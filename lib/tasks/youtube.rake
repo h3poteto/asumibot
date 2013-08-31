@@ -1,0 +1,2 @@
+namespace :youtube do
+end
