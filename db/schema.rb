@@ -11,9 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130901131335) do
+ActiveRecord::Schema.define(:version => 20130901154704) do
 
   create_table "youtube_movies", :force => true do |t|
+    t.string   "title"
+    t.string   "url"
+    t.integer  "priority"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "youtube_populars", :force => true do |t|
     t.string   "title"
     t.string   "url"
     t.integer  "priority"
