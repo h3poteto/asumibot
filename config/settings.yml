@@ -1,0 +1,9 @@
+defaults: &defaults
+  user_name: 'h3poteto'
+development:
+  <<: *defaults
+test:
+  <<: *defaults
+production:
+  <<: *defaults
+  
