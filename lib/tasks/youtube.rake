@@ -15,11 +15,31 @@ namespace :youtube do
     options = '&orderby=published&time=today'
 
     uri = URI(URL + keywords + options )
-    search_youtube(uri)
+    doc = Nokogiri::XML(uri.read)
+    search_youtube(doc)
   end
 
   desc "all youtube movie get"
   task :all => :environment do
+    i = 0
+    while true
+      options = '&orderby=relevance&max-result=25&lr=ja&start-index=' + (i*25+1).to_s
+      i += 1
+      uri = URI(URL + '%22' + keywords + '%22' + options )
+      doc = Nokogiri::XML(uri.read)
+      if doc.search('entry').blank?
+        break
+      end
+      doc.search('entry').each do |entry|
+        next if !entry.search('content').text.include?('阿澄') && !entry.search('title').text.include?('阿澄')
+        puts entry.search('title').text
+        puts entry.xpath('media:group/media:player').first['url']
+        new_data = YoutubeMovie.create(title: entry.search('title').text, url: entry.xpath('media:group/media:player').first['url'], priority: nil)
+        p new_data.save
+        sleep(0.01)
+        puts
+      end
+    end
   end
   
   desc "popular youtube movie get"
@@ -46,8 +66,7 @@ namespace :youtube do
     YoutubePopular.delete_all(["created_at < ?","Today"])
   end
 
-  def search_youtube(uri)
-    doc = Nokogiri::XML(uri.read)
+  def search_youtube(doc)
     doc.search('entry').each do |entry|
       puts entry.search('title').text
       puts entry.xpath('media:group/media:player').first['url']
