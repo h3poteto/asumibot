@@ -7,6 +7,7 @@ require 'open-uri'
 
 URL = 'http://gdata.youtube.com/feeds/api/videos?vq='
 keywords = URI.encode('阿澄佳奈')
+@asumi_word = ['阿澄','佳奈','あすみ','アスミ','もこ']
 
 namespace :youtube do
   desc "new youtube movie get"
@@ -31,7 +32,7 @@ namespace :youtube do
         break
       end
       doc.search('entry').each do |entry|
-        next if !entry.search('content').text.include?('阿澄') && !entry.search('title').text.include?('阿澄')
+        next if !entry.search('content').text.include?('阿澄') && !asumi_check(entry.search('title').text)
         puts entry.search('title').text
         puts entry.xpath('media:group/media:player').first['url']
         new_data = YoutubeMovie.create(title: entry.search('title').text, url: entry.xpath('media:group/media:player').first['url'], priority: nil)
@@ -77,5 +78,12 @@ namespace :youtube do
         p "save error"
       end
     end
+  end
+
+  def asumi_check(word)
+    @asumi_word.each do |asumi|
+      return true if word.include?(asumi)
+    end
+    return false
   end
 end
