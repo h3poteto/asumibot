@@ -11,15 +11,33 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130908095639) do
+ActiveRecord::Schema.define(:version => 20130908164007) do
+
+  create_table "last_data", :force => true do |t|
+    t.string   "category"
+    t.string   "tweet_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "today_youtubes", :force => true do |t|
+    t.string   "title"
+    t.string   "url"
+    t.text     "description"
+    t.integer  "priority"
+    t.boolean  "used",        :default => false, :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+  end
 
   create_table "youtube_movies", :force => true do |t|
     t.string   "title"
     t.string   "url"
     t.text     "description"
     t.integer  "priority"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.boolean  "disabled",    :default => false, :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   create_table "youtube_populars", :force => true do |t|
@@ -27,8 +45,10 @@ ActiveRecord::Schema.define(:version => 20130908095639) do
     t.string   "url"
     t.text     "description"
     t.integer  "priority"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.boolean  "used",        :default => false, :null => false
+    t.boolean  "disabled",    :default => false, :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
 end

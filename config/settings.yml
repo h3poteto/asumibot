@@ -1,9 +1,33 @@
 defaults: &defaults
-  user_name: 'h3poteto'
+  user_name: 'asumi_bot'
 development:
   <<: *defaults
+  twitter:
+    user_name: '9uri27bot_test'
+    ## アプリ登録時に取得したCONSUMER_KEY/CONSUMER_SECRET
+    consumer_key: 'n0XirlSAjQF9PBkRITelyg'
+    consumer_secret: 'TOIztls4M6Z90U37Ef9btdZj5GRcpOxHWKatKAvvRY'
+    ## irbで取得したAccess Token/Access Secret
+    oauth_token: '209365898-lsBb5pdJHKoZUb7nkqRRFlFAkYJeywRaBnZVuUxb'
+    oauth_token_secret: 'GZsanMXuA9ZtfEBh1sEZy82wVPpCZ5fyCTZdvN1CB4'
 test:
   <<: *defaults
+  twitter:
+    user_name: '9uri27bot_test'
+    ## アプリ登録時に取得したCONSUMER_KEY/CONSUMER_SECRET
+    consumer_key: 'n0XirlSAjQF9PBkRITelyg'
+    consumer_secret: 'TOIztls4M6Z90U37Ef9btdZj5GRcpOxHWKatKAvvRY'
+    ## irbで取得したAccess Token/Access Secret
+    oauth_token: '209365898-lsBb5pdJHKoZUb7nkqRRFlFAkYJeywRaBnZVuUxb'
+    oauth_token_secret: 'GZsanMXuA9ZtfEBh1sEZy82wVPpCZ5fyCTZdvN1CB4'
 production:
   <<: *defaults
+  twitter:
+    user_name: '9uri27bot_test'
+    ## アプリ登録時に取得したCONSUMER_KEY/CONSUMER_SECRET
+    consumer_key: 'n0XirlSAjQF9PBkRITelyg'
+    consumer_secret: 'TOIztls4M6Z90U37Ef9btdZj5GRcpOxHWKatKAvvRY'
+    ## irbで取得したAccess Token/Access Secret
+    oauth_token: '209365898-lsBb5pdJHKoZUb7nkqRRFlFAkYJeywRaBnZVuUxb'
+    oauth_token_secret: 'GZsanMXuA9ZtfEBh1sEZy82wVPpCZ5fyCTZdvN1CB4'
   

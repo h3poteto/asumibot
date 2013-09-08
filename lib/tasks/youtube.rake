@@ -20,7 +20,7 @@ namespace :youtube do
       keywords = URI.encode(words)
       uri = URI(URL + '%22' +  keywords + '%22' + options )
       doc = Nokogiri::XML(uri.read)
-      add_youtube(doc)
+      add_youtube(doc,true)
     end
   end
 
@@ -41,7 +41,7 @@ namespace :youtube do
         if doc.search('entry').blank?
           break
         end
-        add_youtube(doc)
+        add_youtube(doc,false)
       end
     end
   end
@@ -71,6 +71,7 @@ namespace :youtube do
   desc "clear db"
   task :clear => :environment do
     YoutubePopular.delete_all(["created_at < ?","Today"])
+    TodayYoutube.delete_all(["created_at < ?", "Today"])
   end
 
 
@@ -79,12 +80,16 @@ namespace :youtube do
 # 関数定義
 #############################
 
-  def add_youtube(doc)
+  def add_youtube(doc, new_flag)
     doc.search('entry').each do |entry|
       next if !asumi_check(entry.search('content').text) && !asumi_check(entry.search('title').text)
       next if !except_check(entry.search('content').text) || !except_check(entry.search('title').text)
       puts entry.search('title').text
       puts entry.xpath('media:group/media:player').first['url']
+      if new_flag
+        today_data = TodayYoutube.create(title: entry.search('title').text, url: entry.xpath('media:group/media:player').first['url'], description: entry.search('content').text, priority: nil)
+        today_data.save
+      end
       new_data = YoutubeMovie.create(title: entry.search('title').text, url: entry.xpath('media:group/media:player').first['url'], description: entry.search('content').text, priority: nil)
       p new_data.save
       sleep(0.01)
