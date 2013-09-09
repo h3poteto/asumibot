@@ -36,12 +36,26 @@ namespace :twitter do
     last_men = LastData.where(:category => "mention").first
     mention.each do |men|
       break if men.id.to_s == last_men.tweet_id.to_s
-      user = men.user.screen_name
-      next if user == Settings['twitter']['user_name']
+      user_name = men.user.screen_name
+      next if user_name == Settings['twitter']['user_name']
       movies = YoutubeMovie.where(:disabled => false).sample
       movie_info = "【" + movies.title + "】" + movies.url
       tweet = "おすすめな阿澄病治療動画だよ！ \n"
-      update("@" + user + " " + tweet + movie_info)
+      update("@" + user_name + " " + tweet + movie_info)
+      user_id = men.user.id
+      db_user = User.where(:twitter_id => user_id.to_i ).first
+      if db_user.blank?
+        db_user = User.new
+        db_user.youtube_movies.push(movies)
+        db_user.twitter_id = user_id.to_i
+        db_user.screen_name = user_name
+        db_user.save
+      else
+        # db_user.youtube_movies.push(movies)
+        # db_user.save
+        movies.users.push(db_user)
+        movies.save
+      end
     end
     last_men.tweet_id = mention[0].id.to_s
     last_men.save
