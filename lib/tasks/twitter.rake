@@ -51,8 +51,6 @@ namespace :twitter do
         db_user.screen_name = user_name
         db_user.save
       else
-        # db_user.youtube_movies.push(movies)
-        # db_user.save
         movies.users.push(db_user)
         movies.save
       end

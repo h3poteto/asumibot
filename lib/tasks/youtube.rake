@@ -7,7 +7,7 @@ require 'open-uri'
 
 URL = 'http://gdata.youtube.com/feeds/api/videos?vq='
 keywords = URI.encode('阿澄佳奈')
-@asumi_word = ['阿澄','佳奈','あすみ','アスミ']
+@asumi_word = ['阿澄','あすみ','アスミ']
 @except_word = ['中田あすみ','東方','シルクロード','歌ってみた','明日美','hito20','明日実','ピストン西沢','ふぉんだんみんと','mariavequoinette','http://www.reponet.tv','アカツキ']
 @searchwords = ['阿澄佳奈','阿澄さん','あすみん','アスミス','もこたん']
 
@@ -50,21 +50,26 @@ namespace :youtube do
   task :popular => :environment do
     options = '&orderby=viewCount&time=all_time'
 
-    uri = URI(URL + keywords + options )
-    doc = Nokogiri::XML(uri.read)
-    i = 1
-    doc.search('entry').each do |entry|
-      puts entry.search('title').text
-      puts entry.xpath('media:group/media:player').first['url']
-      new_data = YoutubePopular.create(title: entry.search('title').text, url: entry.xpath('media:group/media:player').first['url'], description: entry.search('content').text, priority: i)
-      if new_data.save
-        i+=1
-        sleep(0.01)
-        p true
-      else
-        p false
+    @searchwords.each do | words |
+      keywords = URI.encode(words)
+      uri = URI(URL + keywords + options )
+      doc = Nokogiri::XML(uri.read)
+      i = 1
+      doc.search('entry').each do |entry|
+        next if !asumi_check(entry.search('content').text) && !asumi_check(entry.search('title').text)
+        next if !except_check(entry.search('content').text) || !except_check(entry.search('title').text)
+        puts entry.search('title').text
+        puts entry.xpath('media:group/media:player').first['url']
+        new_data = YoutubePopular.create(title: entry.search('title').text, url: entry.xpath('media:group/media:player').first['url'], description: entry.search('content').text, priority: i)
+        if new_data.save
+          i+=1
+          sleep(0.01)
+          p true
+        else
+          p false
+        end
+        puts
       end
-      puts
     end
   end
 
