@@ -8,7 +8,7 @@ require 'open-uri'
 URL = 'http://gdata.youtube.com/feeds/api/videos?vq='
 keywords = URI.encode('阿澄佳奈')
 @asumi_word = ['阿澄','あすみ','アスミ']
-@except_word = ['中田あすみ','東方','シルクロード','歌ってみた','明日美','hito20','明日実','ピストン西沢','ふぉんだんみんと','mariavequoinette','http://www.reponet.tv','アカツキ']
+@except_word = ['中田あすみ','東方','シルクロード','歌ってみた','明日美','hito20','明日実','ピストン西沢','ふぉんだんみんと','mariavequoinette','http://www.reponet.tv','アカツキ','ってみた']
 @searchwords = ['阿澄佳奈','阿澄さん','あすみん','アスミス','もこたん']
 
 namespace :youtube do
@@ -36,6 +36,8 @@ namespace :youtube do
         begin
           doc = Nokogiri::XML(uri.read)
         rescue
+          p i
+          debugger
           break
         end
         if doc.search('entry').blank?

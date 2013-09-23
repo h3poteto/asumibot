@@ -37,6 +37,6 @@ production:
   reconnect: false
   database: asumibot_production
   pool: 5
-  username: root
+  username: akira
   password: pianosolo
-  socket: /tmp/mysql.sock
+  socket: /var/run/mysqld/mysqld.sock

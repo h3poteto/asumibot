@@ -2,6 +2,9 @@ defaults: &defaults
   user_name: 'asumi_bot'
 development:
   <<: *defaults
+  nicovideo:
+    mail_address: 'seatbelts_horns@yahoo.co.jp'
+    password: 'battlecry'
   twitter:
     user_name: '9uri27bot_test'
     ## アプリ登録時に取得したCONSUMER_KEY/CONSUMER_SECRET
