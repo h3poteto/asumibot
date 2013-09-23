@@ -7,7 +7,7 @@ require 'json'
 HOST = 'http://ext.nicovideo.jp'
 SEARCH = '/api/search/search/'
 TAG = '/api/search/tag/'
-keywords = URI.encode('阿澄病')
+keywords = URI.encode('阿澄佳奈')
 @watch_path = 'http://www.nicovideo.jp/watch/'
 @niconico_words = ['阿澄','あすみ','アスミ','もこたん']
 @niconico_tags = ['阿澄佳奈']
@@ -22,8 +22,12 @@ namespace :niconico do
     open(HOST + SEARCH + keywords + options, 'Cookie' => cookie){ |f|
       f.each_line{ |line| @result.push(JSON.parse(line))}
     }
+    t = Date.today
+    str_t = t.strftime("%y/%m/%d")
     @result[0]["list"].each do | movie |
-      add_niconico(movie, true)
+      post = movie["first_retrieve"]
+      str_post = Date.parse(post[0..9]).strftime("%y/%m/%d")
+      add_niconico(movie, true) if str_post == str_t
     end
   end
   
