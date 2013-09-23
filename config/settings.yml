@@ -26,11 +26,11 @@ test:
 production:
   <<: *defaults
   twitter:
-    user_name: '9uri27bot_test'
+    user_name: 'asumi_syndrome'
     ## アプリ登録時に取得したCONSUMER_KEY/CONSUMER_SECRET
-    consumer_key: 'n0XirlSAjQF9PBkRITelyg'
-    consumer_secret: 'TOIztls4M6Z90U37Ef9btdZj5GRcpOxHWKatKAvvRY'
+    consumer_key: 'ywLtEJGN30zYi0xJrmY2Ow'
+    consumer_secret: 'czmFKXB9ZTwTIcofVM9WNPWTklEs6sdNwLorLuQdqSw'
     ## irbで取得したAccess Token/Access Secret
-    oauth_token: '209365898-lsBb5pdJHKoZUb7nkqRRFlFAkYJeywRaBnZVuUxb'
-    oauth_token_secret: 'GZsanMXuA9ZtfEBh1sEZy82wVPpCZ5fyCTZdvN1CB4'
+    oauth_token: '1893110347-60JyKaaaZhFuOUB72pEQwIkyJUK0dPjHsaLpZYf'
+    oauth_token_secret: 'PIkFUBlJiO9hQv9NQfTW2gmnTAA5iINJwqbTNHo'
   
