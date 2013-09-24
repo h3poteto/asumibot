@@ -40,3 +40,4 @@ gem 'jquery-rails'
  gem 'twitter'
  gem 'rails_config'
  gem 'nokogiri'
+ gem 'whenever', :require => false
