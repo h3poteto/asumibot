@@ -26,3 +26,9 @@ set :environment, :production
 every 1.minute do
   rake "twitter:reply"
 end
+
+every 1.day :at => '0:05 am' do
+  rake "youtube:clear"
+  rake "youtube:popular"
+  rake "youtube:new"
+end
