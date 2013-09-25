@@ -27,8 +27,18 @@ every 1.minute do
   rake "twitter:reply"
 end
 
-every 1.day :at => '0:05 am' do
+every '48 * * * *' do
+  rake "twitter:popular"
+end
+
+every '32 18-24 * * *' do
+  rake "twitter:new"
+end
+
+every 1.day, :at => '0:05 am' do
   rake "youtube:clear"
   rake "youtube:popular"
   rake "youtube:new"
 end
+
+
