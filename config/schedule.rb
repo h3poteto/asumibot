@@ -45,4 +45,10 @@ every 1.day, :at => '23:55' do
   rake "youtube:new"
 end
 
+every 1.day, :at => '23:59' do
+  rake "niconico:clear"
+  rake "niconico:popular"
+  rake "niconico:new"
+end
+
 
