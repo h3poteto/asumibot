@@ -31,7 +31,7 @@ every '48 * * * *' do
   rake "twitter:popular"
 end
 
-every '32 18-24 * * *' do
+every '32 18-23 * * *' do
   rake "twitter:new"
 end
 
