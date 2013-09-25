@@ -23,7 +23,7 @@ set :output, 'log/crontab.log'
 
 set :environment, :production
 
-every 1.minute do
+every 2.minutes do
   rake "twitter:reply"
 end
 
