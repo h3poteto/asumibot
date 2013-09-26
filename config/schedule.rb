@@ -27,11 +27,11 @@ every 2.minutes do
   rake "twitter:reply"
 end
 
-every '48 * * * *' do
+every '49 * * * *' do
   rake "twitter:normal"
 end
 
-every '32 18-23 * * *' do
+every '31 18-23 * * *' do
   rake "twitter:new"
 end
 
@@ -45,7 +45,7 @@ every 1.day, :at => '23:55' do
   rake "youtube:new"
 end
 
-every 1.day, :at => '18:00' do
+every 1.day, :at => '18:01' do
   rake "youtube:clear"
   rake "youtube:popular"
   rake "youtube:new"

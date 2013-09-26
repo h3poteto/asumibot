@@ -8,7 +8,10 @@ namespace :twitter do
   desc "normal tweet"
   task :normal => :environment do
     setting_twitter
-    movies = YoutubePopular.where(:used => false).sample
+    movies_array = []
+    movies_array.push(NiconicoPopular.where(:used => false).sample)
+    movies_array.push(YoutubePopular.where(:used => false).sample)
+    movies = movies_array.sample
     movie_info = "【" + movies.title + "】" + movies.url
     popular_tweet = "今、阿澄病患者に人気な動画だよ \n"
     if update( popular_tweet + movie_info)
@@ -21,6 +24,9 @@ namespace :twitter do
   task :new => :environment do
     setting_twitter
     movies = TodayYoutube.where(:used => false).sample
+    if movies.blank?
+      movies = TodayNiconico.where(:used => false).sample
+    end
     movie_info = "【" + movies.title + "】" + movies.url
     new_tweet = "今日の新着あすみん動画はこんなの \n"
     if update( new_tweet + movie_info )
