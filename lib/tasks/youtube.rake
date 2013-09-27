@@ -58,17 +58,17 @@ namespace :youtube do
       doc.search('entry').each do |entry|
         next if !asumi_check(entry.search('content').text) && !asumi_check(entry.search('title').text)
         next if !except_check(entry.search('content').text) || !except_check(entry.search('title').text)
-        puts entry.search('title').text
-        puts entry.xpath('media:group/media:player').first['url']
+        #puts entry.search('title').text
+        #puts entry.xpath('media:group/media:player').first['url']
         new_data = YoutubePopular.create(title: entry.search('title').text, url: entry.xpath('media:group/media:player').first['url'], description: entry.search('content').text, priority: i)
         if new_data.save
           i+=1
           sleep(0.01)
-          p true
+          #p true
         else
-          p false
+          #p false
         end
-        puts
+        #puts
       end
     end
   end
@@ -89,16 +89,14 @@ namespace :youtube do
     doc.search('entry').each do |entry|
       next if !asumi_check(entry.search('content').text) && !asumi_check(entry.search('title').text)
       next if !except_check(entry.search('content').text) || !except_check(entry.search('title').text)
-      puts entry.search('title').text
-      puts entry.xpath('media:group/media:player').first['url']
+      #puts entry.search('title').text
+      #puts entry.xpath('media:group/media:player').first['url']
       if new_flag
         today_data = TodayYoutube.create(title: entry.search('title').text, url: entry.xpath('media:group/media:player').first['url'], description: entry.search('content').text, priority: nil)
         today_data.save
       end
       new_data = YoutubeMovie.create(title: entry.search('title').text, url: entry.xpath('media:group/media:player').first['url'], description: entry.search('content').text, priority: nil)
-      p new_data.save
-      sleep(0.01)
-      puts
+      new_data.save
     end
   end
 

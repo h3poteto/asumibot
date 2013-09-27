@@ -24,7 +24,7 @@ namespace :twitter do
   task :new => :environment do
     setting_twitter
     movies = TodayYoutube.where(:used => false).sample
-    if movies.blank?
+    if movies == nil
       movies = TodayNiconico.where(:used => false).sample
     end
     movie_info = "【" + movies.title + "】" + movies.url
@@ -44,22 +44,30 @@ namespace :twitter do
       break if men.id.to_s == last_men.tweet_id.to_s
       user_name = men.user.screen_name
       next if user_name == Settings['twitter']['user_name']
-      movies = YoutubeMovie.where(:disabled => false).sample
+
+      # DBアクセス
+      movies = nil
+      random = rand(2)
+      if random == 0
+        movies = NiconicoMovie.where(:disabled => false).sample
+      else
+        movies = YoutubeMovie.where(:disabled => false).sample
+        user_id = men.user.id
+        db_user = User.where(:twitter_id => user_id.to_i ).first
+        if db_user.blank?
+          db_user = User.new
+          db_user.youtube_movies.push(movies)
+          db_user.twitter_id = user_id.to_i
+          db_user.screen_name = user_name
+          db_user.save
+        else
+          movies.users.push(db_user)
+          movies.save
+        end
+      end
       movie_info = "【" + movies.title + "】" + movies.url
       tweet = "おすすめな阿澄病治療動画だよ！ \n"
       update("@" + user_name + " " + tweet + movie_info)
-      user_id = men.user.id
-      db_user = User.where(:twitter_id => user_id.to_i ).first
-      if db_user.blank?
-        db_user = User.new
-        db_user.youtube_movies.push(movies)
-        db_user.twitter_id = user_id.to_i
-        db_user.screen_name = user_name
-        db_user.save
-      else
-        movies.users.push(db_user)
-        movies.save
-      end
     end
     last_men.tweet_id = mention[0].id.to_s
     last_men.save
