@@ -39,6 +39,10 @@ every '*/30 0-2 * * *' do
   rake "twitter:new"
 end
 
+every '11 * * * *' do
+  rake "twitter:follower"
+end
+
 every 1.day, :at => '23:55' do
   rake "youtube:clear"
   rake "youtube:popular"
