@@ -11,11 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130922152852) do
+ActiveRecord::Schema.define(:version => 20130929084733) do
 
   create_table "last_data", :force => true do |t|
     t.string   "category"
     t.string   "tweet_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "new_serifs", :force => true do |t|
+    t.string   "word"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -39,6 +45,25 @@ ActiveRecord::Schema.define(:version => 20130922152852) do
     t.boolean  "disabled",    :default => false, :null => false
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
+  end
+
+  create_table "popular_serifs", :force => true do |t|
+    t.string   "word"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "reply_serifs", :force => true do |t|
+    t.string   "word"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "serifs", :force => true do |t|
+    t.string   "type"
+    t.string   "word"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "today_niconicos", :force => true do |t|

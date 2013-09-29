@@ -13,7 +13,7 @@ namespace :twitter do
     movies_array.push(YoutubePopular.where(:used => false).sample)
     movies = movies_array.sample
     movie_info = "【" + movies.title + "】" + movies.url
-    popular_tweet = "今、阿澄病患者に人気な動画だよ \n"
+    popular_tweet = PopularSerif.all.sample.word + " \n"
     if update( popular_tweet + movie_info)
       movies.used = true
       movies.save
@@ -28,7 +28,8 @@ namespace :twitter do
       movies = TodayNiconico.where(:used => false).sample
     end
     movie_info = "【" + movies.title + "】" + movies.url
-    new_tweet = "今日の新着あすみん動画はこんなの \n"
+
+    new_tweet = NewSerif.all.sample.word + "\n" + "（新着）"
     if update( new_tweet + movie_info )
       movies.used = true
       movies.save
@@ -66,7 +67,7 @@ namespace :twitter do
         end
       end
       movie_info = "【" + movies.title + "】" + movies.url
-      tweet = "おすすめな阿澄病治療動画だよ！ \n"
+      tweet = ReplySerif.all.sample.word + " \n"
       update("@" + user_name + " " + tweet + movie_info)
     end
     last_men.tweet_id = mention[0].id.to_s
