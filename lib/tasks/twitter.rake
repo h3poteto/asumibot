@@ -45,7 +45,8 @@ namespace :twitter do
       break if men.id.to_s == last_men.tweet_id.to_s
       user_name = men.user.screen_name
       next if user_name == Settings['twitter']['user_name']
-
+      next if men.text.include?("RT") || men.text.include?("QT")
+      
       # DBアクセス
       movies = nil
       random = rand(2)
