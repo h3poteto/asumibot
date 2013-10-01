@@ -4,6 +4,7 @@ require 'rubygems'
 require 'twitter'
 require 'date'
 require 'url_expander'
+require 'open-uri'
 
 namespace :twitter do
   desc "normal tweet"
@@ -55,6 +56,22 @@ namespace :twitter do
       if expand_url.include?("www.nicovideo.jp/watch")
         next
       elsif expand_url.include?("www.youtube.com/watch?")
+        start_pos = expand_url.index("watch?v=")
+        end_pos = expand_url.index("&",start_pos)
+        movie_id = expand_url[start_pos+8..end_pos-1]
+        uri = URI("http://gdata.youtube.com/feeds/api/videos/" + movie_id)
+        doc = Nokogiri::XML(uri.read)
+        content = doc.search('content').text
+        title = doc.search('title').text
+        url = doc.search('link').first['href']
+        if content.present? && title.present? && url.present?
+          new_data = YoutubeMovie.create(title: title, url: url, description: content, priority: nil)
+          if new_data.save
+            update("新しく動画が追加されたよ\n" + "【" + title + "】" + url)
+          else
+            update("@" + user_name + " " + "ごめん、もう登録されてるんだ")
+          end
+        end
         next
       end
       # DBアクセス
@@ -90,7 +107,7 @@ namespace :twitter do
     setting_twitter
     follower = Twitter.follower_ids().ids
     friend = Twitter.friend_ids().ids
-    fan = follow - friend
+    fan = follower - friend
     fan.each do |f|
       Twitter.follow(f)
     end
