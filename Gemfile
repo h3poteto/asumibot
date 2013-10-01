@@ -41,3 +41,4 @@ gem 'jquery-rails'
  gem 'rails_config'
  gem 'nokogiri'
  gem 'whenever', :require => false
+ gem 'url_expander'

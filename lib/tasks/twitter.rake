@@ -3,6 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../../config/environment")
 require 'rubygems'
 require 'twitter'
 require 'date'
+require 'url_expander'
 
 namespace :twitter do
   desc "normal tweet"
@@ -46,7 +47,16 @@ namespace :twitter do
       user_name = men.user.screen_name
       next if user_name == Settings['twitter']['user_name']
       next if men.text.include?("RT") || men.text.include?("QT")
-      
+      # URL expand
+      expand_url = ""
+      expand_url = UrlExpander::Client.expand(men.text) if men.text.include?("http:")
+
+      # youtube,nicovideoを含む場合はDBに登録する
+      if expand_url.include?("www.nicovideo.jp/watch")
+        next
+      elsif expand_url.include?("www.youtube.com/watch?")
+        next
+      end
       # DBアクセス
       movies = nil
       random = rand(2)
@@ -76,7 +86,7 @@ namespace :twitter do
   end
 
   desc "follower"
-  task :follwer => :environment do
+  task :follower => :environment do
     setting_twitter
     follower = Twitter.follower_ids().ids
     friend = Twitter.friend_ids().ids
