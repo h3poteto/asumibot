@@ -54,10 +54,28 @@ namespace :twitter do
 
       # youtube,nicovideoを含む場合はDBに登録する
       if expand_url.include?("www.nicovideo.jp/watch")
+        start_pos = expand_url.index("watch/")
+        end_pos = expand_url.index("?",start_pos)
+        end_pos = 100 if end_pos == nil
+        movie_id = expand_url[start_pos+6..end_pos-1]
+        uri = URI("http://ext.nicovideo.jp/api/getthumbinfo/" + movie_id)
+        doc = Nokogiri::XML(uri.read)
+        description = doc.search('description').text
+        title = doc.search('title').text
+        url = doc.search('watch_url').text
+        if title.present? && url.present?
+          new_data = NiconicoMovie.create(title: title, url: url, description: description, priority: nil)
+          if new_data.save
+            update("新しく動画が追加されたよ\n" + "【" + title + "】" + url)
+          else
+            update("@" + user_name + " " + "ごめん、もう登録されてた")
+          end
+        end
         next
       elsif expand_url.include?("www.youtube.com/watch?")
         start_pos = expand_url.index("watch?v=")
         end_pos = expand_url.index("&",start_pos)
+        end_pos = 100 if end_pos == nil
         movie_id = expand_url[start_pos+8..end_pos-1]
         uri = URI("http://gdata.youtube.com/feeds/api/videos/" + movie_id)
         doc = Nokogiri::XML(uri.read)
