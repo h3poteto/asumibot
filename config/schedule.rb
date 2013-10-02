@@ -57,8 +57,11 @@ end
 
 every 1.day, :at => '23:59' do
   rake "niconico:clear"
-  rake "niconico:popular"
   rake "niconico:new"
+end
+
+every 1.day, :at => '0:47' do
+  rake "niconico:popular"
 end
 
 
