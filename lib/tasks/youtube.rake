@@ -48,7 +48,7 @@ namespace :youtube do
   
   desc "popular youtube movie get"
   task :popular => :environment do
-    options = '&orderby=viewCount&time=all_time'
+    options = '&orderby=rating&time=all_time'
 
     @searchwords.each do | words |
       keywords = URI.encode(words)
