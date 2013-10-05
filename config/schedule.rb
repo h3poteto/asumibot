@@ -43,18 +43,21 @@ every '11 * * * *' do
   rake "twitter:follower"
 end
 
+every 1.day, :at => '23:53' do
+  rake "niconico:clear"
+end
 every 1.day, :at => '23:55' do
   rake "youtube:clear"
-  rake "youtube:popular"
 end
-
 every 1.day, :at => '23:57' do
   rake "youtube:new"
 end
-
 every 1.day, :at => '23:59' do
-  rake "niconico:clear"
   rake "niconico:new"
+end
+
+every 1.day, :at => '0:37' do
+  rake "youtube:popular"
 end
 
 every 1.day, :at => '0:47' do
@@ -63,10 +66,13 @@ end
 
 every 1.day, :at => '18:01' do
   rake "youtube:clear"
-  rake "youtube:popular"
 end
 every 1.day, :at => '18:03' do
   rake "youtube:new"
+end
+
+every 1.day, :at => '18:05' do
+  rake "youtube:popular"
 end
 
 
