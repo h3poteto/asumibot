@@ -93,8 +93,8 @@ namespace :twitter do
         end
         content = doc.search('content').text
         title = doc.search('title').text
-        url = doc.search('link').first['href']
-        if content.present? && title.present? && url.present?
+        url = doc.search('link').first['href'] + "_player"
+        if content.present? || title.present? || url.present?
           new_data = YoutubeMovie.create(title: title, url: url, description: content, priority: nil)
           if new_data.save
             update("新しく動画が追加されたよ\n" + "【" + title + "】" + url)
