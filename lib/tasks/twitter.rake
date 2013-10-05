@@ -63,7 +63,11 @@ namespace :twitter do
         end_pos = 100 if end_pos == nil
         movie_id = expand_url[start_pos+6..end_pos-1]
         uri = URI("http://ext.nicovideo.jp/api/getthumbinfo/" + movie_id)
-        doc = Nokogiri::XML(uri.read)
+        begin
+          doc = Nokogiri::XML(uri.read)
+        rescue
+          next
+        end
         description = doc.search('description').text
         title = doc.search('title').text
         url = doc.search('watch_url').text
@@ -82,7 +86,11 @@ namespace :twitter do
         end_pos = 100 if end_pos == nil
         movie_id = expand_url[start_pos+8..end_pos-1]
         uri = URI("http://gdata.youtube.com/feeds/api/videos/" + movie_id)
-        doc = Nokogiri::XML(uri.read)
+        begin
+          doc = Nokogiri::XML(uri.read)
+        rescue
+          next
+        end
         content = doc.search('content').text
         title = doc.search('title').text
         url = doc.search('link').first['href']
