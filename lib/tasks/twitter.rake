@@ -14,6 +14,8 @@ namespace :twitter do
     movies_array.push(NiconicoPopular.where(:used => false).sample)
     movies_array.push(YoutubePopular.where(:used => false).sample)
     movies = movies_array.sample
+
+    # つぶやき
     movie_info = "【" + movies.title + "】" + movies.url
     popular_tweet = PopularSerif.all.sample.word + " \n"
     if update( popular_tweet + movie_info)
@@ -29,8 +31,10 @@ namespace :twitter do
     if movies == nil
       movies = TodayNiconico.where(:used => false).sample
     end
+    
+    next if !confirm_db(movies.url)
+    # つぶやき
     movie_info = "【" + movies.title + "】" + movies.url
-
     new_tweet = NewSerif.all.sample.word + "\n" + "（新着）"
     if update( new_tweet + movie_info )
       movies.used = true
@@ -72,7 +76,7 @@ namespace :twitter do
           end
         end
         next
-      elsif expand_url.include?("www.youtube.com/watch?")
+      elsif expand_url.include?("youtube.com/watch?")
         start_pos = expand_url.index("watch?v=")
         end_pos = expand_url.index("&",start_pos)
         end_pos = 100 if end_pos == nil
@@ -112,6 +116,8 @@ namespace :twitter do
           movies.save
         end
       end
+
+      next if !confirm_db(movies.url)
       movie_info = "【" + movies.title + "】" + movies.url
       tweet = ReplySerif.all.sample.word + " \n"
       update("@" + user_name + " " + tweet + movie_info)
@@ -148,5 +154,73 @@ namespace :twitter do
       return false
     end
     return true
+  end
+  def confirm_youtube(url)
+    if !url.include?("youtube.com/watch?")
+      return false
+    end
+    uri = URI(url)
+    begin
+      doc = Nokogiri::XML(uri.read)
+    rescue
+      return false
+    end
+    
+    if doc.search('title').text == "YouTube"
+      return false
+    else
+      return true
+    end
+  end
+  def confirm_niconico(url)
+    if !url.include?("nicovideo.jp/watch")
+      return false
+    end
+    start_pos = url.index("watch/")
+    end_pos = url.index("?", start_pos)
+    end_pos = 100 if end_pos == nil
+    movie_id = url[start_pos+6..end_pos-1]
+
+    uri = URI("http://ext.nicovideo.jp/api/getthumbinfo/" + movie_id)
+    begin
+      doc = Nokogiri::XML(uri.read)
+    rescue
+      return false
+    end
+    if doc.search('code').text == "DELETED" || doc.search('code').text == "NOT_FOUND"
+      return false
+    else
+      return true
+    end
+  end
+
+  def confirm_db(url)
+    if url.include?("youtube.com/watch?")
+      if confirm_youtube(url)
+        ## 問題なし
+        return "youtube"
+      else
+        ## DBから探し出しdisabled => false
+        youtube = YoutubeMovie.where(:url => url).first
+        youtube.update_attributes!(:disabled => true)
+        youtube.save
+        return false
+      end
+    elsif url.include?("nicovideo.jp/watch")
+      if confirm_niconico(url)
+        ## 問題なし
+        return "niconico"
+      else
+        ## DBから探し出しdisabled => false
+        niconico = NiconicoMovie.where(:url => url).first
+        niconico.update_attributes!(:disabled => url).first
+        niconico.save
+        return false
+      end
+    else
+      ## 予定外のurl
+      ## DBからの抜き出しなら例外
+      return false
+    end
   end
 end

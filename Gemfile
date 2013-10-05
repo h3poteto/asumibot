@@ -42,3 +42,14 @@ gem 'jquery-rails'
  gem 'nokogiri'
  gem 'whenever', :require => false
  gem 'url_expander'
+
+
+group :test do
+ gem "shoulda-matchers"
+end
+
+group :development, :test do
+ gem 'rspec-rails'
+ gem 'rspec'
+ gem 'rspec-mocks'
+end
