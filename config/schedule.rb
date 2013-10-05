@@ -46,12 +46,9 @@ end
 every 1.day, :at => '23:55' do
   rake "youtube:clear"
   rake "youtube:popular"
-  rake "youtube:new"
 end
 
-every 1.day, :at => '18:01' do
-  rake "youtube:clear"
-  rake "youtube:popular"
+every 1.day, :at => '23:57' do
   rake "youtube:new"
 end
 
@@ -62,6 +59,14 @@ end
 
 every 1.day, :at => '0:47' do
   rake "niconico:popular"
+end
+
+every 1.day, :at => '18:01' do
+  rake "youtube:clear"
+  rake "youtube:popular"
+end
+every 1.day, :at => '18:03' do
+  rake "youtube:new"
 end
 
 
