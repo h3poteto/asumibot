@@ -8,7 +8,7 @@ require 'open-uri'
 URL = 'http://gdata.youtube.com/feeds/api/videos?vq='
 keywords = URI.encode('阿澄佳奈')
 @asumi_word = ['阿澄','アスミス','阿澄佳奈']
-@except_word = ['中田あすみ','東方','シルクロード','歌ってみた','明日美','hito20','明日実','ピストン西沢','ふぉんだんみんと','mariavequoinette','http://www.reponet.tv','アカツキ','弾いてみた','やってみた','湾岸','太鼓さん次郎','明治神宮']
+@except_word = ['中田あすみ','東方','シルクロード','歌ってみた','明日美','hito20','明日実','ピストン西沢','ふぉんだんみんと','mariavequoinette','http://www.reponet.tv','アカツキ','弾いてみた','やってみた','湾岸','太鼓さん次郎','明治神宮','踊ってみた']
 @searchwords = ['阿澄佳奈','阿澄さん','アスミス','もこたん']
 
 namespace :youtube do

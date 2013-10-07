@@ -76,7 +76,7 @@ namespace :twitter do
           if new_data.save
             update("新しく動画が追加されたよ\n" + "【" + title + "】" + url)
           else
-            update("@" + user_name + " " + "ごめん、もう登録されてた")
+            update("@" + user_name + " " + "ごめん、これはもう登録されてた\n" + url)
           end
         end
         next
@@ -99,7 +99,7 @@ namespace :twitter do
           if new_data.save
             update("新しく動画が追加されたよ\n" + "【" + title + "】" + url)
           else
-            update("@" + user_name + " " + "ごめん、もう登録されてるんだ")
+            update("@" + user_name + " " + "ごめん、これはもう登録されてるんだ\n" + url)
           end
         end
         next
