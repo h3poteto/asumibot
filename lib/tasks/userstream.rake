@@ -12,7 +12,8 @@ namespace :userstream do
     
     client = TweetStream::Client.new
     client.userstream do | status |
-      if status.in_reply_to_user_id != nil && !status.text.include?("RT") && !status.text.include?("QT") && status.user.screen_name != Settings['twitter']['user_name']
+      if (status.in_reply_to_user_id != nil) && (!status.text.include?("RT")) && (!status.text.include?("QT")) && (status.user.screen_name != Settings['twitter']['user_name']) && (status.text.include?("@"+Settings['twitter']['user_name']))
+
         puts status.user.screen_name
         puts status.text
         puts "\n"
@@ -98,6 +99,7 @@ namespace :userstream do
         end
 
         next if !confirm_db(movies.url)
+
         movie_info = "【" + movies.title + "】" + movies.url
         tweet = ReplySerif.all.sample.word + " \n"
         update("@" + user_name + " " + tweet + movie_info)
