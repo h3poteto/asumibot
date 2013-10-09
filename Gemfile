@@ -42,6 +42,7 @@ gem 'jquery-rails'
  gem 'nokogiri'
  gem 'whenever', :require => false
  gem 'url_expander'
+ gem 'tweetstream'
 
 
 group :test do
