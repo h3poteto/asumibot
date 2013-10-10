@@ -27,7 +27,14 @@ namespace :userstream do
 
         # URL expand
         expand_url = ""
-        expand_url = UrlExpander::Client.expand(men.text) if men.text.include?("http:")
+        # https
+        if men.text.include?("https:")
+          http_url = men.text.gsub('https:','http:')
+          expand_url = UrlExpander::Client.expand(http_url) if http_url.include?("http:")
+        else
+          expand_url = UrlExpander::Client.expand(men.text) if men.text.include?("http:")
+        end
+
 
         # youtube,nicovideoを含む場合はDBに登録する
         if expand_url.include?("www.nicovideo.jp/watch")
@@ -49,7 +56,8 @@ namespace :userstream do
             if new_data.save
               update("新しく動画が追加されたよ\n" + "【" + title + "】" + url)
             else
-              update("@" + user_name + " " + "ごめん、これはもう登録されてた\n" + url)
+              already = AlreadySerif.all.sample.word
+              update("@" + user_name + " " + already + "\n" + url)
             end
           end
           next
@@ -72,7 +80,8 @@ namespace :userstream do
             if new_data.save
               update("新しく動画が追加されたよ\n" + "【" + title + "】" + url)
             else
-              update("@" + user_name + " " + "ごめん、これはもう登録されてるんだ\n" + url)
+              already = AlreadySerif.all.sample.word
+              update("@" + user_name + " " + already + "\n" + url)
             end
           end
           next
