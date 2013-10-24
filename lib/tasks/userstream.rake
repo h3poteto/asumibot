@@ -88,10 +88,8 @@ namespace :userstream do
         end
         # DBアクセス
         movies = nil
-        random = rand(2)
-        if random == 0
-          movies = NiconicoMovie.where(:disabled => false).sample
-        else
+        random = rand(4)
+        if random == 1
           movies = YoutubeMovie.where(:disabled => false).sample
           user_id = men.user.id
           db_user = User.where(:twitter_id => user_id.to_i ).first
@@ -105,6 +103,8 @@ namespace :userstream do
             movies.users.push(db_user)
             movies.save
           end
+        else
+          movies = NiconicoMovie.where(:disabled => false).sample
         end
 
         next if !confirm_db(movies.url)
