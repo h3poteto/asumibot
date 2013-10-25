@@ -96,20 +96,23 @@ namespace :niconico do
 
   desc "popular nicovideo movie get"
   task :popular => :environment do
-    @result = []
     cookie = login(Settings['nicovideo']['mail_address'], Settings['nicovideo']['password'])
-    options = '?mode=watch&page=1&sort=n&order=d'
-    open(HOST + TAG + keywords + options, 'Cookie' => cookie){ |f|
-      f.each_line{ |line| @result.push(JSON.parse(line))}
-    }
-    if @result[0]["status"] != "fail"
-      pop = 1
-      @result[0]["list"].each do | movie |
-        popular_data = NiconicoPopular.create(title: movie["title"], url: @watch_path + movie["id"], description: movie["description_short"], priority: pop )
-        popular_data.save
-        pop += 1
+    
+    for i in 0..1 do
+      @result = []
+      options = '?mode=watch&page=' + (i+1).to_s + '&sort=n&order=d'
+
+      open(HOST + TAG + keywords + options, 'Cookie' => cookie){ |f|
+        f.each_line{ |line| @result.push(JSON.parse(line))}
+      }
+      if @result[0]["status"] != "fail"
+        pop = i * 32 + 1
+        @result[0]["list"].each do | movie |
+          popular_data = NiconicoPopular.create(title: movie["title"], url: @watch_path + movie["id"], description: movie["description_short"], priority: pop )
+          popular_data.save
+          pop += 1
+        end
       end
-      
     end
   end
 

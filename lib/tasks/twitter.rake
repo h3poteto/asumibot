@@ -12,6 +12,7 @@ namespace :twitter do
     setting_twitter
     movies_array = []
     movies_array.push(NiconicoPopular.where(:used => false).sample)
+    movies_array.push(NiconicoPopular.where(:used => false).sample)
     movies_array.push(YoutubePopular.where(:used => false).sample)
     movies = movies_array.sample
 
