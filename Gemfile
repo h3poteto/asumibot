@@ -46,7 +46,7 @@ gem 'jquery-rails'
  gem 'url_expander'
  gem 'tweetstream'
  gem 'kaminari'
-
+ gem 'devise','>= 2.1.2'
 
 group :test do
  gem "shoulda-matchers"

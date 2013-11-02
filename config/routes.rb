@@ -1,4 +1,6 @@
 Asumibot::Application.routes.draw do
+  devise_for :admins
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -40,7 +42,7 @@ Asumibot::Application.routes.draw do
   #   end
 
   # Sample resource route within a namespace:
-  namespace :admin do
+  namespace :admins do
   #     # Directs /admin/products/* to Admin::ProductsController
   #     # (app/controllers/admin/products_controller.rb)
     resources :serifs, :except => [:show]
@@ -55,4 +57,5 @@ Asumibot::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
+  root :to => "admins/serifs#index"
 end

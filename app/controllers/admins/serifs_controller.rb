@@ -1,4 +1,5 @@
-class Admin::SerifsController < AdminController
+class Admins::SerifsController < AdminsController
+  before_filter :authenticate_admin!
   # GET /serifs
   # GET /serifs.json
   def index

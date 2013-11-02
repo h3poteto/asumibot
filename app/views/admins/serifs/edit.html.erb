@@ -4,7 +4,7 @@
     <%= @notice %>
   </div>
 <% end %>
-<%= form_tag(admin_serif_path, :method => :put) do %>
+<%= form_tag(admins_serif_path, :method => :put) do %>
   <% if @serif.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@serif.errors.count, "error") %> prohibited this serif from being saved:</h2>
@@ -35,8 +35,8 @@
     <%= submit_tag "登録" , class: "btn btn-info" %>
   </div>
 <% end %>
-<%= button_to 'Back', admin_serifs_path, method: :get,  class: "btn" %>
+<%= button_to 'Back', admins_serifs_path, method: :get,  class: "btn" %>
 <div class="button_area">
-  <%= button_to 'Delete', admin_serif_path(@serif), method: :delete, class:"btn btn-danger", confirm: "本当に削除しますか？"  %>
+  <%= button_to 'Delete', admins_serif_path(@serif), method: :delete, class:"btn btn-danger", confirm: "本当に削除しますか？"  %>
 
 </div>
