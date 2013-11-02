@@ -1,0 +1,7 @@
+/*
+
+*= require_self
+*= require bootstrap_and_overrides
+*= require all
+*= require_tree ./admin
+*/

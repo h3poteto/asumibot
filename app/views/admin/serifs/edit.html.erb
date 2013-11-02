@@ -1,0 +1,42 @@
+<h1>編集</h1>
+<% if @notice.present? %>
+  <div class="alert alert-success alert_notice">
+    <%= @notice %>
+  </div>
+<% end %>
+<%= form_tag(admin_serif_path, :method => :put) do %>
+  <% if @serif.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@serif.errors.count, "error") %> prohibited this serif from being saved:</h2>
+
+      <ul>
+      <% @serif.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <table class="table">
+    <tr>
+      <th>ID</th>
+      <td><%= @serif.id %><%= text_field_tag :id , @serif.id, :class => "hidden" %></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><%= @serif.type %><%= text_field_tag 'serif[type]', @serif.type, :class => "hidden" %></td>
+    </tr>
+    <tr>
+      <th>台詞</th>
+      <td><%= text_field_tag 'serif[word]', @serif.word %></td>
+    </tr>
+  </table>
+
+  <div class="actions">
+    <%= submit_tag "登録" , class: "btn btn-info" %>
+  </div>
+<% end %>
+<%= button_to 'Back', admin_serifs_path, method: :get,  class: "btn" %>
+<div class="button_area">
+  <%= button_to 'Delete', admin_serif_path(@serif), method: :delete, class:"btn btn-danger", confirm: "本当に削除しますか？"  %>
+
+</div>

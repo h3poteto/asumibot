@@ -1,0 +1,36 @@
+<h1>台詞一覧</h1>
+<% if @notice.present? %>
+  <div class="alert alert-success alert_notice">
+    <%= @notice %>
+  </div>
+<% end %>
+<div class="button_area">
+  <%= button_to '新規追加', new_admin_serif_path, method: :get, class: "btn btn-info" %>
+</div>
+<table class="table">
+  <tr>
+    <th>ID</th>
+    <th>type</th>
+    <th>台詞</th>
+    <th></th>
+  </tr>
+
+<% @serifs.each_with_index do |serif, i| %>
+  <% if i > 25 %>
+    <tr class="none">
+  <% else %>
+    <tr>
+  <% end %>
+    <td><%= serif[:id] %></td>
+    <td><%= serif[:type] %></td>
+    <td><%= serif[:word] %></td>
+    <td><%= link_to "編集", edit_admin_serif_path(serif) %></td>
+  </tr>
+<% end %>
+</table>
+<div class="center">
+  <%= button_tag "続きを読む(#{@serifs.length - 25})", class: "btn more", value: (@serifs.length - 25) %>
+</div>
+<div class="button_area">
+  <%= button_to '新規追加', new_admin_serif_path, method: :get, class: "btn btn-info" %>
+</div>

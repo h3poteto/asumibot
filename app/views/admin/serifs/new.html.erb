@@ -1,0 +1,20 @@
+<h1>新規追加</h1>
+
+<%= form_tag(admin_serifs_path, :method => :post) do %>
+  <table class="table">
+    <tr>
+      <th>type</th>
+      <td><%= select_tag 'serif[type]', options_for_select([["New","NewSerif"],["Reply","ReplySerif"],["Popular","PopularSerif"]]) %></td>
+    </tr>
+    <tr>
+      <th>台詞</th>
+      <td><%= text_field_tag 'serif[word]' %></td>
+    </tr>
+  </table>
+
+  <div class="actions">
+    <%= submit_tag "登録",method: :post, class: "btn btn-info" %>
+  </div>
+<% end %>
+
+<%= button_to 'Back', admin_serifs_path, method: :get, class: "btn" %>
