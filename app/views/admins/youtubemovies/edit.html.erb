@@ -1,0 +1,10 @@
+<h1>編集</h1>
+<% if @notice.present? %>
+  <div class="alert alert-success alert_notice">
+    <%= @notice %>
+  </div>
+<% end %>
+<%= render 'form' %>
+
+<%#= link_to 'Show', @youtubemovie %>
+<%= button_to'Back', admins_youtubemovies_path, method: :get, class: "btn" %>

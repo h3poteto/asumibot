@@ -1,0 +1,41 @@
+<%= form_for(@youtubemovie,:url =>  admins_youtubemovie_path) do |f| %>
+  <% if @youtubemovie.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@youtubemovie.errors.count, "error") %> prohibited this youtubemovie from being saved:</h2>
+
+      <ul>
+      <% @youtubemovie.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <table class="table movie_form">
+    <tr>
+      <th>ID</th>
+      <td><%= @youtubemovie.id %><%= f.text_field :id, class: "hidden" %></td>
+    </tr>
+    <tr>
+      <th>作成日時</th>
+      <td><%= I18n.l(@youtubemovie.created_at) %></td>
+    </tr>
+    <tr>
+      <th>タイトル</th>
+      <td><%= f.text_field :title %></td>
+    </tr>
+    <tr>
+      <th>説明</th>
+      <td><%= @youtubemovie.description %></td>
+    </tr>
+    <tr>
+      <th>URL</th>
+      <td><%= f.text_field :url %></td>
+    </tr>
+    <tr>
+      <th>無効</th>
+      <td><%= f.check_box :disabled, {:checked => @youtubemovie.disabled}, 1, 0 %></td>
+  </table>
+  <div class="actions">
+    <%= f.submit "登録", class: "btn btn-info" %>
+  </div>
+<% end %>

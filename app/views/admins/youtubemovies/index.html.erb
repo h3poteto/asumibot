@@ -1,0 +1,38 @@
+<h1>Youtube動画一覧</h1>
+
+<div class="button_area">
+<%= search_form_for(@search, :url => admins_youtubemovies_path) do |f| %>
+  <div class="field">
+    <%#= f.label :name_cont, "Name contains" %>
+    <%= f.text_field :title_or_url_or_description_cont %>
+  </div>
+  <div class="actions"><%= f.submit "検索" %></div>
+<% end %>
+</div>
+<table class="table movies">
+  <tr>
+    <th>ID</th>
+    <th>タイトル</th>
+    <th>URL</th>
+    <th></th>
+  </tr>
+
+<% @youtubemovies.each do |youtubemovie| %>
+  <% if youtubemovie.disabled %>
+    <tr class="disabled">
+  <% else %>
+    <tr>
+  <% end %>
+    <td><%= youtubemovie.id %></td>
+    <td><%= youtubemovie.title %></td>
+    <td><%= link_to youtubemovie.url, youtubemovie.url, target: "_blank" %></td>
+    <td class="detail"><%= link_to '詳細', edit_admins_youtubemovie_path(youtubemovie.id) %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+<div class="center">
+  <%= paginate @youtubemovies, :window => 2 %>
+</div>
+<%#= link_to 'New Youtubemovie', new_youtubemovie_path %>

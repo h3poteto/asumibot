@@ -47,6 +47,7 @@ gem 'jquery-rails'
  gem 'tweetstream'
  gem 'kaminari'
  gem 'devise','>= 2.1.2'
+ gem 'ransack'
 
 group :test do
  gem "shoulda-matchers"
