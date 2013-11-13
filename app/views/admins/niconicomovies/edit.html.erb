@@ -1,0 +1,9 @@
+<h1>編集</h1>
+<% if @notice.present? %>
+  <div class="alert alert-success alert_notice">
+    <%= @notice %>
+  </div>
+<% end %>
+<%= render 'form' %>
+
+<%= button_to'Back', admins_niconicomovies_path, method: :get, class: "btn" %>
