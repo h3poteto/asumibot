@@ -48,6 +48,7 @@ gem 'jquery-rails'
  gem 'kaminari'
  gem 'devise','>= 2.1.2'
  gem 'ransack'
+ gem 'bootstarp_helper'
 
 group :test do
  gem "shoulda-matchers"
