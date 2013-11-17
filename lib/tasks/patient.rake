@@ -13,12 +13,19 @@ namespace :patient do
     follower.each do |f|
       prev_level = f.level
       parameter = {}
+      users_tweet = []
       if f.since_id.present?
-        parameter = {:id => f.twitter_id.to_i, :since_id => f.since_id.to_i, :count => 200}
+        i = 0
+        begin
+          i += 1
+          parameter = {:id => f.twitter_id.to_i, :since_id => f.since_id.to_i, :count => 200, :page => i}
+          users_per = Twitter.user_timeline(parameter)
+          users_tweet = users_tweet + users_per
+        end while users_per.length == 200
       else
         parameter = {:id => f.twitter_id.to_i, :count => 200}
+        users_tweet = Twitter.user_timeline(parameter)
       end
-      users_tweet = Twitter.user_timeline(parameter)
       if users_tweet.present?
         asumi_count = 0
         tweet_count = users_tweet.length
@@ -36,14 +43,12 @@ namespace :patient do
     setting_twitter
     patient = Patient.all
     patient.each do |p|
-      if p.asumi_count > 0
+      if p.asumi_count > 0 && p.prev_level.present?
         tweet = "@" + p.name + " 今日の阿済病進行度は" + p.level.to_s + "だよ。"
-        if p.prev_level.present?
-          if p.level- p.prev_level >= 0
-            tweet = tweet + "昨日に比べて" + (p.level - p.prev_level).to_s + "上がったよ。"
-          else
-            tweet = tweet + "昨日に比べて" + (p.prev_level - p.level).to_s + "下がったよ"
-          end
+        if p.level- p.prev_level >= 0
+          tweet = tweet + "昨日に比べて" + (p.level - p.prev_level).to_s + "上がったよ。"
+        else
+          tweet = tweet + "昨日に比べて" + (p.prev_level - p.level).to_s + "下がったよ"
         end
         tweet = tweet + p.tweet_count.to_s + "ツイート中" + p.asumi_count.to_s + "回も私のこと考えてたでしょ。"
         Twitter.update(tweet)
@@ -60,6 +65,17 @@ namespace :patient do
   task :add => :environment do
     setting_twitter
     follower = Twitter.followers
+    patients = Patient.all
+    patients.each do |p|
+      exist_flg = false
+      follower.each do |f|
+        exist_flg = true if f.id.to_s == p.twitter_id
+      end
+      if !exist_flg
+        p.delete
+      end
+    end
+
     follower.each do |f|
       patient = Patient.new(:twitter_id => f.id.to_s, :name => f.screen_name)
       patient.save
