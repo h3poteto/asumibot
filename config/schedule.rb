@@ -32,6 +32,10 @@ every '31 18-23 * * *' do
   rake "twitter:new"
 end
 
+every '07 18-23 * * *' do
+  rake "twitter:new"
+end
+
 every '*/30 0-2 * * *' do
   rake "twitter:new"
 end
