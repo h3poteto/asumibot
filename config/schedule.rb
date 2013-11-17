@@ -72,4 +72,10 @@ every 1.day, :at => '18:05' do
   rake "youtube:popular"
 end
 
+every 1.day, :at => '20:00' do
+  rake "patient:add"
+end
 
+every 1.day, :at => '20:01' do
+  rake "patient:update"
+end

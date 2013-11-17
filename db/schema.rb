@@ -11,30 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131102124914) do
-
-  create_table "administrators", :force => true do |t|
-    t.string   "email",                               :default => "", :null => false
-    t.string   "encrypted_password",   :limit => 128, :default => "", :null => false
-    t.string   "password_salt",                       :default => "", :null => false
-    t.string   "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string   "reset_password_token"
-    t.string   "remember_token"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                       :default => 0
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                          :null => false
-    t.datetime "updated_at",                                          :null => false
-  end
-
-  add_index "administrators", ["confirmation_token"], :name => "index_administrators_on_confirmation_token", :unique => true
-  add_index "administrators", ["email"], :name => "index_administrators_on_email", :unique => true
-  add_index "administrators", ["reset_password_token"], :name => "index_administrators_on_reset_password_token", :unique => true
+ActiveRecord::Schema.define(:version => 20131116092838) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -98,6 +75,19 @@ ActiveRecord::Schema.define(:version => 20131102124914) do
     t.string   "word"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "patients", :force => true do |t|
+    t.string   "twitter_id"
+    t.string   "name"
+    t.integer  "level"
+    t.integer  "asumi_count"
+    t.integer  "tweet_count"
+    t.integer  "prev_level"
+    t.string   "since_id"
+    t.boolean  "clear",       :default => false, :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   create_table "popular_serifs", :force => true do |t|
