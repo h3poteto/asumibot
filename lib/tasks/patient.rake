@@ -64,12 +64,12 @@ namespace :patient do
   end
   task :add => :environment do
     setting_twitter
-    follower = Twitter.followers
+    follower = Twitter.follower_ids().ids
     patients = Patient.all
     patients.each do |p|
       exist_flg = false
       follower.each do |f|
-        exist_flg = true if f.id.to_s == p.twitter_id
+        exist_flg = true if f.to_s == p.twitter_id
       end
       if !exist_flg
         p.delete
@@ -77,8 +77,11 @@ namespace :patient do
     end
 
     follower.each do |f|
-      patient = Patient.new(:twitter_id => f.id.to_s, :name => f.screen_name)
-      patient.save
+      already = Patient.where(:twitter_id => f.to_s)
+      if already.blank?
+        patient = Patient.new(:twitter_id => f.to_s, :name => Twitter.user(f).screen_name)
+        patient.save
+      end
     end
   end
   def setting_twitter
