@@ -35,6 +35,8 @@ namespace :patient do
         # ascumi_count cal
         asumi = asumi_calculate(asumi_count, tweet_count)
         f.update_attributes(:level => asumi, :asumi_count => asumi_count, :tweet_count => tweet_count,:since_id => users_tweet.first.id.to_s, :prev_level => prev_level, :clear => false)
+      else
+        f.update_attributes(:level => 0, :asumi_count => 0, :tweet_count => 0, :prev_level => prev_level, :clear => false)
       end
     end
   end
