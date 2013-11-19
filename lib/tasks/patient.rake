@@ -45,7 +45,7 @@ namespace :patient do
     setting_twitter
     patient = Patient.all
     patient.each do |p|
-      if p.asumi_count > 0 && p.prev_level.present?
+      if p.asumi_count > 0 && p.prev_level.present? && p.level >= 40
         tweet = "@" + p.name + " 今日の阿済病進行度は" + p.level.to_s + "だよ。"
         if p.level- p.prev_level >= 0
           tweet = tweet + "昨日に比べて" + (p.level - p.prev_level).to_s + "上がったよ。"
