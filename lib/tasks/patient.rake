@@ -28,15 +28,17 @@ namespace :patient do
       end
       if users_tweet.present?
         asumi_count = 0
+        asumi_word = 0
         tweet_count = users_tweet.length
         users_tweet.each do |tl|
-          asumi_count += asumi_tweet_check(tl.text)
+          asumi_count += 1 if asumi_tweet_check(tl.text)
+          asumi_word += asumi_tweet_count(tl.text)
         end
         # ascumi_count cal
         asumi = asumi_calculate(asumi_count, tweet_count)
-        f.update_attributes(:level => asumi, :asumi_count => asumi_count, :tweet_count => tweet_count,:since_id => users_tweet.first.id.to_s, :prev_level => prev_level, :clear => false)
+        f.update_attributes(:level => asumi, :asumi_count => asumi_count, :tweet_count => tweet_count, :asumi_word => asumi_word, :since_id => users_tweet.first.id.to_s, :prev_level => prev_level, :clear => false)
       else
-        f.update_attributes(:level => 0, :asumi_count => 0, :tweet_count => 0, :prev_level => prev_level, :clear => false)
+        f.update_attributes(:level => 0, :asumi_count => 0, :tweet_count => 0, :asumi_word => 0, :prev_level => prev_level, :clear => false)
       end
     end
   end
@@ -45,7 +47,7 @@ namespace :patient do
     setting_twitter
     patient = Patient.all
     patient.each do |p|
-      if p.asumi_count > 0 && p.prev_level.present? && p.level >= 40
+      if p.asumi_count > 0 && p.prev_level.present? && p.level >= 30
         tweet = "@" + p.name + " 今日の阿済病進行度は" + p.level.to_s + "だよ。"
         if p.level- p.prev_level >= 0
           tweet = tweet + "昨日に比べて" + (p.level - p.prev_level).to_s + "上がったよ。"
@@ -95,6 +97,12 @@ namespace :patient do
     end
   end
   def asumi_tweet_check(word)
+    @asumi_tweet.each do |asumi|
+      return true if word.include?(asumi)
+    end
+    return false
+  end
+  def asumi_tweet_count(word)
     count = 0
     @asumi_tweet.each do |asumi|
       count += word.scan(/#{asumi}/).length
@@ -104,12 +112,6 @@ namespace :patient do
   def asumi_calculate(asumi_count, tweet_count)
     m = asumi_count.to_f/tweet_count.to_f
     m = m * 100
-    s = -1
-    if m <= 40
-      s = 9 * m / 4 - 3 * m * m / 160
-    elsif m > 40
-      s = Math.min( 100, 30 + 3 * m / 4 )
-    end
-    return s
+    return m
   end
 end

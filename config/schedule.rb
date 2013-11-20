@@ -84,6 +84,3 @@ every 1.day, :at => '22:59' do
   rake "patient:update"
 end
 
-every 1.day, :at => '23:02' do
-  rake "patient:tweet"
-end
