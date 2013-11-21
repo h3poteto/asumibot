@@ -45,16 +45,17 @@ namespace :patient do
 
   task :tweet => :environment do
     setting_twitter
-    patient = Patient.all
-    patient.each do |p|
-      if p.asumi_count > 0 && p.prev_level.present? && p.level >= 30
-        tweet = "@" + p.name + " 今日の阿済病進行度は" + p.level.to_s + "だよ。"
-        if p.level- p.prev_level >= 0
-          tweet = tweet + "昨日に比べて" + (p.level - p.prev_level).to_s + "上がったよ。"
-        else
-          tweet = tweet + "昨日に比べて" + (p.prev_level - p.level).to_s + "下がったよ"
-        end
-        tweet = tweet + p.tweet_count.to_s + "ツイート中" + p.asumi_count.to_s + "回も私のこと考えてたでしょ。"
+    patient = Patient.order("level DESC")
+    patient.each_with_index do |p, i|
+      if p.asumi_count > 0 && p.prev_level.present? && p.tweet_count >= 10 && p.level >= 30
+        tweet = "@" + p.name + " 今日の阿済度は" + p.level.to_s + "%だよ。"
+        # if p.level- p.prev_level >= 0
+        #   tweet = tweet + "昨日に比べて" + (p.level - p.prev_level).to_s + "上がったよ。"
+        # else
+        #   tweet = tweet + "昨日に比べて" + (p.prev_level - p.level).to_s + "下がったよ"
+        # end
+        #tweet = tweet + p.tweet_count.to_s + "ツイート中" + p.asumi_count.to_s + "回も私のこと考えてたでしょ。"
+        tweet = tweet + "フォロワーの中で" + (i+1).to_s + "位。" + p.asumi_word.to_s + "語の阿澄単語があったよ。"
         Twitter.update(tweet)
       end
     end
