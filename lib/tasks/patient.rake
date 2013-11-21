@@ -2,8 +2,10 @@
 require File.expand_path(File.dirname(__FILE__) + "/../../config/environment")
 require 'rubygems'
 require 'twitter'
+require 'url_expander'
+require 'open-uri'
 
-@asumi_tweet = ["阿澄","あすみ","佳奈","アスミ","もこたん"]
+@asumi_tweet = ["阿澄","あすみ","佳奈","アスミ","もこたん","もこちゃ"]
 namespace :patient do
 
   desc "update patient level"
@@ -49,12 +51,6 @@ namespace :patient do
     patient.each_with_index do |p, i|
       if p.asumi_count > 0 && p.prev_level.present? && p.tweet_count >= 10 && p.level >= 30
         tweet = "@" + p.name + " 今日の阿済度は" + p.level.to_s + "%だよ。"
-        # if p.level- p.prev_level >= 0
-        #   tweet = tweet + "昨日に比べて" + (p.level - p.prev_level).to_s + "上がったよ。"
-        # else
-        #   tweet = tweet + "昨日に比べて" + (p.prev_level - p.level).to_s + "下がったよ"
-        # end
-        #tweet = tweet + p.tweet_count.to_s + "ツイート中" + p.asumi_count.to_s + "回も私のこと考えてたでしょ。"
         tweet = tweet + "フォロワーの中で" + (i+1).to_s + "位。" + p.asumi_word.to_s + "語の阿澄単語があったよ。"
         Twitter.update(tweet)
       end
@@ -98,8 +94,21 @@ namespace :patient do
     end
   end
   def asumi_tweet_check(word)
+    expand_url = ""
+    doc = ""
+    if word.include?("https:")
+      http_url = word.gsub('https:','http:')
+      expand_url = UrlExpander::Client.expand(http_url) if http_url.include?("http:")
+    else
+      expand_url = UrlExpander::Client.expand(word) if word.include?("http:")
+    end
+    if expand_url.present?
+      uri = URI(expand_url)
+      doc = Nokogiri::XML(uri.read).text
+    end
     @asumi_tweet.each do |asumi|
       return true if word.include?(asumi)
+      return true if doc.include?(asumi)
     end
     return false
   end
