@@ -13,7 +13,6 @@ namespace :userstream do
     client = TweetStream::Client.new
     client.userstream do | status |
       if (status.in_reply_to_user_id != nil) && (!status.text.include?("RT")) && (!status.text.include?("QT")) && (status.user.screen_name != Settings['twitter']['user_name']) && (status.text.include?("@"+Settings['twitter']['user_name']))
-
         puts status.user.screen_name
         puts status.text
         puts "\n"
@@ -88,26 +87,27 @@ namespace :userstream do
         end
         # DBアクセス
         movies = nil
-        random = rand(4)
-        if random == 1
-          movies = YoutubeMovie.where(:disabled => false).sample
-          user_id = men.user.id
-          db_user = User.where(:twitter_id => user_id.to_i ).first
-          if db_user.blank?
-            db_user = User.new
-            db_user.youtube_movies.push(movies)
-            db_user.twitter_id = user_id.to_i
-            db_user.screen_name = user_name
-            db_user.save
+        begin
+          random = rand(4)
+          if random == 1
+            movies = YoutubeMovie.where(:disabled => false).sample
+            user_id = men.user.id
+            db_user = User.where(:twitter_id => user_id.to_i ).first
+            if db_user.blank?
+              db_user = User.new
+              db_user.youtube_movies.push(movies)
+              db_user.twitter_id = user_id.to_i
+              db_user.screen_name = user_name
+              db_user.save
+            else
+              movies.users.push(db_user)
+              movies.save
+            end
           else
-            movies.users.push(db_user)
-            movies.save
+            movies = NiconicoMovie.where(:disabled => false).sample
           end
-        else
-          movies = NiconicoMovie.where(:disabled => false).sample
-        end
 
-        next if !confirm_db(movies.url)
+        end while !confirm_db(movies.url)
 
         movie_info = "【" + movies.title + "】" + movies.url
         tweet = ReplySerif.all.sample.word + " \n"
