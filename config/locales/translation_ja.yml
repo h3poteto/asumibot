@@ -1,0 +1,111 @@
+ja:
+  activerecord:
+    models:
+      admin: admin  #g
+      already_serif: already_serif  #g
+      last_data: last_data  #g
+      new_serif: new_serif  #g
+      niconico_movie: niconico_movie  #g
+      niconico_popular: niconico_popular  #g
+      patient: patient  #g
+      popular_serif: popular_serif  #g
+      reply_serif: reply_serif  #g
+      serif: serif  #g
+      today_niconico: today_niconico  #g
+      today_youtube: today_youtube  #g
+      user: user  #g
+      youtube_movie: youtube_movie  #g
+      youtube_popular: youtube_popular  #g
+      youtube_user: youtube_user  #g
+
+    attributes:
+      admin:
+        current_sign_in_at: current_sign_in_at  #g
+        current_sign_in_ip: current_sign_in_ip  #g
+        email: email  #g
+        encrypted_password: encrypted_password  #g
+        last_sign_in_at: last_sign_in_at  #g
+        last_sign_in_ip: last_sign_in_ip  #g
+        remember_created_at: remember_created_at  #g
+        reset_password_sent_at: reset_password_sent_at  #g
+        reset_password_token: reset_password_token  #g
+
+      already_serif:
+        word: word  #g
+
+      last_data:
+        category: category  #g
+
+      new_serif:
+        word: word  #g
+
+      niconico_movie:
+        description: description  #g
+        disabled: disabled  #g
+        priority: priority  #g
+        title: title  #g
+        url: url  #g
+
+      niconico_popular:
+        description: description  #g
+        disabled: disabled  #g
+        priority: priority  #g
+        title: title  #g
+        url: url  #g
+        used: used  #g
+
+      patient:
+        asumi_word: asumi_word  #g
+        clear: clear  #g
+        level: level  #g
+        name: name  #g
+        prev_level: prev_level  #g
+
+      popular_serif:
+        word: word  #g
+
+      reply_serif:
+        word: word  #g
+
+      serif:
+        word: word  #g
+
+      today_niconico:
+        description: description  #g
+        priority: priority  #g
+        title: title  #g
+        url: url  #g
+        used: used  #g
+
+      today_youtube:
+        description: description  #g
+        priority: priority  #g
+        title: title  #g
+        url: url  #g
+        used: used  #g
+
+      user:
+        screen_name: screen_name  #g
+        youtube_movies: youtube_movies  #g
+        youtube_users: youtube_users  #g
+
+      youtube_movie:
+        description: description  #g
+        disabled: disabled  #g
+        priority: priority  #g
+        title: title  #g
+        url: url  #g
+        users: users  #g
+        youtube_users: youtube_users  #g
+
+      youtube_popular:
+        description: description  #g
+        disabled: disabled  #g
+        priority: priority  #g
+        title: title  #g
+        url: url  #g
+        used: used  #g
+
+      youtube_user:
+        user: :activerecord.models.user  #g
+        youtube_movie: :activerecord.models.youtube_movie  #g

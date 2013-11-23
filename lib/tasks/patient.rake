@@ -34,7 +34,13 @@ namespace :patient do
         tweet_count = users_tweet.length
         users_tweet.each do |tl|
           asumi_count += 1 if asumi_tweet_check(tl.text)
-          asumi_word += asumi_tweet_count(tl.text)
+          tweet = asumi_tweet_count(tl.text)
+          asumi_word += tweet
+          if tweet > 0
+            # add asumi_tweet for DB
+            asumi_tweet = AsumiTweet.new(patient_id: f.id, tweet: tl.text, tweet_id: tl.id.to_s, tweet_time: tl.created_at)
+            asumi_tweet.save
+          end
         end
         # ascumi_count cal
         asumi = asumi_calculate(asumi_count, tweet_count)
@@ -104,7 +110,11 @@ namespace :patient do
     end
     if expand_url.present?
       uri = URI(expand_url)
-      doc = Nokogiri::XML(uri.read).text
+      begin
+        doc = Nokogiri::XML(uri.read).text
+      rescue
+        doc = "error"
+      end
     end
     @asumi_tweet.each do |asumi|
       return true if word.include?(asumi)

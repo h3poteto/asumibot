@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131120163244) do
+ActiveRecord::Schema.define(:version => 20131122160335) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -33,6 +33,15 @@ ActiveRecord::Schema.define(:version => 20131120163244) do
 
   create_table "already_serifs", :force => true do |t|
     t.string   "word"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "asumi_tweets", :force => true do |t|
+    t.integer  "patient_id"
+    t.string   "tweet"
+    t.string   "tweet_id"
+    t.datetime "tweet_time", :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

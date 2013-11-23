@@ -1,15 +1,32 @@
 <p id="notice"><%= notice %></p>
 
+<h4><%= @patient.name %>さんの阿澄病レポート</h4>
+
+
+<%=l @patient.updated_at %>更新
+
 <p>
-  <b>Name:</b>
-  <%= @patient.name %>
+  <b>阿澄度:</b>
+  <%= @patient.level %>%
 </p>
 
 <p>
-  <b>Level:</b>
-  <%= @patient.level %>
+  <b>阿澄ワード:</b>
+  <%= @patient.asumi_word %>語
 </p>
-
-
-<%= link_to 'Edit', edit_patient_path(@patient) %> |
-<%= link_to 'Back', patients_path %>
+<table class="table">
+  <thead>
+    <tr>
+      <th>ツイート</th>
+      <th>投稿日時</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @asumi_tweet.each do | tweet | %>
+    <tr>
+      <td><%= tweet.tweet %></td>
+      <td><%=l tweet.tweet_time %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

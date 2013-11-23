@@ -76,15 +76,15 @@ every 1.day, :at => '18:05' do
   rake "youtube:popular"
 end
 
-every 1.day, :at => '22:55' do
+every 1.day, :at => '23:35' do
   rake "patient:add"
 end
 
-every 1.day, :at => '22:59' do
+every 1.day, :at => '0:01' do
   rake "patient:update"
 end
 
-every 1.day, :at => '23:06' do
+every 1.day, :at => '0:24' do
   rake "patient:tweet"
 end
 

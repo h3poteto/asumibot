@@ -50,6 +50,7 @@ gem 'jquery-rails'
  gem 'devise','>= 2.1.2'
  gem 'ransack'
  gem 'bootstrap_helper'
+ gem 'i18n_generators'
 
 group :test do
  gem "shoulda-matchers"

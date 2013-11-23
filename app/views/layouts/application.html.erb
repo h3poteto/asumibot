@@ -36,18 +36,13 @@
 
     <%= javascript_include_tag "application" %>
   </head>
-  <body>
-
-    <%= render "layouts/nav_admin" %>
-      
+  <body>      
 
     <div class="container">
       <div id="main_area">
         <div class="row">
-          <div class="span9">
-            <%= bootstrap_flash %>
-            <%= yield %>
-          </div>
+          <%= bootstrap_flash %>
+          <%= yield %>
 	  <%#= render "layouts/side_admin" %>
         </div><!--/row-->
 	</div>
