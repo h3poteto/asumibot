@@ -1,5 +1,5 @@
 class PatientsController < ApplicationController
-  layout "application"
+  layout "user"
   # GET /patients
   # GET /patients.json
   def index

@@ -1,5 +1,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
-//= require all
+//= require common
 //= require_tree ./admin

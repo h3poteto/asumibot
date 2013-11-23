@@ -2,6 +2,6 @@
 
 *= require_self
 *= require bootstrap_and_overrides
-*= require all
+*= require common
 *= require_tree ./admin
 */
