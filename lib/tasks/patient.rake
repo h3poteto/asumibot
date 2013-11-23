@@ -104,9 +104,17 @@ namespace :patient do
     doc = ""
     if word.include?("https:")
       http_url = word.gsub('https:','http:')
-      expand_url = UrlExpander::Client.expand(http_url) if http_url.include?("http:")
+      begin
+        expand_url = UrlExpander::Client.expand(http_url) if http_url.include?("http:")
+      rescue
+        expand_url = nil
+      end
     else
-      expand_url = UrlExpander::Client.expand(word) if word.include?("http:")
+      begin
+        expand_url = UrlExpander::Client.expand(word) if word.include?("http:")
+      rescue
+        expand_url = nil
+      end
     end
     if expand_url.present?
       uri = URI(expand_url)
