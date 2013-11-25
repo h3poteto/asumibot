@@ -17,7 +17,7 @@ class PatientsController < ApplicationController
     @patient = Patient.find(params[:id])
     today = Time.now.at_beginning_of_day
     yesterday = Date.yesterday.at_beginning_of_day
-    @asumi_tweet = AsumiTweet.where(patient_id: params[:id]).where(tweet_time: l(today)...l(yesterday)).order("tweet_time DESC")
+    @asumi_tweet = AsumiTweet.where(patient_id: params[:id]).order("tweet_time DESC").page(params[:page]).per(25)
 
     respond_to do |format|
       format.html # show.html.erb
