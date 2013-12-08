@@ -51,6 +51,7 @@ gem 'jquery-rails'
  gem 'ransack'
  gem 'bootstrap_helper'
  gem 'i18n_generators'
+ gem 'gon'
 
 group :test do
  gem "shoulda-matchers"

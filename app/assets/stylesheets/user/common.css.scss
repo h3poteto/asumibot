@@ -1,0 +1,40 @@
+.container{
+    position: relative;
+    z-index: 2;
+    width: 982px;
+    #main_area{
+	z-index: 3;
+	padding: 10px 20px 30px 20px;
+	background: rgba(255, 255, 255, 0.7);
+    }
+}
+.navbar-static-top{
+    position: relative !important;
+}
+.background{
+    background: url(asset-path("blur_back04.jpg",image)) no-repeat center center fixed;
+    background-size: cover;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+}
+
+.center{
+    text-align: center;
+}
+.left{
+    text-align: left;
+}
+.right{
+    text-align: right;
+}
+
+footer{
+    margin: 10px 0 0 20px;
+    a{
+	color: rgba(0, 100, 255, 1.0);
+    }
+}

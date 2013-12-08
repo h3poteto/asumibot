@@ -38,16 +38,23 @@ namespace :patient do
           asumi_word += tweet
           if tweet > 0
             # add asumi_tweet for DB
-            asumi_tweet = AsumiTweet.new(patient_id: f.id, tweet: tl.text, tweet_id: tl.id.to_s, tweet_time: tl.created_at)
+            asumi_tweet = AsumiTweet.new(patient_id: f.id, tweet: tl.text, tweet_id: tl.id.to_s, tweet_time: tl.created_at.to_s(:db))
             asumi_tweet.save
           end
         end
         # ascumi_count cal
         asumi = asumi_calculate(asumi_count, tweet_count)
         f.update_attributes(:level => asumi, :asumi_count => asumi_count, :tweet_count => tweet_count, :asumi_word => asumi_word, :since_id => users_tweet.first.id.to_s, :prev_level => prev_level, :clear => false)
+        # asumilevels update
+        asumi_levels = AsumiLevel.new(patient_id: f.id, asumi_count: asumi_count, tweet_count: tweet_count, asumi_word: asumi_word)
+        asumi_levels.save
       else
         f.update_attributes(:level => 0, :asumi_count => 0, :tweet_count => 0, :asumi_word => 0, :prev_level => prev_level, :clear => false)
+        # asumilevels update
+        asumi_levels = AsumiLevel.new(patient_id: f.id, asumi_count: 0, tweet_count: 0, asumi_word: 0)
+        asumi_levels.save
       end
+
     end
   end
 

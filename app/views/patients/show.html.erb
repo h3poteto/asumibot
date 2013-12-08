@@ -1,35 +1,114 @@
 <p id="notice"><%= notice %></p>
 
-<h4><%= @patient.name %>さんの阿澄病レポート</h4>
+<h4><%= link_to @patient.name + "さんの阿澄病レポート", patient_path(@patient) %></h4>
 
+<div class="update_time">
+  <%=l @patient.updated_at %>更新
+</div>
 
-<%=l @patient.updated_at %>更新
+<div class="left_box">
 
-<p>
-  <b>阿澄度:</b>
-  <%= @patient.level %>%
-</p>
-
-<p>
-  <b>阿澄ワード:</b>
-  <%= @patient.asumi_word %>語
-</p>
-<table class="table">
-  <thead>
-    <tr>
-      <th>ツイート</th>
-      <th>投稿日時</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @asumi_tweet.each do | tweet | %>
-    <tr>
-      <td><%= tweet.tweet %></td>
-      <td><%=l tweet.tweet_time %></td>
-    </tr>
+  <div id="chart"></div>
+  <table class="report center">
+    <tbody>
+      <tr>
+	<th>
+	  今日
+	</th>
+	<td>
+	  <b>阿澄度</b><br />
+	  <%= @patient.level %>%
+	</td>
+	<td>
+	  <b>ツイート数</b><br />
+	  <%= @patient.tweet_count %>
+	</td>
+	<td>
+	  <b>阿澄ワード</b><br />
+	  <%= @patient.asumi_word %>語
+	</td>
+	<td class="last">
+	  <b>順位</b><br />
+	  <%= @ranking %>位
+	</td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="main_tweet">
+    <caption><h5>阿澄ツイート</h5></caption>
+    <table class="table tweet_area">
+      <tbody>
+	<% @asumi_tweet.each do | tweet | %>
+	  <tr>
+	    <td><%= tweet.tweet %>
+	      <div class="tweet_detail"><%= link_to "詳細", "http://twitter.com/#{@patient.name}/status/#{tweet.tweet_id}", target: :blank %></div>
+	    </td>
+	    <td><%=l tweet.tweet_time %></td>
+	  </tr>
+	<% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="right_box">
+  <div class="content_area">
+    <div class="right">
+      <%= search_form_for(@search, :url => patient_path(@patient)) do |f| %>
+	<%= f.text_field :tweet_cont, :placeholder => "ツイート検索" %>
+	<%= f.submit "検索", class: "btn" %>
+      </div>
     <% end %>
-  </tbody>
-</table>
+  </div>
+  <br />
+  <div class="content_area center">
+    <table class="table">
+      <caption><%= Date.today.year %>年<%= Date.today.month %>月</caption>
+      <thead>
+	<tr>
+	  <th>日</th>
+	  <th>月</th>
+	  <th>火</th>
+	  <th>水</th>
+	  <th>木</th>
+	  <th>金</th>
+	  <th>土</th>
+	</tr>
+      </thead>
+      <tbody>
+	<tr>
+	  <% for i in 0..(@first_day.wday - 1) do %>
+	    <td>t</td>
+	  <% end %>
+	  <% for i in 1..(7 - @first_day.wday) do %>
+	    <td><%= link_to i, patient_path(@patient, :day => i) %></td>
+	  <% end %>
+	</tr>
+	<% for i in (8 - @first_day.wday)..@last_day.day do %>
+	  <% if ( i - 1)%7 == 0 %>
+	    <tr>
+	  <% end %>
+	  <td><%= link_to i, patient_path(@patient, :day => i) %></td>
+	  <% if i%7 == 0 %>
+	    </tr>
+	  <% end %>
+
+	<% end %>
+      </tbody>
+    </table>
+  </div>
+<br />
+  <div class="content_area ranking">
+    <h5>ランキング</h5>
+    <table class="ranking">
+    <% @all_patients.first(10).each_with_index do |p ,i| %>
+      <tr>
+	<th><%= i + 1 %>位</th>
+	<td><%= link_to "@" + p.name, patient_path(p.id) %></td>
+    <% end %>
+    </table>
+  </div>
+</div>
+<div class="clearfix"></div>
 <div class="center">
   <%= paginate @asumi_tweet, :window => 2 %>
 </div>

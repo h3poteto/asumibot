@@ -3,7 +3,7 @@ class PatientsController < ApplicationController
   # GET /patients
   # GET /patients.json
   def index
-    @patients = Patient.all
+    @patients = Patient.order("level DESC").take(10)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,74 +14,43 @@ class PatientsController < ApplicationController
   # GET /patients/1
   # GET /patients/1.json
   def show
+    
     @patient = Patient.find(params[:id])
-    today = Time.now.at_beginning_of_day
-    yesterday = Date.yesterday.at_beginning_of_day
-    @asumi_tweet = AsumiTweet.where(patient_id: params[:id]).order("tweet_time DESC").page(params[:page]).per(25)
+    @search = AsumiTweet.where(patient_id: params[:id]).search(params[:q])
+    if params[:day].present?
+      from = Time.mktime(Date.today.year, Date.today.month, params[:day].to_i)
+      to = from.end_of_day
+      @asumi_tweet = @search.result.where(tweet_time: from...to).order("tweet_time DESC").page(params[:page]).per(25)
+    else
+      @asumi_tweet = @search.result.order("tweet_time DESC").page(params[:page]).per(25)
+    end
 
+    @all_patients = Patient.order("level DESC")
+    @all_patients.each_with_index do |p, i|
+      @ranking = i + 1 if p.id == params[:id].to_i
+    end
+
+    @first_day = Date.today.beginning_of_month
+    @last_day = Date.today.end_of_month
+    @today = Date.today
+    @datedata = Date.today.prev_week..@today
+    @level_data = []
+    @datedata.each do | day |
+      level = AsumiLevel.where(patient_id: params[:id]).where(created_at: day.beginning_of_day...day.end_of_day )
+
+      if level.present?
+        @level_data.push(level.first.asumi_count)
+      else
+        @level_data.push(0)
+      end
+    end
+    gon.leveldata = @level_data
+    gon.datedata = @datedata.map{|d| d.month.to_s + "/" + d.day.to_s }
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @patient }
     end
   end
 
-  # GET /patients/new
-  # GET /patients/new.json
-  def new
-    @patient = Patient.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @patient }
-    end
-  end
-
-  # GET /patients/1/edit
-  def edit
-    @patient = Patient.find(params[:id])
-  end
-
-  # POST /patients
-  # POST /patients.json
-  def create
-    @patient = Patient.new(params[:patient])
-
-    respond_to do |format|
-      if @patient.save
-        format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
-        format.json { render json: @patient, status: :created, location: @patient }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @patient.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /patients/1
-  # PUT /patients/1.json
-  def update
-    @patient = Patient.find(params[:id])
-
-    respond_to do |format|
-      if @patient.update_attributes(params[:patient])
-        format.html { redirect_to @patient, notice: 'Patient was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @patient.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /patients/1
-  # DELETE /patients/1.json
-  def destroy
-    @patient = Patient.find(params[:id])
-    @patient.destroy
-
-    respond_to do |format|
-      format.html { redirect_to patients_url }
-      format.json { head :no_content }
-    end
-  end
 end

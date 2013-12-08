@@ -1,5 +1,5 @@
 Asumibot::Application.routes.draw do
-  resources :patients, only: [:show]
+  resources :patients, only: [:show, :index]
 
 
   devise_for :admins
@@ -10,5 +10,5 @@ Asumibot::Application.routes.draw do
     resources :niconicomovies, :except => [:show, :destroy, :new, :create]
   end
 
-  root :to => "admins/serifs#index"
+  root :to => "patients#index"
 end

@@ -33,24 +33,23 @@
     <!-- For all other devices -->
     <!-- Size should be 32 x 32 pixels -->
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
+    <%= include_gon %>
 
-    <%= javascript_include_tag "user" %>
   </head>
   <body>      
-
+    <div class="background"></div>
+    <div class="blur"></div>
+    <%= render "layouts/nav_user" %>
     <div class="container">
       <div id="main_area">
-        <div class="row">
-          <%= bootstrap_flash %>
-          <%= yield %>
-	  <%#= render "layouts/side_admin" %>
-        </div><!--/row-->
-	</div>
+        <%= bootstrap_flash %>
+        <%= yield %>
+      </div>
       <footer>
-        <p>&copy; Asumibot 2013</p>
+        <p>&copy; AsumiSyndrome 2013  Created by <%= link_to :@h3_poteto, 'http://twitter.com/h3_poteto', target: :blank %></p>
       </footer>
-
-    </div> <!-- /container -->
-
+    </div>
+    <%= javascript_include_tag "user" %>
+    
   </body>
 </html>

@@ -82,6 +82,9 @@ GEM
     execjs (2.0.1)
     faraday (0.8.7)
       multipart-post (~> 1.1)
+    gon (4.1.1)
+      actionpack (>= 2.3.0)
+      json
     hike (1.2.3)
     hpricot (0.8.6)
     http-cookie (1.0.2)
@@ -253,6 +256,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   debugger
   devise (>= 2.1.2)
+  gon
   i18n_generators
   jquery-rails
   kaminari

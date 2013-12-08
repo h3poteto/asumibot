@@ -1,0 +1,7 @@
+<h1>阿澄度ランキング</h1>
+
+<% @patients.each_with_index do |p, i| %>
+  <div>
+    <%= i + 1 %>位 <%= link_to p.name, patient_path(p) %> <%= p.level %>%
+  </div>
+<% end %>
