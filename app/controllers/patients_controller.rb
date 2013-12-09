@@ -33,7 +33,7 @@ class PatientsController < ApplicationController
     @first_day = Date.today.beginning_of_month
     @last_day = Date.today.end_of_month
     @today = Date.today
-    @datedata = Date.today.prev_week..@today
+    @datedata = Date.today.weeks_ago(2)..@today
     @level_data = []
     @datedata.each do | day |
       level = AsumiLevel.where(patient_id: params[:id]).where(created_at: day.beginning_of_day...day.end_of_day )
