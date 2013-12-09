@@ -39,13 +39,13 @@ class PatientsController < ApplicationController
       level = AsumiLevel.where(patient_id: params[:id]).where(created_at: day.beginning_of_day...day.end_of_day )
 
       if level.present?
-        @level_data.push(level.first.asumi_count)
+        @level_data.push(level.first.asumi_count * 100 / level.first.tweet_count)
       else
         @level_data.push(0)
       end
     end
     gon.leveldata = @level_data
-    gon.datedata = @datedata.map{|d| d.month.to_s + "/" + d.day.to_s }
+    gon.datedata = @datedata.map{|d| d.prev_day.month.to_s + "/" + d.prev_day.day.to_s }
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @patient }
