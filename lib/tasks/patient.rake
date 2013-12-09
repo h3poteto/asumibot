@@ -33,14 +33,14 @@ namespace :patient do
         asumi_word = 0
         tweet_count = users_tweet.length
         users_tweet.each do |tl|
-          asumi_count += 1 if asumi_tweet_check(tl.text)
-          tweet = asumi_tweet_count(tl.text)
-          asumi_word += tweet
-          if tweet > 0
+          if asumi_tweet_check(tl.text)
+            asumi_count += 1 
             # add asumi_tweet for DB
             asumi_tweet = AsumiTweet.new(patient_id: f.id, tweet: tl.text, tweet_id: tl.id.to_s, tweet_time: tl.created_at.to_s(:db))
             asumi_tweet.save
           end
+          tweet = asumi_tweet_count(tl.text)
+          asumi_word += tweet
         end
         # ascumi_count cal
         asumi = asumi_calculate(asumi_count, tweet_count)
