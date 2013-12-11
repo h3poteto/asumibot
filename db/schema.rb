@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131203150556) do
+ActiveRecord::Schema.define(:version => 20131211165006) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -105,6 +105,8 @@ ActiveRecord::Schema.define(:version => 20131203150556) do
     t.integer  "prev_level"
     t.string   "since_id"
     t.boolean  "clear",       :default => false, :null => false
+    t.boolean  "locked",      :default => false, :null => false
+    t.boolean  "disabled",    :default => false, :null => false
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
   end

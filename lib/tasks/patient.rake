@@ -11,7 +11,7 @@ namespace :patient do
   desc "update patient level"
   task :update => :environment do
     setting_twitter
-    follower = Patient.where(:clear => false)
+    follower = Patient.where(:disabled => false).where(:locked => false)
     follower.each do |f|
       prev_level = f.level
       parameter = {}
@@ -24,6 +24,8 @@ namespace :patient do
           begin
             users_per = Twitter.user_timeline(parameter)
           rescue
+            f.update_attributes(:locked => true)
+            f.save
             next
           end
           users_tweet = users_tweet + users_per
@@ -33,6 +35,8 @@ namespace :patient do
         begin
           users_tweet = Twitter.user_timeline(parameter)
         rescue
+          f.update_attributes(:locked => true)
+          f.save
           next
         end
       end
@@ -68,7 +72,7 @@ namespace :patient do
 
   task :tweet => :environment do
     setting_twitter
-    patient = Patient.order("level DESC")
+    patient = Patient.where(:locked => false).where(:disabled => false).order("level DESC")
     patient.each_with_index do |p, i|
       next if p.asumi_count.blank?
       if p.asumi_count > 0 && p.prev_level.present? && p.tweet_count >= 10 && p.level >= 30
@@ -95,7 +99,8 @@ namespace :patient do
         exist_flg = true if f.to_s == p.twitter_id
       end
       if !exist_flg
-        p.delete
+        p.update_attributes(:disabled => true)
+        p.save
       end
     end
 

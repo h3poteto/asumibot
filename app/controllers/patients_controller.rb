@@ -3,7 +3,7 @@ class PatientsController < ApplicationController
   # GET /patients
   # GET /patients.json
   def index
-    @patients = Patient.order("level DESC").take(10)
+    @patients = Patient.where(:locked => false).where(:disabled => false).order("level DESC").take(10)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,7 +25,7 @@ class PatientsController < ApplicationController
       @asumi_tweet = @search.result.order("tweet_time DESC").page(params[:page]).per(25)
     end
 
-    @all_patients = Patient.order("level DESC")
+    @all_patients = Patient.where(:locked => false).where(:disabled => false).order("level DESC")
     @all_patients.each_with_index do |p, i|
       @ranking = i + 1 if p.id == params[:id].to_i
     end
