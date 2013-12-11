@@ -88,3 +88,7 @@ every 1.day, :at => '0:24' do
   rake "patient:tweet"
 end
 
+every 1.day, :at => '11:34' do
+  rake "patient:change_name"
+end
+
