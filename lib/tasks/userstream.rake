@@ -116,6 +116,8 @@ namespace :userstream do
     end
   end
 
+
+  private
   def setting_tweetstream
     TweetStream.configure do |config|
       config.consumer_key       = Settings['twitter']['consumer_key']
@@ -133,7 +135,7 @@ namespace :userstream do
       config.oauth_token_secret = Settings['twitter']['oauth_token_secret']
     end
   end
-def confirm_youtube(url)
+  def confirm_youtube(url)
     if !url.include?("youtube.com/watch?")
       return false
     end

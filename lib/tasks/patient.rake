@@ -5,8 +5,8 @@ require 'twitter'
 require 'url_expander'
 require 'open-uri'
 
-@asumi_tweet = ["阿澄","あすみ","佳奈","アスミ","もこたん","もこちゃ"]
 namespace :patient do
+  @asumi_tweet = ["阿澄","あすみ","佳奈","アスミ","もこたん","もこちゃ"]
 
   desc "update patient level"
   task :update => :environment do
@@ -98,6 +98,20 @@ namespace :patient do
       end
     end
   end
+
+  task :change_name => :environment do
+    setting_twitter
+    patients = Patient.all
+    patients.each do |p|
+      user_name = Twitter.user(p.twitter_id.to_i).screen_name
+      if p.name != user_name
+        p.update_attributes(:name => user_name)
+        p.save
+      end
+    end
+  end
+
+  private
   def setting_twitter
     Twitter.configure do |config|
       config.consumer_key       = Settings['twitter']['consumer_key']

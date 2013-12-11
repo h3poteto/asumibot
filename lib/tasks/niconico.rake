@@ -4,15 +4,14 @@ require File.expand_path(File.dirname(__FILE__) + "/../../config/environment")
 require 'open-uri'
 require 'json'
 
-HOST = 'http://ext.nicovideo.jp'
-SEARCH = '/api/search/search/'
-TAG = '/api/search/tag/'
-keywords = URI.encode('阿澄佳奈')
-@watch_path = 'http://www.nicovideo.jp/watch/'
-@niconico_words = ['阿澄','あすみ','アスミ','もこたん']
-@niconico_tags = ['阿澄佳奈']
-
 namespace :niconico do
+  HOST = 'http://ext.nicovideo.jp'
+  SEARCH = '/api/search/search/'
+  TAG = '/api/search/tag/'
+  keywords = URI.encode('阿澄佳奈')
+  @watch_path = 'http://www.nicovideo.jp/watch/'
+  @niconico_words = ['阿澄','あすみ','アスミ','もこたん']
+  @niconico_tags = ['阿澄佳奈']
 
   desc "new nicovideo movie get"
   task :new => :environment do
@@ -125,7 +124,7 @@ namespace :niconico do
 ######################################
 # 関数定義
 ######################################
-
+  private
   def login( mail, pass )
     host = 'secure.nicovideo.jp'
     path = '/secure/login?site=niconico'

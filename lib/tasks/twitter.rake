@@ -145,6 +145,8 @@ namespace :twitter do
       Twitter.follow(f)
     end
   end
+
+  private
   
   def setting_twitter
     Twitter.configure do |config|
