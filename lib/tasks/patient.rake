@@ -21,12 +21,20 @@ namespace :patient do
         begin
           i += 1
           parameter = {:id => f.twitter_id.to_i, :since_id => f.since_id.to_i, :count => 200, :page => i}
-          users_per = Twitter.user_timeline(parameter)
+          begin
+            users_per = Twitter.user_timeline(parameter)
+          rescue
+            next
+          end
           users_tweet = users_tweet + users_per
         end while users_per.length == 200
       else
         parameter = {:id => f.twitter_id.to_i, :count => 200}
-        users_tweet = Twitter.user_timeline(parameter)
+        begin
+          users_tweet = Twitter.user_timeline(parameter)
+        rescue
+          next
+        end
       end
       if users_tweet.present?
         asumi_count = 0
