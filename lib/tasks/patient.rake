@@ -11,7 +11,7 @@ namespace :patient do
   desc "update patient level"
   task :update => :environment do
     setting_twitter
-    follower = Patient.where(:disabled => false).where(:locked => false)
+    follower = Patient.where(:disabled => false)
     follower.each do |f|
       prev_level = f.level
       parameter = {}
@@ -29,6 +29,8 @@ namespace :patient do
             f.save
             next
           end
+          f.update_attributes(:locked => false)
+          f.save
           users_tweet = users_tweet + users_per
         end while users_per.length == 200
       else
@@ -40,6 +42,8 @@ namespace :patient do
           f.save
           next
         end
+        f.update_attributes(:locked => false)
+        f.save
       end
       if users_tweet.present?
         asumi_count = 0
