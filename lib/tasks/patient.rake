@@ -21,6 +21,7 @@ namespace :patient do
         begin
           i += 1
           parameter = {:id => f.twitter_id.to_i, :since_id => f.since_id.to_i, :count => 200, :page => i}
+          users_per = []
           begin
             users_per = Twitter.user_timeline(parameter)
           rescue
