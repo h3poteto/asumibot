@@ -120,7 +120,7 @@ namespace :patient do
 
   task :change_name => :environment do
     setting_twitter
-    patients = Patient.all
+    patients = Patient.where(:locked => false)
     patients.each do |p|
       user_name = Twitter.user(p.twitter_id.to_i).screen_name
       if p.name != user_name
