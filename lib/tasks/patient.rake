@@ -127,6 +127,7 @@ namespace :patient do
         p.update_attributes(:name => user_name)
         p.save
       end
+      sleep(1)
     end
   end
 
