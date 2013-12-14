@@ -33,6 +33,7 @@ namespace :twitter do
       movies = TodayNiconico.where(:used => false).sample
     end
     
+    next if movies.blank?
     next if !confirm_db(movies.url)
     # つぶやき
     movie_info = "【" + movies.title + "】" + movies.url
