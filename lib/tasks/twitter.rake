@@ -140,7 +140,8 @@ namespace :twitter do
     setting_twitter
     follower = Twitter.follower_ids().ids
     friend = Twitter.friend_ids().ids
-    fan = follower - friend
+    outgoing = Twitter.friendships_outgoing().ids
+    fan = follower - friend - outgoing
     fan.each do |f|
       Twitter.follow(f)
     end
