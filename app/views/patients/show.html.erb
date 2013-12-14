@@ -29,7 +29,11 @@
 	</td>
 	<td class="last">
 	  <b>順位</b><br />
-	  <%= @ranking %>位
+	  <% if @ranking.present? %>
+	    <%= @ranking %>位
+	  <% else %>
+	    圏外
+	  <% end %>
 	</td>
       </tr>
     </tbody>

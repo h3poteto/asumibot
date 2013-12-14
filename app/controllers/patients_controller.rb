@@ -3,7 +3,7 @@ class PatientsController < ApplicationController
   # GET /patients
   # GET /patients.json
   def index
-    @patients = Patient.where(:locked => false).where(:disabled => false).order("level DESC").take(10)
+    @patients = Patient.rankings.take(10)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,6 +16,9 @@ class PatientsController < ApplicationController
   def show
     
     @patient = Patient.find(params[:id])
+    if @patient.protect
+      redirect_to :action => :index and return
+    end
     @search = AsumiTweet.where(patient_id: params[:id]).search(params[:q])
     if params[:day].present?
       from = Time.mktime(Date.today.year, Date.today.month, params[:day].to_i)
@@ -25,7 +28,7 @@ class PatientsController < ApplicationController
       @asumi_tweet = @search.result.order("tweet_time DESC").page(params[:page]).per(25)
     end
 
-    @all_patients = Patient.where(:locked => false).where(:disabled => false).order("level DESC")
+    @all_patients = Patient.rankings
     @all_patients.each_with_index do |p, i|
       @ranking = i + 1 if p.id == params[:id].to_i
     end

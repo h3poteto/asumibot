@@ -77,14 +77,11 @@ namespace :patient do
 
   task :tweet => :environment do
     setting_twitter
-    patient = Patient.where(:locked => false).where(:disabled => false).order("level DESC")
+    patient = Patient.avail_rankings
     patient.each_with_index do |p, i|
-      next if p.asumi_count.blank?
-      if p.asumi_count > 0 && p.prev_level.present? && p.tweet_count >= 10 && p.level >= 30
-        tweet = "@" + p.name + " 今日の阿済度は" + p.level.to_s + "%だよ。"
-        tweet = tweet + "フォロワーの中で" + (i+1).to_s + "位。" + p.asumi_word.to_s + "語の阿澄単語があったよ。"
-        Twitter.update(tweet)
-      end
+      tweet = "@" + p.name + " 今日の阿済度は" + p.level.to_s + "%だよ。"
+      tweet = tweet + "フォロワーの中で" + (i+1).to_s + "位。" + p.asumi_word.to_s + "語の阿澄単語があったよ。"
+      Twitter.update(tweet)
     end
   end
 
