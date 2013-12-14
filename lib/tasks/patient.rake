@@ -119,11 +119,10 @@ namespace :patient do
     setting_twitter
     patients = Patient.where(:locked => false)
     patients.each do |p|
-      user_name = Twitter.user(p.twitter_id.to_i).screen_name
-      if p.name != user_name
-        p.update_attributes(:name => user_name)
-        p.save
-      end
+      user = Twitter.user(p.twitter_id.to_i)
+      user_name = user.screen_name
+      p.update_attributes(:name => user_name, :protect => user.protected)
+      p.save
       sleep(1)
     end
   end
