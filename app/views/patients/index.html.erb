@@ -13,7 +13,7 @@
 	      <div class="name"><%= link_to(p.nickname, patient_path(p)) %></div>
 	    </td>
 	    <td class="profile">
-	      <div class="description"><%= p.asumi_tweets.sample(1).first.tweet %>
+	      <div class="description"><%= p.asumi_tweets.sample(1).first.tweet if p.asumi_tweets.present? %>
 		<div class="hover_profile none"><%= p.description %></div>
 		<div class="screen_name">@<%= p.name %></div>
 	      </div>
