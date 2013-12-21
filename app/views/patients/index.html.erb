@@ -27,7 +27,7 @@
     <div class="month_ranking">
     <h5 class="dark_blue">12月のランキング</h5>
       <table>
-      <% @month_ranking.each_with_index do |p,i| %>
+      <% @month_ranking[0..19].each_with_index do |p,i| %>
 	<tr>
 	  <th><%= i+1%>位</th>
 	  <td><%= link_to(p.name, patient_path(p.id)) %></td>

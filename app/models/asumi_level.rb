@@ -14,8 +14,11 @@ class AsumiLevel < ActiveRecord::Base
         month_tweet += l.tweet_count
         month_asumi += l.asumi_count
       end
-      month_level = month_asumi * 100 / month_tweet if month_tweet != 0
+      month_level = month_asumi * 100 / month_tweet if month_tweet != 0 && month_tweet > 20
       rankings.push(user_info.new(p.id, p.name, month_level))
+    end
+    rankings.sort! do |a,b|
+      b.level <=> a.level
     end
     return rankings
   end
