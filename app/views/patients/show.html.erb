@@ -1,13 +1,10 @@
-<p id="notice"><%= notice %></p>
-
 <h4><%= link_to @patient.name + "さんの阿澄病レポート", patient_path(@patient) %></h4>
 
 <div class="update_time">
   <%=l @patient.updated_at %>更新
 </div>
-
+<div id="patient_show">
 <div class="left_box">
-
   <div id="chart"></div>
   <table class="report center">
     <tbody>
@@ -115,4 +112,5 @@
 <div class="clearfix"></div>
 <div class="center">
   <%= paginate @asumi_tweet, :window => 2 %>
+</div>
 </div>

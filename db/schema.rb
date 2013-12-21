@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131214085202) do
+ActiveRecord::Schema.define(:version => 20131214185439) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -98,6 +98,12 @@ ActiveRecord::Schema.define(:version => 20131214085202) do
   create_table "patients", :force => true do |t|
     t.string   "twitter_id"
     t.string   "name"
+    t.string   "nickname"
+    t.text     "description"
+    t.string   "icon"
+    t.integer  "all_tweet"
+    t.integer  "friend"
+    t.integer  "follower"
     t.integer  "level"
     t.integer  "asumi_count"
     t.integer  "tweet_count"

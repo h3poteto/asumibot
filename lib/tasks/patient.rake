@@ -26,11 +26,9 @@ namespace :patient do
             users_per = Twitter.user_timeline(parameter)
           rescue
             f.update_attributes(:locked => true)
-            f.save
             next
           end
           f.update_attributes(:locked => false)
-          f.save
           users_tweet = users_tweet + users_per
         end while users_per.length == 200
       else
@@ -39,11 +37,9 @@ namespace :patient do
           users_tweet = Twitter.user_timeline(parameter)
         rescue
           f.update_attributes(:locked => true)
-          f.save
           next
         end
         f.update_attributes(:locked => false)
-        f.save
       end
       if users_tweet.present?
         asumi_count = 0
@@ -102,14 +98,14 @@ namespace :patient do
       end
       if !exist_flg
         p.update_attributes(:disabled => true)
-        p.save
       end
     end
 
     follower.each do |f|
       already = Patient.where(:twitter_id => f.to_s)
       if already.blank?
-        patient = Patient.new(:twitter_id => f.to_s, :name => Twitter.user(f).screen_name)
+        user = Twitter.user(f)
+        patient = Patient.new(twitter_id: f.to_s, name: user.screen_name, nickname: user.name, description: user.description, icon: user.profile_image_url, friend: user.friends_count, follower: user.followers_count, all_tweet: user.statuses_count, protect: user.protected )
         patient.save
       end
     end
@@ -125,9 +121,7 @@ namespace :patient do
         p.update_attributes(:locked => true )
         next
       end
-      user_name = user.screen_name
-      p.update_attributes(:name => user_name, :protect => user.protected)
-      p.save
+      p.update_attributes(name: user.screen_name, protect: user.protected, nickname: user.name, description: user.description, icon: user.profile_image_url, friend: user.friends_count, follower: user.followers_count, all_tweet: user.statuses_count )
       sleep(1)
     end
   end

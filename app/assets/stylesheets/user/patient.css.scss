@@ -3,9 +3,75 @@
     right: 20px;
     top: 10px;
 }
-
 .left_box{
     float: left;
+}
+.right_box{
+    margin-left: 682px;
+}
+
+#patient_ranking{
+    #ranking{
+	margin-top:40px;
+	.ranking_tbl{
+	    cursor: pointer;
+	    tr{
+		position: relative;
+	    }
+	    th{
+		width: 50px;
+		.ranking_1{
+		    color: rgb(255,170,0);
+		    font-size: 24px;
+		}
+		.ranking_2{
+		    color: rgb(100,100,192);
+		    font-size: 20px;
+		}
+		.ranking_3{
+		    color: rgb( 196, 112, 34);
+		    font-size: 18px;
+		}
+	    }
+	    td.icon{
+		width: 100px;
+		text-align:center;
+	    }
+	    td.profile{
+		.description{
+		    background: rgba(230,230,230,0.7);
+		    border: 1px solid rgb(220,220,220);
+		    border-radius: 10px;
+		    padding: 10px;
+		    width: 452px;
+		    .screen_name{
+			text-align: right;
+		    }
+		    .hover_profile{
+			position: absolute;
+			z-index: 10;
+			background: rgba(0,0,0,0.5);
+			color: rgb(255,255,255);
+			padding: 10px;
+			width: 450px;
+		    }
+		}
+	    }
+	}
+    }
+    .month_ranking{
+	background: rgba(240,210,160,0.7);
+	padding: 10px;
+	border-radius: 10px;
+	table{
+	    th{
+		width: 50px;
+	    }
+	}
+    }
+}
+
+#patient_show{
     #main_tweet{
 	background: rgba(255,255,255,1.0);
 	z-index:1;
@@ -27,7 +93,7 @@
 		    color: rgba(150,150,150,1.0);
 		}
 	    }
- 	}
+	}
     }
     #chart{
 	margin-bottom: 10px;
@@ -50,9 +116,6 @@
 	    border-right: 3px solid rgb(150,200,250);
 	}
     }
-}
-.right_box{
-    margin-left: 682px;
 
     .content_area{
 	padding: 10px;

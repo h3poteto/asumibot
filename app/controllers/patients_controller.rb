@@ -3,8 +3,8 @@ class PatientsController < ApplicationController
   # GET /patients
   # GET /patients.json
   def index
-    @patients = Patient.rankings.take(10)
-
+    @patients = Patient.includes(:asumi_tweets).rankings.take(10)
+    @month_ranking = AsumiLevel.month_rankings
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @patients }
@@ -14,7 +14,6 @@ class PatientsController < ApplicationController
   # GET /patients/1
   # GET /patients/1.json
   def show
-    
     @patient = Patient.find(params[:id])
     if @patient.protect
       redirect_to :action => :index and return

@@ -1,7 +1,40 @@
-<h1>阿澄度ランキング</h1>
-
-<% @patients.each_with_index do |p, i| %>
-  <div>
-    <%= i + 1 %>位 <%= link_to p.name, patient_path(p) %> <%= p.level %>%
+<h4>阿澄度ランキング</h4>
+<div class="update_time">
+  <%=l @patients.first.updated_at %>更新
+</div>
+<div id="patient_ranking">
+  <div class="left_box">
+    <div id="ranking">
+      <table class="ranking_tbl">
+	<% @patients.each_with_index do |p, i| %>
+	  <tr onclick="location.href='<%= patient_path(p) %>'">
+	    <th><span class='<%= "ranking_#{i+1}" %>'><%= i + 1 %>位</span><br /><span class="gray">(Level<%= p.level %>)</span></th>
+	    <td class="icon"><%= image_tag(p.icon) %>
+	      <div class="name"><%= link_to(p.nickname, patient_path(p)) %></div>
+	    </td>
+	    <td class="profile">
+	      <div class="description"><%= p.asumi_tweets.sample(1).first.tweet %>
+		<div class="hover_profile none"><%= p.description %></div>
+		<div class="screen_name">@<%= p.name %></div>
+	      </div>
+	    </td>
+	  </tr>
+	<% end %>
+      </table>
+    </div>
   </div>
-<% end %>
+  <div class="right_box">
+    <div class="month_ranking">
+    <h5 class="dark_blue">12月のランキング</h5>
+      <table>
+      <% @month_ranking.each_with_index do |p,i| %>
+	<tr>
+	  <th><%= i+1%>位</th>
+	  <td><%= link_to(p.name, patient_path(p.id)) %></td>
+	</tr>
+      <% end %>
+      </table>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</div>

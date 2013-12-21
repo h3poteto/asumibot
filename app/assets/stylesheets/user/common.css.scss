@@ -32,9 +32,25 @@
     text-align: right;
 }
 
+// color
+.dark_blue{
+    color: rgb(0,0,128);
+}
+.light_gray{
+    color: rgb(211, 211,211);
+}
+.gray{
+    color: rgb(128,128,128);
+}
+
 footer{
     margin: 10px 0 0 20px;
     a{
 	color: rgba(0, 100, 255, 1.0);
     }
+}
+
+// display
+.none{
+    display: none;
 }

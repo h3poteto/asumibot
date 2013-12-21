@@ -6,10 +6,10 @@
 	<span class="icon-bar"></span>
 	<span class="icon-bar"></span>
       </a>
-      <a class="brand" href="#">阿澄病なう</a>
+      <%= link_to("阿澄病なう", root_path, class: "brand") %>
       <div class="container nav-collapse">
 	<ul class="nav">
-	  <li><%= link_to "ランキング", root_path  %></li>
+	  <li><%= link_to "ランキング", patients_path  %></li>
 	</ul>
       </div><!--/.nav-collapse -->
     </div>
