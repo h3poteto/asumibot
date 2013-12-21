@@ -19,7 +19,7 @@
 		position: relative;
 	    }
 	    th{
-		width: 50px;
+		width: 80px;
 		.ranking_1{
 		    color: rgb(255,170,0);
 		    font-size: 24px;
@@ -32,12 +32,16 @@
 		    color: rgb( 196, 112, 34);
 		    font-size: 18px;
 		}
+		.updown{
+		    width: 25px;
+		    margin-left: 10px;
+		}
 	    }
 	    td.icon{
 		width: 120px;
 		text-align:center;
 		.name{
-		    margin:10px 10px;
+		    margin:10px 5px;
 		}
 	    }
 	    td.profile{
@@ -46,7 +50,7 @@
 		    border: 1px solid rgb(220,220,220);
 		    border-radius: 10px;
 		    padding: 10px;
-		    width: 452px;
+		    width: 442px;
 		    margin-bottom: 20px;
 		    .screen_name{
 			text-align: right;
@@ -68,8 +72,21 @@
 	padding: 10px;
 	border-radius: 10px;
 	table{
+	    line-height: 1.7em;
 	    th{
-		width: 50px;
+		width: 120px;
+		.ranking_1{
+		    color: rgb(255,170,0);
+		    font-size: 18px;
+		}
+		.ranking_2{
+		    color: rgb(100,100,192);
+		    font-size: 16px;
+		}
+		.ranking_3{
+		    color: rgb( 196, 112, 34);
+		    font-size: 14px;
+		}
 	    }
 	}
     }

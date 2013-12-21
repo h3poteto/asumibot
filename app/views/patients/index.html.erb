@@ -8,7 +8,15 @@
       <table class="ranking_tbl">
 	<% @patients.each_with_index do |p, i| %>
 	  <tr onclick="location.href='<%= patient_path(p) %>'">
-	    <th><span class='<%= "ranking_#{i+1}" %>'><%= i + 1 %>位</span><br /><span class="gray">(Level<%= p.level %>)</span></th>
+	    <% if p.level > p.prev_level %>
+	      <% updown = "rankup.png" %>
+	    <% elsif p.level < p.prev_level %>
+	      <% updown = "rankdown.png" %>
+	    <% else %>
+	      <% updown =  nil %>
+	    <% end %>
+	    <th><span class='<%= "ranking_#{i+1}" %>'><%= i + 1 %>位</span><%= image_tag(updown, class: "updown") if updown.present? %><br />
+	      <span class="gray">(阿澄度<%= p.level %>)</span></th>
 	    <td class="icon"><%= image_tag(p.icon) %>
 	      <div class="name"><%= link_to(p.nickname, patient_path(p)) %></div>
 	    </td>
@@ -29,8 +37,8 @@
       <table>
       <% @month_ranking[0..19].each_with_index do |p,i| %>
 	<tr>
-	  <th><%= i+1%>位</th>
-	  <td><%= link_to(p.name, patient_path(p.id)) %></td>
+	  <th><span class='<%= "ranking_#{i+1}" %>'><%= i+1%>位</span><span class="gray">（阿澄度<%= p.level %>）</span></th>
+	  <td><%= link_to("@" + p.name, patient_path(p.id)) %></td>
 	</tr>
       <% end %>
       </table>
