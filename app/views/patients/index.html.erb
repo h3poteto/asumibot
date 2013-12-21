@@ -8,9 +8,9 @@
       <table class="ranking_tbl">
 	<% @patients.each_with_index do |p, i| %>
 	  <tr onclick="location.href='<%= patient_path(p) %>'">
-	    <% if p.level > p.prev_level %>
+	    <% if p.prev_level && p.level > p.prev_level %>
 	      <% updown = "rankup.png" %>
-	    <% elsif p.level < p.prev_level %>
+	    <% elsif p.prev_level && p.level < p.prev_level %>
 	      <% updown = "rankdown.png" %>
 	    <% else %>
 	      <% updown =  nil %>
