@@ -13,7 +13,6 @@ class gon.Patients
         if ofLeft > ( contentWidth - popupWidth )
           ofLeft = ofLeft - popupWidth
 
-        $hover.css("top", ofTop)
         $hover.css("left", ofLeft)
         $hover.fadeIn(300)
       ,(e)->

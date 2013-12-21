@@ -34,8 +34,11 @@
 		}
 	    }
 	    td.icon{
-		width: 100px;
+		width: 120px;
 		text-align:center;
+		.name{
+		    margin:10px 10px;
+		}
 	    }
 	    td.profile{
 		.description{
@@ -44,6 +47,7 @@
 		    border-radius: 10px;
 		    padding: 10px;
 		    width: 452px;
+		    margin-bottom: 20px;
 		    .screen_name{
 			text-align: right;
 		    }
