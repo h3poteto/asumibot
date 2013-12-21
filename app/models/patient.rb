@@ -10,11 +10,11 @@ class Patient < ActiveRecord::Base
 
 
   def self.rankings
-    rank = Patient.where(disabled: false).where(locked: false).where(protect: false).where("tweet_count >?", 20).order("level DESC")
+    rank = Patient.where(disabled: false).where(locked: false).where(protect: false).where("tweet_count >?", 10).order("level DESC")
     return rank
   end
   def self.avail_rankings
-    rank = Patient.where(disabled: false).where(locked: false).where(protect: false).where("tweet_count >?", 20).where("level >?", 20).order("level DESC")
+    rank = Patient.where(disabled: false).where(locked: false).where(protect: false).where("tweet_count >?", 10).where("level >?", 20).order("level DESC")
     return rank
   end
 
