@@ -1,7 +1,7 @@
 <h4><%= link_to @patient.name + "さんの阿澄病レポート", patient_path(@patient) %></h4>
 
 <div class="update_time">
-  <%=l @patient.updated_at %>更新
+  <%=l @patient.updated_at.beginning_of_day %>更新
 </div>
 <div id="patient_show">
 <div class="left_box">
