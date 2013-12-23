@@ -1,6 +1,6 @@
 <h4>阿澄度ランキング</h4>
 <div class="update_time">
-  <%=l @patients.first.updated_at.beginning_of_day %>更新
+  <%=l @patients.first.updated_at.beginning_of_day if @patients.present? %>更新
 </div>
 <div id="patient_ranking">
   <div class="left_box">

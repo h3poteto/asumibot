@@ -1,9 +1,32 @@
 defaults: &defaults
   user_name: 'asumi_bot'
+  site:
+    http: 'http://www.asumi.ch/'
 development:
   <<: *defaults
+  nicovideo:
+    mail_address: <%# settings.local overrides %>
+    password: <%# settings.local overrides %>
+  twitter:
+    user_name: <%# settings.local overrides %>
+    ## アプリ登録時に取得したCONSUMER_KEY/CONSUMER_SECRET
+    consumer_key: <%# settings.local overrides %>
+    consumer_secret: <%# settings.local overrides %>
+    ## irbで取得したAccess Token/Access Secret
+    oauth_token: <%# settings.local overrides %>
+    oauth_token_secret: <%# settings.local overrides %>
 test:
   <<: *defaults
 production:
   <<: *defaults
-  
+  nicovideo:
+    mail_address: <%# settings.local overrides %>
+    password: <%# settings.local overrides %>
+  twitter:
+    user_name: <%# settings.local overrides %>
+    ## アプリ登録時に取得したCONSUMER_KEY/CONSUMER_SECRET
+    consumer_key: <%# settings.local overrides %>
+    consumer_secret: <%# settings.local overrides %>
+    ## irbで取得したAccess Token/Access Secret
+    oauth_token: <%# settings.local overrides %>
+    oauth_token_secret: <%# settings.local overrides %>  

@@ -76,7 +76,8 @@ namespace :patient do
     patient = Patient.avail_rankings
     patient.each_with_index do |p, i|
       tweet = "@" + p.name + " 今日の阿済度は" + p.level.to_s + "%だよ。"
-      tweet = tweet + "フォロワーの中で" + (i+1).to_s + "位。" + p.asumi_word.to_s + "語の阿澄単語があったよ。"
+      tweet = tweet + Settings['site']['http'] + 'patients/' + p.id.to_s
+      debugger
       Twitter.update(tweet)
     end
   end
