@@ -1,10 +1,16 @@
 class PatientsController < ApplicationController
   layout "user"
+  #caches_action :show
   # GET /patients
   # GET /patients.json
   def index
     @patients = Patient.includes(:asumi_tweets).rankings.take(10)
     @month_ranking = AsumiLevel.month_rankings
+    @prev_rank = Patient.avail_prev_rankings
+    @prev_rank_index = []
+    @patients.each_with_index do |p|
+      @prev_rank_index.push(@prev_rank.index(p))
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @patients }

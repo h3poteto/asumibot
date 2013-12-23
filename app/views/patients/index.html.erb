@@ -8,12 +8,12 @@
       <table class="ranking_tbl">
 	<% @patients.each_with_index do |p, i| %>
 	  <tr onclick="location.href='<%= patient_path(p) %>'">
-	    <% if p.prev_level && p.level > p.prev_level %>
+	    <% if i < @prev_rank_index[i] %>
 	      <% updown = "rankup.png" %>
-	    <% elsif p.prev_level && p.level < p.prev_level %>
+	    <% elsif i > @prev_rank_index[i] %>
 	      <% updown = "rankdown.png" %>
 	    <% else %>
-	      <% updown =  nil %>
+	      <% updown =  "normal.png" %>
 	    <% end %>
 	    <th><span class='<%= "ranking_#{i+1}" %>'><%= i + 1 %>位</span><%= image_tag(updown, class: "updown") if updown.present? %><br />
 	      <span class="gray">(阿澄度<%= p.level %>)</span></th>

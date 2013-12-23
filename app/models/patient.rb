@@ -18,4 +18,8 @@ class Patient < ActiveRecord::Base
     return rank
   end
 
+  def self.avail_prev_rankings
+    prev_rank = Patient.where(disabled: false).where(locked: false).where(protect: false).order("prev_level DESC")
+    return prev_rank
+  end
 end

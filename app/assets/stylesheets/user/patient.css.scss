@@ -33,12 +33,13 @@
 		    font-size: 18px;
 		}
 		.updown{
-		    width: 25px;
+		    width: 20px;
 		    margin-left: 10px;
 		}
 	    }
 	    td.icon{
 		width: 120px;
+		max-width: 120px;
 		text-align:center;
 		.name{
 		    margin:10px 5px;
