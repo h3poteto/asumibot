@@ -9,7 +9,6 @@ namespace :userstream do
   task :reply => :environment do
     setting_tweetstream
     setting_twitter
-    
     client = TweetStream::Client.new
     client.userstream do | status |
       if (status.in_reply_to_user_id != nil) && (!status.text.include?("RT")) && (!status.text.include?("QT")) && (status.user.screen_name != Settings['twitter']['user_name']) && (status.text.include?("@"+Settings['twitter']['user_name']))
@@ -91,18 +90,6 @@ namespace :userstream do
           random = rand(4)
           if random == 1
             movies = YoutubeMovie.where(:disabled => false).sample
-            user_id = men.user.id
-            db_user = User.where(:twitter_id => user_id.to_i ).first
-            if db_user.blank?
-              db_user = User.new
-              db_user.youtube_movies.push(movies)
-              db_user.twitter_id = user_id.to_i
-              db_user.screen_name = user_name
-              db_user.save
-            else
-              movies.users.push(db_user)
-              movies.save
-            end
           else
             movies = NiconicoMovie.where(:disabled => false).sample
           end
