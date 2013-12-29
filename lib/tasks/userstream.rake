@@ -10,6 +10,46 @@ namespace :userstream do
     setting_tweetstream
     setting_twitter
     client = TweetStream::Client.new
+    
+    ## for fav event
+    client.on_event(:favorite) do |event|
+      if event[:event] == "favorite"
+        # search user
+        user_id = event[:source][:id]
+        user = User.where(twitter_id: user_id)
+        if user.blank?
+          new_user = User.new(screen_name: event[:source][:screen_name], twitter_id: user_id.to_i)
+          new_user.save
+          user = new_user
+        else
+          user = user.first
+        end
+
+        # find url
+        text = event[:target_object][:text]
+        expand_url = ""
+        if text.include?("https:")
+          http_url = text.gsub('https:','http:')
+          expand_url = UrlExpander::Client.expand(http_url) if http_url.include?('http:')
+        else
+          expand_url = UrlExpander::Client.expand(text) if text.include?('http:')
+        end
+
+        # search object
+        if expand_url.include?("youtube")
+          movie_object = YoutubeMovie.where(url: expand_url).first
+        elsif expand_url.include?("nicovideo")
+          movie_object = NiconicoMovie.where(url: expand_url).first
+        end
+        # add object
+        if movie_object.present?
+          movie_object.fav_users.push(user)
+          movie_object.save!
+        end
+      end
+    end
+
+    ## read timeline
     client.userstream do | status |
       if (status.in_reply_to_user_id != nil) && (!status.text.include?("RT")) && (!status.text.include?("QT")) && (status.user.screen_name != Settings['twitter']['user_name']) && (status.text.include?("@"+Settings['twitter']['user_name']))
         puts status.user.screen_name
@@ -99,6 +139,45 @@ namespace :userstream do
         movie_info = "【" + movies.title + "】" + movies.url
         tweet = ReplySerif.all.sample.word + " \n"
         update("@" + user_name + " " + tweet + movie_info)
+
+      elsif ((status.text.include?("RT") || status.text.include?("QT")) && (status.text.include?("@"+Settings['twitter']['user_name'])) && (status.user.screen_name != Settings['twitter']['user_name']))
+        ## for RT
+        # search user
+        user_id = status.user.id.to_i
+        user = User.where(twitter_id: user_id)
+        if user.blank?
+          new_user = User.new(screen_name: status.user.screen_name, twitter_id: user_id)
+          new_user.save
+          user = new_user
+        else
+          user = user.first
+        end
+        
+        # find url
+        text = status.text
+        
+        expand_url = ""
+        if text.include?("https:")
+          http_url = text.gsub('https:','http:')
+          expand_url = UrlExpander::Client.expand(http_url) if http_url.include?('http:')
+        else
+          expand_url = UrlExpander::Client.expand(text) if text.include?('http:')
+        end
+        # search object
+        if expand_url.include?("youtube")
+          movie_object = YoutubeMovie.where(url: expand_url).first
+        elsif expand_url.include?("nicovideo")
+          movie_object = NiconicoMovie.where(url: expand_url).first
+        end
+        # add object
+        debugger
+        p movie_object
+        if movie_object.present?
+          movie_object.rt_users.push(user)
+          movie_object.save!
+        end
+        debugger
+        p movie_object
       end
     end
   end
