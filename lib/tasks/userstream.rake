@@ -170,14 +170,10 @@ namespace :userstream do
           movie_object = NiconicoMovie.where(url: expand_url).first
         end
         # add object
-        debugger
-        p movie_object
         if movie_object.present?
           movie_object.rt_users.push(user)
           movie_object.save!
         end
-        debugger
-        p movie_object
       end
     end
   end
