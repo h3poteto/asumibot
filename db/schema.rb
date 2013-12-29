@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131229135228) do
+ActiveRecord::Schema.define(:version => 20131229153140) do
 
   create_table "admins", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -110,7 +110,7 @@ ActiveRecord::Schema.define(:version => 20131229135228) do
   end
 
   create_table "patients", :force => true do |t|
-    t.string   "twitter_id"
+    t.integer  "twitter_id",  :limit => 8
     t.string   "name"
     t.string   "nickname"
     t.text     "description"
@@ -124,12 +124,12 @@ ActiveRecord::Schema.define(:version => 20131229135228) do
     t.integer  "asumi_word"
     t.integer  "prev_level"
     t.string   "since_id"
-    t.boolean  "clear",       :default => false, :null => false
-    t.boolean  "protect",                        :null => false
-    t.boolean  "locked",      :default => false, :null => false
-    t.boolean  "disabled",    :default => false, :null => false
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.boolean  "clear",                    :default => false, :null => false
+    t.boolean  "protect",                                     :null => false
+    t.boolean  "locked",                   :default => false, :null => false
+    t.boolean  "disabled",                 :default => false, :null => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
   end
 
   create_table "popular_serifs", :force => true do |t|

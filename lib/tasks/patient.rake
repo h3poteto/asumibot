@@ -95,7 +95,7 @@ namespace :patient do
     patients.each do |p|
       exist_flg = false
       follower.each do |f|
-        exist_flg = true if f.to_s == p.twitter_id
+        exist_flg = true if f.to_i == p.twitter_id.to_i
       end
       if !exist_flg
         p.update_attributes(:disabled => true)
@@ -103,10 +103,10 @@ namespace :patient do
     end
 
     follower.each do |f|
-      already = Patient.where(:twitter_id => f.to_s)
+      already = Patient.where(:twitter_id => f.to_i)
       if already.blank?
         user = Twitter.user(f)
-        patient = Patient.new(twitter_id: f.to_s, name: user.screen_name, nickname: user.name, description: user.description, icon: user.profile_image_url, friend: user.friends_count, follower: user.followers_count, all_tweet: user.statuses_count, protect: user.protected )
+        patient = Patient.new(twitter_id: f.to_i, name: user.screen_name, nickname: user.name, description: user.description, icon: user.profile_image_url, friend: user.friends_count, follower: user.followers_count, all_tweet: user.statuses_count, protect: user.protected )
         patient.save
       end
     end
