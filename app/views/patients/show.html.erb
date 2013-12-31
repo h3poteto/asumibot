@@ -78,13 +78,14 @@
       <tbody>
 	<tr>
 	  <% for i in 0..(@first_day.wday - 1) do %>
-	    <td>t</td>
+	    <td></td>
 	  <% end %>
 	  <% for i in 1..(7 - @first_day.wday) do %>
 	    <td><%= link_to i, patient_path(@patient, :day => i) %></td>
 	  <% end %>
 	</tr>
-	<% for i in (8 - @first_day.wday)..@last_day.day do %>
+	
+	<% for i in 8..@last_day.day do %>
 	  <% if ( i - 1)%7 == 0 %>
 	    <tr>
 	  <% end %>
