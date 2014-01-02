@@ -5,7 +5,7 @@ class AsumiLevel < ActiveRecord::Base
 
   def self.month_rankings
     user_info = Struct.new("Patient", :id, :name, :level )
-    to = Date.tomorrow
+    to = Date.today
     from = Date.today.beginning_of_month
     patients = Patient.joins(:asumi_levels).where(:asumi_levels => {created_at: from..to }).where(disabled: false).where(locked: false).where(protect: false)
     rankings = []
@@ -14,6 +14,7 @@ class AsumiLevel < ActiveRecord::Base
       month_tweet = 0
       month_asumi = 0
       p.asumi_levels.each do |l|
+        next if l.created_at < from
         month_tweet += l.tweet_count
         month_asumi += l.asumi_count
       end
