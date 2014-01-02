@@ -1,0 +1,90 @@
+<div id="main">
+  <div id="fav">
+    <ul>
+      <% @all_fav_niconico.each do | v| %>
+	<% val = v.values.first %>
+	<% key = v.keys.first %>
+	<li>
+	  <%= link_to val.url, :target => '_blank' do %>
+	  <div class="movie">
+	    <div class="key<%= rand(4) %>"><span class="count"><%= key %></span>  fav</div>
+	    <div class="title"><%= val.title %></div>
+	    <div class="detail">
+	      <div class="description"><%= val.description %></div>
+	      <% id_s = val.url.index('watch/') %>
+	      <% id = val.url[id_s+8..100] %>
+	      <% rand = id.to_i % 4 + 1 %>
+	      <div class="url"><%= image_tag('http://tn-skr' + rand.to_s + '.smilevideo.jp/smile?i=' + id) %></div>
+	      <div class="clearfix"></div>
+	    </div>
+	  </div>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+    <ul>
+      <% @all_fav_youtube.each do | v| %>
+	<% val = v.values.first %>
+	<% key = v.keys.first %>
+	<li>
+	  <%= link_to val.url, :target => '_blank' do %>
+	  <div class="movie">
+	    <div class="key<%= rand(4) %>"><span class="count"><%= key %></span>  fav</div>
+	    <div class="title"><%= val.title %></div>
+	    <div class="detail">
+	      <div class="description"><%= val.description %></div>
+	      <% id_s = val.url.index('v=') %>
+	      <% id_e = val.url.index('&') %>
+	      <div class="url"><%= image_tag('http://i.ytimg.com/vi/' + val.url[id_s+2..id_e-1] + '/default.jpg') %></div>
+	      <div class="clearfix"></div>
+	    </div>
+	  </div>
+	  <% end %>
+        </li>
+      <% end %>
+    </ul>
+    <ul>
+      <% @all_rt_niconico.each do | v| %>
+	<% val = v.values.first %>
+	<% key = v.keys.first %>
+	<li>
+	  <%= link_to val.url, :target => '_blank' do %>
+	  <div class="movie">
+	    <div class="key<%= rand(4) %>"><span class="count"><%= key %></span>  RT</div>
+	    <div class="title"><%= val.title %></div>
+	    <div class="detail">
+	      <div class="description"><%= val.description %></div>
+	      <% id_s = val.url.index('watch/') %>
+	      <% id = val.url[id_s+8..100] %>
+	      <% rand = id.to_i % 4 + 1 %>
+	      <div class="url"><%= image_tag('http://tn-skr' + rand.to_s + '.smilevideo.jp/smile?i=' + id) %></div>
+	      <div class="clearfix"></div>
+	    </div>
+	  </div>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+    <ul>
+      <% @all_rt_youtube.each do | v| %>
+	<% val = v.values.first %>
+	<% key = v.keys.first %>
+	<li>
+	  <%= link_to val.url, :target => '_blank' do %>
+	  <div class="movie">
+	    <div class="key<%= rand(4) %>"><span class="count"><%= key %></span>  RT</div>
+	    <div class="title"><%= val.title %></div>
+	    <div class="detail">
+	      <div class="description"><%= val.description %></div>
+	      <% id_s = val.url.index('v=') %>
+	      <% id_e = val.url.index('&') %>
+	      <div class="url"><%= image_tag('http://i.ytimg.com/vi/' + val.url[id_s+2..id_e-1] + '/default.jpg') %></div>
+	      <div class="clearfix"></div>
+	    </div>
+	  </div>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

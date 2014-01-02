@@ -1,7 +1,9 @@
+# coding: utf-8
 class AsumiLevel < ActiveRecord::Base
   attr_accessible :asumi_count, :asumi_word, :patient_id, :tweet_count
   belongs_to :patient
 
+  # 一月絞り込みがない?
   def self.month_rankings
     user_info = Struct.new("Patient", :id, :name, :level )
     patients = Patient.includes(:asumi_levels).where(disabled: false).where(locked: false).where(protect: false)
