@@ -7,7 +7,7 @@ class AsumiLevel < ActiveRecord::Base
     user_info = Struct.new("Patient", :id, :name, :level )
     to = Date.today
     from = Date.today.beginning_of_month
-    patients = Patient.joins(:asumi_levels).where(:asumi_levels => {created_at: from..to }).where(disabled: false).where(locked: false).where(protect: false)
+    patients = Patient.includes(:asumi_levels).where(disabled: false).where(locked: false).where(protect: false)
     rankings = []
     patients.each do |p|
       month_level = 0

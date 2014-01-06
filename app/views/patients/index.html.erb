@@ -33,7 +33,7 @@
   </div>
   <div class="right_box">
     <div class="month_ranking">
-    <h5 class="dark_blue">12月のランキング</h5>
+    <h5 class="dark_blue"><%= Date.today.month %>月のランキング</h5>
       <table>
       <% @month_ranking[0..19].each_with_index do |p,i| %>
 	<tr>
