@@ -1,11 +1,13 @@
 #main{
     #fav{
-	ul{
-	    list-style-type: none;
-	    li{
-		display: inline-block;
+	.top_new{
+	    width: 580px;
+	}
+	table.recommend{
+	    td{
+		//display: inline-block;
 		width: 290px;
-		margin: 0 10px 25px 0;
+		padding: 0 10px 45px 10px;
 	    }
 	    a{/*リンクされた文字*/
 		color: rgb(0,0,0);
@@ -81,6 +83,14 @@
 		.detail{
 		    padding-right: 10px;
 		    padding-left: 5px;
+		    .top_description{
+			font-size: 13px;
+			float: left;
+			width: 380px;
+			line-height: 1.5em;
+			max-height: 12.0em;
+			overflow: hidden;
+		    }
 		    .description{
 			font-size: 12px;
 			float: left;
@@ -88,6 +98,11 @@
 			line-height: 1.5em;
 			max-height: 12.0em;
 			overflow: hidden;
+		    }
+		    .url_top{
+			margin-top: 0;
+			width: 180px;
+			float: right;
 		    }
 		    .url{
 			margin-top: 20px;

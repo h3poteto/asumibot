@@ -2,21 +2,29 @@ class NiconicoFavUser < ActiveRecord::Base
   belongs_to :fav_niconico, :class_name => 'NiconicoMovie', :foreign_key => :niconico_movie_id
   belongs_to :fav_user, :class_name => 'User', :foreign_key => :user_id
 
-  def self.ranking(period=nil)
-    to = Date.tomorrow
+  def self.new(period=1.week.ago)
+    to = Date.today
     if period.present?
-      ranking = self.where(created_at: period...to).order("niconico_movie_id")
+      new_rt = self.where(created_at: period...to).order("created_at DESC")
     else
-      ranking = self.order("niconico_movie_id").all
+      new_rt = self.order("created_at DESC").all
     end
-    # count
-    rank_movie = ranking.map{|r| r.niconico_movie_id }
-    ranking = rank_movie.count
-    count = []
-    ranking.each do |r|
-      movie = NiconicoMovie.find(r[0])
-      count.push({r[1]=>movie})
+    movie_ids = new_rt.map{|r| r.niconico_movie_id }
+    movie_ids.uniq!
+    count=[]
+    movie_ids.each do |id|
+      movie = NiconicoMovie.find(id)
+      count.push([movie, rt_count(id)])
     end
+    count.sort!{|a,b|
+      b[1] <=> a[1]
+    }
+    #raise count.inspect
     return count
+  end
+
+  def self.rt_count(id)
+    rt_movie = self.where(niconico_movie_id: id.to_i)
+    return rt_movie.count
   end
 end
