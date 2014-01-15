@@ -12,6 +12,11 @@
 	      <% id_s = @top_movie.url.index('v=') %>
 	      <% id_e = @top_movie.url.index('&') %>
 	      <div class="url_top"><%= image_tag('http://i.ytimg.com/vi/' + @top_movie.url[id_s+2..id_e-1] + '/hqdefault.jpg') %></div>
+	    <% else %>
+	      <% id_s = val.url.index('watch/') %>
+	      <% id = val.url[id_s+8..100] %>
+	      <% rand = id.to_i % 4 + 1 %>
+	      <div class="url"><%= image_tag('http://tn-skr' + rand.to_s + '.smilevideo.jp/smile?i=' + id) %></div>
 	    <% end %>
 	    <div class="clearfix"></div>
 	  </div>
