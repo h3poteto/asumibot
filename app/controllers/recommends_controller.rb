@@ -11,17 +11,17 @@ class RecommendsController < ApplicationController
     @first_rt_youtube = YoutubeRtUser.order("created_at DESC").first
     @first_rt_niconico = NiconicoRtUser.order("created_at DESC").first
     
-    if @first_fav_youtube.created_at > @first_fav_niconico.created_at
+    if @first_fav_youtube.created_at.to_s(:db) > @first_fav_niconico.created_at.to_s(:db)
       @top_new = @first_fav_youtube
     else
       @top_new = @first_fav_niconico
     end
     
-    if @first_rt_youtube.created_at > @top_new.created_at
+    if @first_rt_youtube.created_at.to_s(:db) > @top_new.created_at.to_s(:db)
       @top_new = @first_rt_youtube
     end
 
-    if @first_rt_niconico.created_at > @top_new.created_at
+    if @first_rt_niconico.created_at.to_s(:db) > @top_new.created_at.to_s(:db)
       @top_new = @first_rt_niconico
     end
     begin

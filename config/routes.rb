@@ -10,5 +10,5 @@ Asumibot::Application.routes.draw do
     resources :niconicomovies, :except => [:show, :destroy, :new, :create]
   end
 
-  root :to => "patients#index"
+  root :to => "recommends#index"
 end
