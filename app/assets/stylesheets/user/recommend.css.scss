@@ -3,7 +3,42 @@
 	.top_new{
 	    width: 580px;
 	}
-	table.recommend{
+	span.recent{
+	    font-size: 14px;
+	    color: rgb(255,255,255);
+	    background: rgb(170,170,170);
+	    padding: 3px 7px 3px 7px;
+	}
+	table.today_new{
+	    td{
+		font-weight: 600;
+		font-size: 13px;
+		.title{
+		    border-bottom: 1px solid rgb(230,230,230);
+		    padding: 3px 2px 5px 3px;
+		}
+		.border_color0{
+		    border-top: 3px solid rgb(255, 165, 0);
+		}
+		.border_color1{
+		    border-top: 3px solid rgb(30, 144, 255);
+		}
+		.border_color2{
+		    border-top: 3px solid rgb(255, 105, 180);
+		}
+		.border_color3{
+		    border-top: 3px solid rgb(0, 128, 128);
+		}
+		.border_color4{
+		    border-top: 3px solid rgb(184, 134, 11);
+		}
+		.today_pic{
+		    width: 100px;
+		    margin: 10px auto;
+		}
+	    }
+	}
+ 	table.recommend{
 	    td{
 		//display: inline-block;
 		width: 290px;

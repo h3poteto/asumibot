@@ -46,9 +46,9 @@ class RecommendsController < ApplicationController
       @type = "Fav"
       @number = YoutubeFavUser.where(youtube_movie_id: @top_new.youtube_movie_id).length
     end
+    @new_youtube = TodayYoutube.all
+    @new_niconico = TodayNiconico.all
+    @today_movie = @new_youtube + @new_niconico
   end
-
-  @new_youtube = TodayYoutube.all.sample(4)
-  @new_niconico = TodayNiconico.all.sample(4)
 
 end

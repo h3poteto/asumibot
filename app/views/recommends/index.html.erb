@@ -26,6 +26,40 @@
 	</td>
       </tr>
       <tr>
+	<td colspan="3">
+	  <span class="recent">新着</span>
+	</td>
+      </tr>
+      <tr>
+	<td colspan="3">
+	  <table class="today_new">
+	    <% @today_movie.each_with_index do |movie, i| %>
+	      <% if i%4 == 0 %>
+		<tr>
+	      <% end %>
+	      <td>
+		<%= link_to movie.url, :target => "_blank" do %>
+		<div class="title border_color<%= rand(4) %>"><%= movie.title %></div>
+		<% if movie.kind_of?(TodayNiconico) %>
+		  <% id_s = movie.url.index('watch/') %>
+		  <% id = movie.url[id_s+8..100] %>
+		  <% rand = id.to_i % 4 + 1 %>
+		  <div class="today_pic"><%= image_tag('http://tn-skr' + rand.to_s + '.smilevideo.jp/smile?i=' + id) %></div>
+		<% elsif movie.kind_of?(TodayYoutube) %>
+		  <% id_s = movie.url.index('v=') %>
+		  <% id_e = movie.url.index('&') %>
+		  <div class="today_pic"><%= image_tag('http://i.ytimg.com/vi/' + movie.url[id_s+2..id_e-1] + '/default.jpg') %></div>
+		<% end %>
+		<% end %>
+	      </td>
+	      <% if (i+1)%4 == 0%>
+		</tr>
+              <% end %>
+	    <% end %>
+	  </table>
+	</td>
+      </tr>
+      <tr>
 	<% @new_rt_youtube.each do |v| %>
 	  <% val = v[0] %>
 	  <% key = v[1] %>
