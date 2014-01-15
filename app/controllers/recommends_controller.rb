@@ -24,16 +24,27 @@ class RecommendsController < ApplicationController
     if @first_rt_niconico.created_at.to_s(:db) > @top_new.created_at.to_s(:db)
       @top_new = @first_rt_niconico
     end
-    begin
-      if @top_new.niconico_movie_id.present?
-        @top_movie = NiconicoMovie.find(@top_new.niconico_movie_id)
-        @movie_type = "nicovideo"
-      end
-    rescue
-      if @top_new.youtube_movie_id.present?
-        @top_movie = YoutubeMovie.find(@top_new.youtube_movie_id)
-        @movie_type = "youtube"
-      end
+
+    if @top_new.kind_of?(NiconicoFavUser) || @top_new.kind_of?(NiconicoRtUser)
+      @top_movie = NiconicoMovie.find(@top_new.niconico_movie_id)
+      @movie_type = "nicovideo"
+    elsif @top_new.kind_of?(YoutubeFavUser) || @top_new.kind_of?(YoutubeRtUser)
+      @top_movie = YoutubeMovie.find(@top_new.youtube_movie_id)
+      @movie_type = "youtube"
+    end
+
+    if @top_new.kind_of?(NiconicoFavUser)
+      @type = "Fav"
+      @number = NiconicoFavUser.where(niconico_movie_id: @top_new.niconico_movie_id).length
+    elsif @top_new.kind_of?(NiconicoRtUser)
+      @type = "RT"
+      @number = NiconicoRtUser.where(niconico_movie_id: @top_new.niconico_movie_id).length
+    elsif @top_new.kind_of?(YoutubeRtUser)
+      @type = "RT"
+      @number = YoutubeRtUser.where(youtube_movie_id: @top_new.youtube_movie_id).length
+    elsif @top_new.kind_of?(YoutubeFavUser)
+      @type = "Fav"
+      @number = YoutubeFavUser.where(youtube_movie_id: @top_new.youtube_movie_id).length
     end
   end
 
