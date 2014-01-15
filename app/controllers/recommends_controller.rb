@@ -1,10 +1,10 @@
 class RecommendsController < ApplicationController
   layout "user"
   def index
-    @new_fav_youtube = YoutubeFavUser.new().take(3)
-    @new_fav_niconico = NiconicoFavUser.new().take(3)
-    @new_rt_youtube = YoutubeRtUser.new().take(3)
-    @new_rt_niconico = NiconicoRtUser.new().take(3)
+    @new_fav_youtube = YoutubeFavUser.recent(2.week.ago).take(3)
+    @new_fav_niconico = NiconicoFavUser.recent(2.week.ago).take(3)
+    @new_rt_youtube = YoutubeRtUser.recent(2.week.ago).take(3)
+    @new_rt_niconico = NiconicoRtUser.recent(2.week.ago).take(3)
 
     @first_fav_youtube = YoutubeFavUser.order("created_at DESC").first
     @first_fav_niconico = NiconicoFavUser.order("created_at DESC").first

@@ -2,7 +2,7 @@ class NiconicoFavUser < ActiveRecord::Base
   belongs_to :fav_niconico, :class_name => 'NiconicoMovie', :foreign_key => :niconico_movie_id
   belongs_to :fav_user, :class_name => 'User', :foreign_key => :user_id
 
-  def self.new(period=1.week.ago)
+  def self.recent(period=1.week.ago)
     to = Date.today
     if period.present?
       new_rt = self.where(created_at: period...to).order("created_at DESC")
