@@ -2,7 +2,7 @@
   <div id="fav">
     <table class="recommend">
       <tr>
-	<td class="movie" colspan="2">
+	<td class="movie top" colspan="2">
 	  <%= link_to @top_movie.url, :target => '_blank' do %>
 	  <div class="key<%= rand(4) %>"><span class="count"><%= @number %></span>  <%= @type %></div>
 	  <div class="title"><%= @top_movie.title %></div>
@@ -22,41 +22,14 @@
 	  </div>
 	  <% end %>
 	</td>
-	<td>
-	</td>
-      </tr>
-      <tr>
-	<td colspan="3">
-	  <span class="recent">新着</span>
-	</td>
-      </tr>
-      <tr>
-	<td colspan="3">
-	  <table class="today_new">
-	    <% @today_movie.each_with_index do |movie, i| %>
-	      <% if i%4 == 0 %>
-		<tr>
-	      <% end %>
-	      <td>
-		<%= link_to movie.url, :target => "_blank" do %>
-		<div class="title border_color<%= rand(4) %>"><%= movie.title %></div>
-		<% if movie.kind_of?(TodayNiconico) %>
-		  <% id_s = movie.url.index('watch/') %>
-		  <% id = movie.url[id_s+8..100] %>
-		  <% rand = id.to_i % 4 + 1 %>
-		  <div class="today_pic"><%= image_tag('http://tn-skr' + rand.to_s + '.smilevideo.jp/smile?i=' + id) %></div>
-		<% elsif movie.kind_of?(TodayYoutube) %>
-		  <% id_s = movie.url.index('v=') %>
-		  <% id_e = movie.url.index('&') %>
-		  <div class="today_pic"><%= image_tag('http://i.ytimg.com/vi/' + movie.url[id_s+2..id_e-1] + '/default.jpg') %></div>
-		<% end %>
-		<% end %>
-	      </td>
-	      <% if (i+1)%4 == 0%>
-		</tr>
-              <% end %>
-	    <% end %>
-	  </table>
+	<td class="tweet">
+	  <div class="tweetWind">
+<!-- start TweetsWind code -->
+<iframe     scrolling="no" frameborder="0" id="twitterWindIframe"     style="width:240px;height:400px; border:none;"     src="http://www.tweetswind.com/show?option=%7B%22isOnlyMe%22%3A%20%22true%22%2C%20%22twitterwind_frame_width%22%3A%20%22240%22%2C%20%22twitterwind_frame_height%22%3A%20%22400%22%2C%20%22twitterwind_frame_border%22%3A%20%22none%22%2C%20%22twitterwind_frame_border_color%22%3A%20%22C0DEED%22%2C%20%22twitterwind_base_font_size%22%3A%20%2212%22%2C%20%22twitterwind_logoimage%22%3A%20%22blue%22%2C%20%22twitterwind_username%22%3A%20%22on%22%2C%20%22twitterwind_username_bgcolor%22%3A%20%22%22%2C%20%22twitterwind_username_color%22%3A%20%22333333%22%2C%20%22twitterwind_username_follow%22%3A%20%22on%22%2C%20%22twitterwind_max_length%22%3A%20%2239%22%2C%20%22twitterwind_logo_bgcolor%22%3A%20%22%22%2C%20%22twitterwind_twit%22%3A%20%22on%22%2C%20%22twitterwind_twit_scroll_color%22%3A%20%22C0DEED%22%2C%20%22twitterwind_twit_scroll_bg_color%22%3A%20%22FFFFFF%22%2C%20%22twitterwind_twit_bgcolor%22%3A%20%22%22%2C%20%22twitterwind_twit_color%22%3A%20%22333333%22%2C%20%22twitterwind_twit_link_color%22%3A%20%220084B4%22%2C%20%22twitterwind_opacity%22%3A%20%22on%22%2C%20%22twitterwind_follower%22%3A%20%22none%22%2C%20%22twitterwind_follower_bgcolor%22%3A%20%22FFFFFF%22%2C%20%22usn%22%3A%20%22140199%22%7D" allowTransparency="true"     > </iframe>
+<!--利用規約に従ってページ内に必ずリンクを表示してください-->
+<div style="font-size:12px; text-align:right; width:240px"><a target="_blank" href="http://www.tweetswind.com">TweetsWind</a></div> 
+<!-- end TweetsWind code -->
+</div>
 	</td>
       </tr>
       <tr>
@@ -142,6 +115,40 @@
             <% end %>
           </td>
         <% end %>
+      </tr>
+      <tr>
+	<td colspan="3">
+	  <span class="recent">新着</span>
+	</td>
+      </tr>
+      <tr>
+	<td colspan="3">
+	  <table class="today_new">
+	    <% @today_movie.each_with_index do |movie, i| %>
+	      <% if i%4 == 0 %>
+		<tr>
+	      <% end %>
+	      <td>
+		<%= link_to movie.url, :target => "_blank" do %>
+		<div class="title border_color<%= rand(4) %>"><%= movie.title %></div>
+		<% if movie.kind_of?(TodayNiconico) %>
+		  <% id_s = movie.url.index('watch/') %>
+		  <% id = movie.url[id_s+8..100] %>
+		  <% rand = id.to_i % 4 + 1 %>
+		  <div class="today_pic"><%= image_tag('http://tn-skr' + rand.to_s + '.smilevideo.jp/smile?i=' + id) %></div>
+		<% elsif movie.kind_of?(TodayYoutube) %>
+		  <% id_s = movie.url.index('v=') %>
+		  <% id_e = movie.url.index('&') %>
+		  <div class="today_pic"><%= image_tag('http://i.ytimg.com/vi/' + movie.url[id_s+2..id_e-1] + '/default.jpg') %></div>
+		<% end %>
+		<% end %>
+	      </td>
+	      <% if (i+1)%4 == 0%>
+		</tr>
+              <% end %>
+	    <% end %>
+	  </table>
+	</td>
       </tr>
     </table>    
   </div>

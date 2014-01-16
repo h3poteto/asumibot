@@ -39,6 +39,16 @@
 	    }
 	}
  	table.recommend{
+	    td.tweet{
+		text-align: right;
+		.tweetWind{
+		    margin-right: -20px;
+		    margin-left: 40px;
+		    padding: 10px;
+		    border-radius: 10px;
+		    background: rgba(200,200,220,0.7);
+		}
+	    }
 	    td{
 		//display: inline-block;
 		width: 290px;
@@ -66,6 +76,9 @@
 	    }
 	    a:active {/*クリック中*/
 		text-decoration:none;
+	    }
+	    .top{
+		padding-top: 35px;
 	    }
 	    .movie{
 		.key0{
