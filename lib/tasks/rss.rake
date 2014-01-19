@@ -18,7 +18,7 @@ namespace :rss do
     
     setting_twitter
     content = Blog.where(used: false).order("created_at DESC").first
-    tweet = "【ブログ更新】『" + content.title  + "』" + content.link
+    tweet = "【あすみんブログ更新】『" + content.title  + "』" + content.link
     content.update_attributes!(used: true)
     Twitter.update(tweet)
   end
