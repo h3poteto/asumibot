@@ -2,6 +2,7 @@ defaults: &defaults
   user_name: 'asumi_bot'
   site:
     http: 'http://www.asumi.ch/'
+    blog: 'http://yaplog.jp/asumibiyori/index1_0.rdf'
 development:
   <<: *defaults
   nicovideo:

@@ -96,3 +96,7 @@ every 1.day, :at => '4:01' do
   rake "checkmovie:recent"
 end
 
+every '32 * * * *' do
+  rake "rss:recent"
+end
+
