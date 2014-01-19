@@ -14,7 +14,7 @@ class NiconicoFavUser < ActiveRecord::Base
     count=[]
     movie_ids.each do |id|
       movie = NiconicoMovie.find(id)
-      count.push([movie, rt_count(id)])
+      count.push([movie, rt_count(id)]) unless movie.disabled
     end
     count.sort!{|a,b|
       b[1] <=> a[1]

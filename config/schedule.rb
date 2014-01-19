@@ -92,3 +92,7 @@ every 1.day, :at => '11:34' do
   rake "patient:change_name"
 end
 
+every 1.day, :at => '4:01' do
+  rake "checkmovie:recent"
+end
+

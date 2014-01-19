@@ -6,10 +6,10 @@ class RecommendsController < ApplicationController
     @new_rt_youtube = YoutubeRtUser.recent(2.week.ago).take(3)
     @new_rt_niconico = NiconicoRtUser.recent(2.week.ago).take(3)
 
-    @first_fav_youtube = YoutubeFavUser.order("created_at DESC").first
-    @first_fav_niconico = NiconicoFavUser.order("created_at DESC").first
-    @first_rt_youtube = YoutubeRtUser.order("created_at DESC").first
-    @first_rt_niconico = NiconicoRtUser.order("created_at DESC").first
+    @first_fav_youtube = YoutubeFavUser.joins(:fav_youtube).where(:youtube_movies => {disabled: false}).order("created_at DESC").first
+    @first_fav_niconico = NiconicoFavUser.joins(:fav_niconico).where(:niconico_movies => {disabled: false}).order("created_at DESC").first
+    @first_rt_youtube = YoutubeRtUser.joins(:rt_youtube).where(:youtube_movies => {disabled: false}).order("created_at DESC").first
+    @first_rt_niconico = NiconicoRtUser.joins(:rt_niconico).where(:niconico_movies => {disabled: false}).order("created_at DESC").first
     
     if @first_fav_youtube.created_at.to_s(:db) > @first_fav_niconico.created_at.to_s(:db)
       @top_new = @first_fav_youtube
