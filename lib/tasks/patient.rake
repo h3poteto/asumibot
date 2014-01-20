@@ -77,7 +77,6 @@ namespace :patient do
     patient.each_with_index do |p, i|
       tweet = "@" + p.name + " 今日の阿澄度は" + p.level.to_s + "%だよ。"
       tweet = tweet + Settings['site']['http'] + 'patients/' + p.id.to_s
-      debugger
       Twitter.update(tweet)
     end
   end
