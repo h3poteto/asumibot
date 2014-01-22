@@ -89,10 +89,10 @@ namespace :userstream do
           if title.present? && url.present?
             new_data = NiconicoMovie.create(title: title, url: url, description: description, priority: nil)
             if new_data.save
-              update("新しく動画が追加されたよ\n" + "【" + title + "】" + url)
+              update("新しく動画が追加されたよ\n" + "【" + title + "】", url)
             else
               already = AlreadySerif.all.sample.word
-              update("@" + user_name + " " + already + "\n" + url)
+              update("@" + user_name + " " + already + "\n", url)
             end
           end
           next
@@ -113,10 +113,10 @@ namespace :userstream do
           if content.present? || title.present? || url.present?
             new_data = YoutubeMovie.create(title: title, url: url, description: content, priority: nil)
             if new_data.save
-              update("新しく動画が追加されたよ\n" + "【" + title + "】" + url)
+              update("新しく動画が追加されたよ\n" + "【" + title + "】", url)
             else
               already = AlreadySerif.all.sample.word
-              update("@" + user_name + " " + already + "\n" + url)
+              update("@" + user_name + " " + already + "\n", url)
             end
           end
           next
@@ -133,9 +133,9 @@ namespace :userstream do
 
         end while !confirm_db(movies.url)
 
-        movie_info = "【" + movies.title + "】" + movies.url
+        movie_info = "【" + movies.title + "】"
         tweet = ReplySerif.all.sample.word + " \n"
-        update("@" + user_name + " " + tweet + movie_info)
+        update("@" + user_name + " " + tweet + movie_info, movies.url)
 
       elsif ((status.text.include?("RT") || status.text.include?("QT")) && (status.text.include?("@"+Settings['twitter']['user_name'])) && (status.user.screen_name != Settings['twitter']['user_name']))
         ## for RT

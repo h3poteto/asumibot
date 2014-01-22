@@ -17,9 +17,9 @@ namespace :twitter do
     movies = movies_array.sample
 
     # つぶやき
-    movie_info = "【" + movies.title + "】" + movies.url
+    movie_info = "【" + movies.title + "】"
     popular_tweet = PopularSerif.all.sample.word + " \n"
-    if update( popular_tweet + movie_info)
+    if update( popular_tweet + movie_info, movies.url)
       movies.used = true
       movies.save
     end
@@ -36,9 +36,9 @@ namespace :twitter do
     next if movies.blank?
     next if !confirm_db(movies.url)
     # つぶやき
-    movie_info = "【" + movies.title + "】" + movies.url
+    movie_info = "【" + movies.title + "】"
     new_tweet = NewSerif.all.sample.word + "\n" + "（新着）"
-    if update( new_tweet + movie_info )
+    if update( new_tweet + movie_info, movies.url )
       movies.used = true
       movies.save
     end
@@ -67,8 +67,13 @@ namespace :twitter do
       config.oauth_token_secret = Settings['twitter']['oauth_token_secret']
     end
   end
-  def update(tweet)
+  def update(tweet, url)
     begin
+      if (tweet + url).length > 140
+        tweet = tweet[0..(140 - url.length)].to_s + url
+      else
+        tweet += url
+      end
       tweet = (tweet.length > 140) ? tweet[0..139].to_s : tweet
       Twitter.update(tweet.chomp)
     rescue => e
