@@ -19,7 +19,7 @@ class Patient < ActiveRecord::Base
   end
 
   def self.avail_prev_rankings
-    prev_rank = Patient.where(disabled: false).where(locked: false).where(protect: false).where("tweet_count >?", 10).order("prev_level DESC")
+    prev_rank = Patient.where(disabled: false).where(locked: false).where(protect: false).where("prev_tweet_count >?", 10).order("prev_level DESC")
     return prev_rank
   end
 end
