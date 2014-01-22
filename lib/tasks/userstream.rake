@@ -26,25 +26,22 @@ namespace :userstream do
         end
 
         # find url
-        text = event[:target_object][:text]
-        expand_url = ""
-        if text.include?("https:")
-          http_url = text.gsub('https:','http:')
-          expand_url = UrlExpander::Client.expand(http_url) if http_url.include?('http:')
-        else
-          expand_url = UrlExpander::Client.expand(text) if text.include?('http:')
+        expanded_urls = []
+        event[:target_object][:entities][:urls].each do |url|
+          expanded_urls.push(url[:expanded_url])
         end
-
-        # search object
-        if expand_url.include?("youtube")
-          movie_object = YoutubeMovie.where(url: expand_url).first
-        elsif expand_url.include?("nicovideo")
-          movie_object = NiconicoMovie.where(url: expand_url).first
-        end
-        # add object
-        if movie_object.present?
-          movie_object.fav_users.push(user)
-          movie_object.save!
+        expanded_urls.each do |expand_url|
+          # search object
+          if expand_url.include?("youtube")
+            movie_object = YoutubeMovie.where(url: expand_url).first
+          elsif expand_url.include?("nicovideo")
+            movie_object = NiconicoMovie.where(url: expand_url).first
+          end
+          # add object
+          if movie_object.present?
+            movie_object.fav_users.push(user)
+            movie_object.save!
+          end
         end
       end
     end
@@ -154,25 +151,22 @@ namespace :userstream do
         end
         
         # find url
-        text = status.text
-        
-        expand_url = ""
-        if text.include?("https:")
-          http_url = text.gsub('https:','http:')
-          expand_url = UrlExpander::Client.expand(http_url) if http_url.include?('http:')
-        else
-          expand_url = UrlExpander::Client.expand(text) if text.include?('http:')
+        expanded_urls = []
+        status.urls.each do |url|
+          expanded_urls.push(url[:expanded_url])
         end
-        # search object
-        if expand_url.include?("youtube")
-          movie_object = YoutubeMovie.where(url: expand_url).first
-        elsif expand_url.include?("nicovideo")
-          movie_object = NiconicoMovie.where(url: expand_url).first
-        end
-        # add object
-        if movie_object.present?
-          movie_object.rt_users.push(user)
-          movie_object.save!
+        expanded_urls.each do |expand_url|
+          # search object
+          if expand_url.include?("youtube")
+            movie_object = YoutubeMovie.where(url: expand_url).first
+          elsif expand_url.include?("nicovideo")
+            movie_object = NiconicoMovie.where(url: expand_url).first
+          end
+          # add object
+          if movie_object.present?
+            movie_object.rt_users.push(user)
+            movie_object.save!
+          end
         end
       end
     end
