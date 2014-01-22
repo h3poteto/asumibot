@@ -9,7 +9,11 @@ class PatientsController < ApplicationController
     @prev_rank = Patient.avail_prev_rankings
     @prev_rank_index = []
     @patients.each_with_index do |p, i|
-      @prev_rank_index[p.id] = @prev_rank.index(p)
+      if @prev_rank.index(p).present?
+        @prev_rank_index[p.id] = @prev_rank.index(p)
+      else
+        @prev_rank_index[p.id] = 2147483648
+      end
     end
     respond_to do |format|
       format.html # index.html.erb
