@@ -16,7 +16,7 @@ namespace :niconico do
   desc "new nicovideo movie get"
   task :new => :environment do
     @result = []
-    cookie = login(Settings['nicovideo']['mail_address'], Settings['nicovideo']['password'])
+    cookie = login(Settings.nicovideo.mail_address, Settings.nicovideo.password)
     options = '?mode=watch&page=1&sort=f&order=d'
     open(HOST + SEARCH + keywords + options, 'Cookie' => cookie){ |f|
       f.each_line{ |line| @result.push(JSON.parse(line))}
@@ -34,7 +34,7 @@ namespace :niconico do
 # errorではなくresultがfailになるのは、アクセス制限
   desc "all nicovideo movie get"
   task :all => :environment do
-    cookie = login(Settings['nicovideo']['mail_address'], Settings['nicovideo']['password'])
+    cookie = login(Settings.nicovideo.mail_address, Settings.nicovideo.password)
     @niconico_tags.each do | words |
       keywords = URI.encode(words)
       p words
@@ -95,7 +95,7 @@ namespace :niconico do
 
   desc "popular nicovideo movie get"
   task :popular => :environment do
-    cookie = login(Settings['nicovideo']['mail_address'], Settings['nicovideo']['password'])
+    cookie = login(Settings.nicovideo.mail_address, Settings.nicovideo.password)
     
     for i in 0..1 do
       @result = []

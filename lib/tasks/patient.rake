@@ -77,7 +77,7 @@ namespace :patient do
     patient = Patient.avail_rankings
     patient.each_with_index do |p, i|
       tweet = "@" + p.name + " 今日の阿澄度は" + p.level.to_s + "%だよ。"
-      tweet = tweet + Settings['site']['http'] + 'patients/' + p.id.to_s
+      tweet = tweet + Settings.site.http + 'patients/' + p.id.to_s
       Twitter.update(tweet)
     end
   end
@@ -130,10 +130,10 @@ namespace :patient do
   private
   def setting_twitter
     Twitter.configure do |config|
-      config.consumer_key       = Settings['twitter']['consumer_key']
-      config.consumer_secret    = Settings['twitter']['consumer_secret']
-      config.oauth_token        = Settings['twitter']['oauth_token']
-      config.oauth_token_secret = Settings['twitter']['oauth_token_secret']
+      config.consumer_key       = Settings.twitter.consumer_key
+      config.consumer_secret    = Settings.twitter.consumer_secret
+      config.oauth_token        = Settings.twitter.oauth_token
+      config.oauth_token_secret = Settings.twitter.oauth_token_secret
     end
   end
   def asumi_tweet_check(word)

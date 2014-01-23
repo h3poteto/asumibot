@@ -48,7 +48,7 @@ namespace :userstream do
 
     ## read timeline
     client.userstream do | status |
-      if (status.in_reply_to_user_id != nil) && (!status.text.include?("RT")) && (!status.text.include?("QT")) && (status.user.screen_name != Settings['twitter']['user_name']) && (status.text.include?("@"+Settings['twitter']['user_name']))
+      if (status.in_reply_to_user_id != nil) && (!status.text.include?("RT")) && (!status.text.include?("QT")) && (status.user.screen_name != Settings.twitter.user_name) && (status.text.include?("@"+Settings.twitter.user_name))
         puts status.user.screen_name
         puts status.text
         puts "\n"
@@ -137,7 +137,7 @@ namespace :userstream do
         tweet = ReplySerif.all.sample.word + " \n"
         update("@" + user_name + " " + tweet + movie_info, movies.url)
 
-      elsif ((status.text.include?("RT") || status.text.include?("QT")) && (status.text.include?("@"+Settings['twitter']['user_name'])) && (status.user.screen_name != Settings['twitter']['user_name']))
+      elsif ((status.text.include?("RT") || status.text.include?("QT")) && (status.text.include?("@"+Settings.twitter.user_name)) && (status.user.screen_name != Settings.twitter.user_name))
         ## for RT
         # search user
         user_id = status.user.id.to_i
@@ -176,19 +176,19 @@ namespace :userstream do
   private
   def setting_tweetstream
     TweetStream.configure do |config|
-      config.consumer_key       = Settings['twitter']['consumer_key']
-      config.consumer_secret    = Settings['twitter']['consumer_secret']
-      config.oauth_token        = Settings['twitter']['oauth_token']
-      config.oauth_token_secret = Settings['twitter']['oauth_token_secret']
+      config.consumer_key       = Settings.twitter.consumer_key
+      config.consumer_secret    = Settings.twitter.consumer_secret
+      config.oauth_token        = Settings.twitter.oauth_token
+      config.oauth_token_secret = Settings.twitter.oauth_token_secret
       config.auth_method        = :oauth
     end
   end
   def setting_twitter
     Twitter.configure do |config|
-      config.consumer_key       = Settings['twitter']['consumer_key']
-      config.consumer_secret    = Settings['twitter']['consumer_secret']
-      config.oauth_token        = Settings['twitter']['oauth_token']
-      config.oauth_token_secret = Settings['twitter']['oauth_token_secret']
+      config.consumer_key       = Settings.twitter.consumer_key
+      config.consumer_secret    = Settings.twitter.consumer_secret
+      config.oauth_token        = Settings.twitter.oauth_token
+      config.oauth_token_secret = Settings.twitter.oauth_token_secret
     end
   end
   def confirm_youtube(url)

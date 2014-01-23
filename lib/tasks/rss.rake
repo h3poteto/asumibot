@@ -8,7 +8,7 @@ require 'rss'
 namespace :rss do
   desc "update rss"
   task :recent => :environment do
-    rss = RSS::Parser.parse(Settings['site']['blog'])
+    rss = RSS::Parser.parse(Settings.site.blog)
     item = rss.item
     already = Blog.where(link: item.link)
     unless already.present? && already.length > 0
@@ -27,7 +27,7 @@ namespace :rss do
 
   desc "all rss"
   task :all => :environment do
-    rss = RSS::Parser.parse(Settings['site']['blog'])
+    rss = RSS::Parser.parse(Settings.site.blog)
     rss.items.each do |item|
       item = Blog.new(title: item.title, link: item.link, used: true, post_at: item.date )
       item.save!
@@ -39,10 +39,10 @@ namespace :rss do
   private
   def setting_twitter
     Twitter.configure do |config|
-      config.consumer_key       = Settings['twitter']['consumer_key']
-      config.consumer_secret    = Settings['twitter']['consumer_secret']
-      config.oauth_token        = Settings['twitter']['oauth_token']
-      config.oauth_token_secret = Settings['twitter']['oauth_token_secret']
+      config.consumer_key       = Settings.twitter.consumer_key
+      config.consumer_secret    = Settings.twitter.consumer_secret
+      config.oauth_token        = Settings.twitter.oauth_token
+      config.oauth_token_secret = Settings.twitter.oauth_token_secret
     end
   end
 end
