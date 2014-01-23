@@ -249,7 +249,7 @@ namespace :userstream do
       else
         ## DBから探し出しdisabled => false
         niconico = NiconicoMovie.where(:url => url).first
-        niconico.update_attributes!(:disabled => false).first
+        niconico.update_attributes!(:disabled => false)
         niconico.save
         return false
       end
