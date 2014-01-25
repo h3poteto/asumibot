@@ -140,7 +140,7 @@ namespace :twitter do
       else
         ## DBから探し出しdisabled => false
         niconico = NiconicoMovie.where(:url => url).first
-        niconico.update_attributes!(:disabled => url).first
+        niconico.update_attributes!(:disabled => url)
         niconico.save
         return false
       end
