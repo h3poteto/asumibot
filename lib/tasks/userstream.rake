@@ -168,6 +168,38 @@ namespace :userstream do
             movie_object.save!
           end
         end
+      elsif (status.urls.any?{|w| w[:expanded_url].include?("/movies/show_")} && (status.text.include?("@"+Settings.twitter.user_name)) && (status.user.screen_name != Settings.twitter.user_name))
+        # search user
+        user_id = status.user.id.to_i
+        user = User.where(twitter_id: user_id)
+        if user.blank?
+          new_user = User.new(screen_name: status.user.screen_name, twitter_id: user_id)
+          new_user.save
+          user = new_user
+        else
+          user = user.first
+        end
+
+        expanded_urls = []
+        status.urls.each do |url|
+          expanded_urls.push(url[:expanded_url])
+        end
+        expanded_urls.each do |expand_url|
+          if expand_url.include?("show_youtube")
+            s = expand_url.index("show_youtube/")
+            id = expand_url[(s+("show_youtube/").length)..200].to_i
+            movie_object = YoutubeMovie.find(id)
+          elsif expand_url.include?("show_niconico")
+            s = expand_url.index("show_niconico/")
+            id = expand_url[(s+("show_niconico/").length)..200].to_i
+            movie_object = NiconicoMovie.find(id)
+          end
+          # add object
+          if movie_object.present?
+            movie_object.rt_users.push(user)
+            movie_object.save!
+          end
+        end
       end
     end
   end
