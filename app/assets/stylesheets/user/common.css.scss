@@ -10,6 +10,20 @@
 }
 .navbar-static-top{
     position: relative !important;
+    .search_form{
+	position: absolute;
+	right: 0px;
+	margin: 5px 0px 5px auto !important;
+	.search_text{
+	    background: rgba(50,50,50, 0.8);
+	    color: rgb(240,240,240);
+	}
+	.search_btn{
+	    margin-top: -10px;
+	    background: rgb(0,0,0);
+	    color: rgb(255,255,255);
+	}
+    }
 }
 .background{
     background: url(asset-path("blur_back04.jpg",image)) no-repeat center center fixed;

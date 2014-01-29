@@ -12,6 +12,11 @@
 	  <li><%= link_to "おすすめ", root_path %></li>
 	  <li><%= link_to "患者たち", patients_path  %></li>
 	</ul>
+	<%= form_tag(movies_path, :method => :get, :class=>"search_form") do |f| %>
+	  <div class="search_field">
+	    <%= text_field_tag :search, nil,:class=> "search_text",:placeholder => "動画検索" %>
+	    <%= submit_tag "検索", class: "btn search_btn" %></div>
+	<% end %>
       </div><!--/.nav-collapse -->
     </div>
   </div>
