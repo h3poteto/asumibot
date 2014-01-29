@@ -3,7 +3,7 @@
     <table class="recommend">
       <tr>
 	<td class="movie top" colspan="2">
-	  <%= link_to @top_movie.url, :target => '_blank' do %>
+	  <%= link_to movie_show_url(@top_movie), :target => '_blank' do %>
 	  <div class="key<%= rand(4) %>"><span class="count"><%= @number %></span>  <%= @type %></div>
 	  <div class="title"><%= @top_movie.title %></div>
 	  <div class="detail">
@@ -37,7 +37,7 @@
 	  <% val = v[0] %>
 	  <% key = v[1] %>
 	  <td class="movie">
-	    <%= link_to val.url, :target => '_blank' do %>
+	    <%= link_to movie_show_url(val), :target => '_blank' do %>
 	    <div class="key<%= rand(4) %>"><span class="count"><%= key %></span>  RT</div>
 	    <div class="title"><%= val.title %></div>
 	    <div class="detail">
@@ -56,7 +56,7 @@
 	  <% val = v[0] %>
 	  <% key = v[1] %>
 	  <td>
-	    <%= link_to val.url, :target => '_blank' do %>
+	    <%= link_to movie_show_url(val), :target => '_blank' do %>
 	    <div class="movie">
 	      <div class="key<%= rand(4) %>"><span class="count"><%= key %></span>  RT</div>
 	      <div class="title"><%= val.title %></div>
@@ -78,7 +78,7 @@
 	  <% val = v[0] %>
 	  <% key = v[1] %>
 	  <td>
-	    <%= link_to val.url, :target => '_blank' do %>
+	    <%= link_to movie_show_url(val), :target => '_blank' do %>
 	    <div class="movie">
 	      <div class="key<%= rand(4) %>"><span class="count"><%= key %></span>  fav</div>
 	      <div class="title"><%= val.title %></div>
@@ -99,7 +99,7 @@
 	  <% val = v[0] %>
 	  <% key = v[1] %>
 	  <td>
-	    <%= link_to val.url, :target => '_blank' do %>
+	    <%= link_to movie_show_url(val), :target => '_blank' do %>
 	    <div class="movie">
 	      <div class="key<%= rand(4) %>"><span class="count"><%= key %></span>  fav</div>
 	      <div class="title"><%= val.title %></div>
@@ -129,7 +129,7 @@
 		<tr>
 	      <% end %>
 	      <td>
-		<%= link_to movie.url, :target => "_blank" do %>
+		<%= link_to movie_show_url(movie), :target => "_blank" do %>
 		<div class="title border_color<%= rand(4) %>"><%= movie.title %></div>
 		<% if movie.kind_of?(TodayNiconico) %>
 		  <% id_s = movie.url.index('watch/') %>
