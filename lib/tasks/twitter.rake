@@ -44,6 +44,18 @@ namespace :twitter do
     end
   end
 
+  desc "ad asumi.ch"
+  task :ad => :environment do
+    schedule = Schedule.where(task: "twitter_ad").first
+    now = Time.now
+    debugger
+    if schedule.time == nil || now > (schedule.time + 10.hours)
+      setting_twitter
+      tweet = "さーて、" + Settings.site.http + "とは！？私のツイートやRT、Favに連携して更新されるサイトだー！"
+      Twitter.update(tweet)
+      schedule.update_attributes!(time: now)
+    end
+  end
 
   desc "follower"
   task :follower => :environment do

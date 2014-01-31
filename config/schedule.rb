@@ -100,3 +100,6 @@ every '32 * * * *' do
   rake "rss:recent"
 end
 
+every '17 * * * *' do
+  rake "twitter:ad"
+end
