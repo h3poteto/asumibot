@@ -48,7 +48,6 @@ namespace :twitter do
   task :ad => :environment do
     schedule = Schedule.where(task: "twitter_ad").first
     now = Time.now
-    debugger
     if schedule.time == nil || now > (schedule.time + 10.hours)
       setting_twitter
       tweet = "さーて、" + Settings.site.http + "とは！？私のツイートやRT、Favに連携して更新されるサイトだー！"
