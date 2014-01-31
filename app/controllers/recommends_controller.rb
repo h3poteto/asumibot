@@ -48,7 +48,13 @@ class RecommendsController < ApplicationController
     end
     @new_youtube = TodayYoutube.all
     @new_niconico = TodayNiconico.all
-    @today_movie = @new_youtube + @new_niconico
+    @today_movie = []
+    @new_youtube.each do |ny|
+      @today_movie.push(YoutubeMovie.where(url: ny.url).first)
+    end
+    @new_niconico.each do |nn|
+      @today_movie.push(NiconicoMovie.where(url: nn.url).first)
+    end
   end
 
 end
