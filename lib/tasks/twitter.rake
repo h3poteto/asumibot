@@ -81,7 +81,7 @@ namespace :twitter do
   def update(tweet, url)
     begin
       if (tweet + url).length > 140
-        tweet = tweet[0..(140 - url.length)].to_s + url
+        tweet = tweet[0..(130 - url.length)].to_s + "...\n" + url
       else
         tweet += url
       end
