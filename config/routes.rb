@@ -1,7 +1,11 @@
 Asumibot::Application.routes.draw do
   resources :patients, only: [:show, :index]
   resources :recommends, only: [:index]
-  resources :movies, only: [:index]
+  resources :movies, only: [:index] do
+    collection do
+      get :streaming
+    end
+  end
   match "/movies/show_niconico/:id" => "movies#show_niconico", :as => :niconico
   match "/movies/show_youtube/:id" => "movies#show_youtube", :as => :youtube
 

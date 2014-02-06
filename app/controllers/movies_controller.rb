@@ -34,4 +34,16 @@ class MoviesController < ApplicationController
     s = @niconico.url.index("/watch/")
     @id = @niconico.url[s+7..100]
   end
+
+  def streaming
+    @movies= YoutubeMovie.where(disabled: false)
+    hashes = []
+    @movies.each do |m|
+      s = m.url.index("?v=")
+      e = m.url.index("&")
+      hashes.push(m.url[s+3..e-1])
+    end
+    gon.youtube = hashes
+  end
+
 end
