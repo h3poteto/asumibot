@@ -11,6 +11,7 @@
 	<ul class="nav">
 	  <li><%= link_to "おすすめ", root_path %></li>
 	  <li><%= link_to "患者たち", patients_path  %></li>
+	  <li><%= link_to "作業用あすみん", streaming_movies_path %></li>
 	</ul>
 	<%= form_tag(movies_path, :method => :get, :class=>"search_form") do |f| %>
 	  <div class="search_field">

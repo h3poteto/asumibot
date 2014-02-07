@@ -5,10 +5,12 @@ gon.movies_streaming = ->
   @movies.streaming()
 
 @onYouTubeIframeAPIReady = ()->
+  movie = gon.youtube[Math.floor(Math.random()*(gon.youtube).length)]
+  $(".title").html(movie.title)
   player = new YT.Player('player',{
     height: '390',
     width: '640',
-    videoId: gon.youtube[Math.floor(Math.random()*(gon.youtube).length)],
+    videoId: movie.id,
     events: {
       onReady: onPlayerReady,
       onStateChange: onPlayerStateChange,
@@ -18,7 +20,9 @@ gon.movies_streaming = ->
 
 @playNext = (player)->
   player.clearVideo()
-  player.loadVideoById(gon.youtube[Math.floor(Math.random()*(gon.youtube).length)],0,"large")
+  movie = gon.youtube[Math.floor(Math.random()*(gon.youtube).length)]
+  $(".title").html(movie.title)
+  player.loadVideoById(movie.id,0,"large")
   player.playVideo()
 
 @onPlayerReady = (event)->
