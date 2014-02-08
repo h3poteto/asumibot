@@ -2,6 +2,7 @@ user_name: 'asumi_syndrome'
 analytics: true
 site:
   http: 'http://www.asumi.ch/'
+  host: 'asumi.ch'
   blog: 'http://yaplog.jp/asumibiyori/index1_0.rdf'
 nicovideo:
   mail_address: <%# settings.local overrides %>

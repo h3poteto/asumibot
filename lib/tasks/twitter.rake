@@ -50,7 +50,13 @@ namespace :twitter do
     now = Time.now
     if schedule.time == nil || now > (schedule.time + 10.hours)
       setting_twitter
-      tweet = "さーて、" + Settings.site.http + "とは！？私のツイートやRT、Favに連携して更新されるサイトだー！"
+      random = rand(2)
+      routes = Rails.application.routes.url_helpers
+      if random == 1
+        tweet = "作業用あすみんの動画を流し続けてくれるページもあるんです。あるんです！\n" + routes.streaming_movies_url(host: Settings.site.host)
+      else
+        tweet = "さーて、" + Settings.site.http + "とは！？私のツイートやRT、Favに連携して更新されるサイトだー！"
+      end
       Twitter.update(tweet)
       schedule.update_attributes!(time: now)
     end
