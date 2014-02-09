@@ -1,13 +1,18 @@
-<% content_for :title do %>
-  作業用あすみん
-<% end %>
-<div id="title">
-  <h3 class="title">作業用あすみん</h3>
+<div id="streaming">
+  <% content_for :title do %>
+    作業用あすみん
+  <% end %>
+  <div id="title">
+    <h3 class="title">作業用あすみん</h3>
+  </div>
+  <div id="player"></div>
+  <script>
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  </script>
+  <div class="tweet_button">
+    <div class="button"></div>
+  </div>
 </div>
-<div id="player"></div>
-<script>
-  var tag = document.createElement('script');
-  tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-</script>

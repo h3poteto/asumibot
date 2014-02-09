@@ -7,6 +7,14 @@ gon.movies_streaming = ->
 @onYouTubeIframeAPIReady = ()->
   movie = gon.youtube[Math.floor(Math.random()*(gon.youtube).length)]
   $(".title").html(movie.title)
+  $(".tweet_button").socialbutton('twitter',{
+    button: 'horizontal',
+    rang: 'ja',
+    text: movie.title + ' - 阿澄ちゃん',
+    url: movie.url,
+    via: 'asumi_syndrome',
+    related: 'twitter'
+  }).width(100)
   player = new YT.Player('player',{
     height: '390',
     width: '640',
@@ -22,6 +30,14 @@ gon.movies_streaming = ->
   player.clearVideo()
   movie = gon.youtube[Math.floor(Math.random()*(gon.youtube).length)]
   $(".title").html(movie.title)
+  $(".tweet_button").socialbutton('twitter',{
+    button: 'horizontal',
+    rang: 'ja',
+    text: movie.title + ' - 阿澄ちゃん',
+    url: movie.url,
+    via: 'asumi_syndrome',
+    related: 'twitter'
+  }).width(150)
   player.loadVideoById(movie.id,0,"large")
   player.playVideo()
 

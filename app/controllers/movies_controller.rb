@@ -41,7 +41,7 @@ class MoviesController < ApplicationController
     @movies.each do |m|
       s = m.url.index("?v=")
       e = m.url.index("&")
-      hashes.push({:title => m.title, :id => m.url[s+3..e-1]})
+      hashes.push({:title => m.title, :id => m.url[s+3..e-1]}, :url => youtube_url(m))
     end
     gon.youtube = hashes
   end
