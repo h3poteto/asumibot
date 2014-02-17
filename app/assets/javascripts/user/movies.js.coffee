@@ -14,7 +14,7 @@ gon.movies_streaming = ->
     url: movie.url,
     via: 'asumi_syndrome',
     related: 'twitter'
-  })
+  }).width(100)
   player = new YT.Player('player',{
     height: '390',
     width: '640',
@@ -37,7 +37,7 @@ gon.movies_streaming = ->
     url: movie.url,
     via: 'asumi_syndrome',
     related: 'twitter'
-  })
+  }).width(150)
   player.loadVideoById(movie.id,0,"large")
   player.playVideo()
 
