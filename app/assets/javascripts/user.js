@@ -14,6 +14,5 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require highcharts/js/highcharts
-//= require jquery.socialbutton-1.9.1.js
 //= require common
 //= require_tree ./user
