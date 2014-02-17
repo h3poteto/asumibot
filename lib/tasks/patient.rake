@@ -154,8 +154,8 @@ namespace :patient do
       end
     end
     if expand_url.present?
-      uri = URI(expand_url)
       begin
+        uri = URI(expand_url)
         doc = Nokogiri::XML(uri.read).text
       rescue
         doc = "error"
