@@ -46,8 +46,8 @@ class RecommendsController < ApplicationController
       @type = "Fav"
       @number = YoutubeFavUser.where(youtube_movie_id: @top_new.youtube_movie_id).length
     end
-    @new_youtube = TodayYoutube.all
-    @new_niconico = TodayNiconico.all
+    @new_youtube = TodayYoutube.where(disabled: false)
+    @new_niconico = TodayNiconico.where(disabled: false)
     @today_movie = []
     @new_youtube.each do |ny|
       @today_movie.push(YoutubeMovie.where(url: ny.url).first)
