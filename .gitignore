@@ -20,4 +20,6 @@ config/settings/*.local.yml
 config/environments/*.local.yml
 vender/ruby/
 vender/cache/
+vendor/bundler/
 public/
+
