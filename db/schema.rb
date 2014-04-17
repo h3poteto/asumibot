@@ -112,12 +112,6 @@ ActiveRecord::Schema.define(:version => 20140219160903) do
     t.datetime "updated_at",        :null => false
   end
 
-  create_table "notfound_serifs", :force => true do |t|
-    t.string   "word"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "patients", :force => true do |t|
     t.integer  "twitter_id",       :limit => 8
     t.string   "name"

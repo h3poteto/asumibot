@@ -23,3 +23,6 @@ vender/cache/
 vendor/bundler/
 public/
 
+
+# Ignore application configuration
+/config/application.yml

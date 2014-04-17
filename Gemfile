@@ -52,6 +52,7 @@ gem 'jquery-rails'
  gem 'bootstrap_helper'
  gem 'i18n_generators'
  gem 'gon'
+ gem 'figaro'
 
 group :test do
  gem "shoulda-matchers"
