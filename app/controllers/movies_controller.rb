@@ -57,6 +57,6 @@ class MoviesController < ApplicationController
     s = @movies.url.index("/watch/")
     @id = @movies.url[s+7..100]
     @url = @movies.url
-    @script = open(Settings.site.fqdn + "nico_ext_autoplay.php?URL=http://ext.nicovideo.jp/thumb_watch/#{@id}?w=490&h=307").read
+    @script = open(Settings.site.fqdn + "external/nico_ext_autoplay.php?URL=http://ext.nicovideo.jp/thumb_watch/#{@id}?w=490&h=307").read
   end
 end
