@@ -49,14 +49,8 @@ class MoviesController < ApplicationController
 
   def streamnico
     @movies = NiconicoMovie.where(disabled: false).sample
-    # hashes = []
-    # @movies.each do |m|
-    #   s = m.url.index("/watch/")
-    #   hashes.push({:title => m.title, :nicovideo_url => m.url,:nicovideo_id => m.url[s+7..100], :db_id => m.id})
-    # end
     s = @movies.url.index("/watch/")
     @id = @movies.url[s+7..100]
     @url = @movies.url
-    @script = open(Settings.site.fqdn + "external/nico_ext_autoplay.php?URL=http://ext.nicovideo.jp/thumb_watch/#{@id}?w=490&h=307").read
   end
 end
