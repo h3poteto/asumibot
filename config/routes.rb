@@ -4,6 +4,7 @@ Asumibot::Application.routes.draw do
   resources :movies, only: [:index] do
     collection do
       get :streaming
+      get :streamnico
     end
   end
   match "/movies/show_niconico/:id" => "movies#show_niconico", :as => :niconico

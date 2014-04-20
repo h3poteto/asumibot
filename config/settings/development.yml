@@ -1,7 +1,8 @@
 user_name: 'asumi_syndrome'
 analytics: false
 site:
-  http: 'http://localhost:3000'
+  http: 'http://localhost:3000/'
+  fqdn: 'http://localhost:3000/'
   host: 'localhost:3000'
   blog: 'http://yaplog.jp/asumibiyori/index1_0.rdf'
 nicovideo:

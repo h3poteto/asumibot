@@ -1,8 +1,24 @@
+exports = this
+exports.nico_player = null
 class gon.Movies
   streaming: ->
+
+  streamnico: ->
+    setInterval ()->
+      if exports.nico_player != null
+        st = exports.nico_player.ext_getStatus()
+        if st == "end"
+          location.reload()
+    , 1000
+
+gon.movies_streamnico = ->
+  @movies = new @Movies
+  @movies.streamnico()
+
 gon.movies_streaming = ->
   @movies = new @Movies
   @movies.streaming()
+
 
 @onYouTubeIframeAPIReady = ()->
   movie = gon.youtube[Math.floor(Math.random()*(gon.youtube).length)]
@@ -34,4 +50,6 @@ gon.movies_streaming = ->
 
 @onPlayerError = (event)->
   playNext(event.target)
-    
+
+@onNicoPlayerReady = (id)->
+  exports.nico_player = document.getElementById(id)
