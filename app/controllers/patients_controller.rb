@@ -1,6 +1,7 @@
 class PatientsController < ApplicationController
   layout "user"
-  #caches_action :show
+  caches_page :index
+
   # GET /patients
   # GET /patients.json
   def index

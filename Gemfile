@@ -51,6 +51,7 @@ gem 'jquery-rails'
  gem 'i18n_generators'
  gem 'gon'
  gem 'figaro'
+ gem 'actionpack-page_caching'
 
 group :test do
   gem "shoulda-matchers"
@@ -67,4 +68,5 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rspec'
   gem 'rspec-mocks'
+  gem 'bullet'
 end
