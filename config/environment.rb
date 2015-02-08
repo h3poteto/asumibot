@@ -1,7 +1,5 @@
-# Load the rails application
+# Load the Rails application.
 require File.expand_path('../application', __FILE__)
 
-# Initialize the rails application
-Asumibot::Application.initialize!
-
-require 'extends/array'
+# Initialize the Rails application.
+Rails.application.initialize!

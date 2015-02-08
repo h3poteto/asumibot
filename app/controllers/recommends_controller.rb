@@ -10,19 +10,24 @@ class RecommendsController < ApplicationController
     @first_fav_niconico = NiconicoFavUser.joins(:fav_niconico).where(:niconico_movies => {disabled: false}).order("created_at DESC").first
     @first_rt_youtube = YoutubeRtUser.joins(:rt_youtube).where(:youtube_movies => {disabled: false}).order("created_at DESC").first
     @first_rt_niconico = NiconicoRtUser.joins(:rt_niconico).where(:niconico_movies => {disabled: false}).order("created_at DESC").first
-    
-    if @first_fav_youtube.created_at.to_s(:db) > @first_fav_niconico.created_at.to_s(:db)
-      @top_new = @first_fav_youtube
-    else
-      @top_new = @first_fav_niconico
-    end
-    
-    if @first_rt_youtube.created_at.to_s(:db) > @top_new.created_at.to_s(:db)
-      @top_new = @first_rt_youtube
+
+    if @first_fav_youtube.present? && @first_fav_niconico.present?
+
+      if @first_fav_youtube.created_at.to_s(:db) > @first_fav_niconico.created_at.to_s(:db)
+        @top_new = @first_fav_youtube
+      else
+        @top_new = @first_fav_niconico
+      end
     end
 
-    if @first_rt_niconico.created_at.to_s(:db) > @top_new.created_at.to_s(:db)
-      @top_new = @first_rt_niconico
+    if @first_rt_youtube.present? && @first_rt_youtube.present?
+      if @first_rt_youtube.created_at.to_s(:db) > @top_new.created_at.to_s(:db)
+        @top_new = @first_rt_youtube
+      end
+
+      if @first_rt_niconico.created_at.to_s(:db) > @top_new.created_at.to_s(:db)
+        @top_new = @first_rt_niconico
+      end
     end
 
     if @top_new.kind_of?(NiconicoFavUser) || @top_new.kind_of?(NiconicoRtUser)

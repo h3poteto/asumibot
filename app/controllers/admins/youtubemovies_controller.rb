@@ -24,7 +24,7 @@ class Admins::YoutubemoviesController < AdminsController
     @youtubemovie = YoutubeMovie.find(params[:id])
 
     respond_to do |format|
-      if @youtubemovie.update_attributes(params[:youtube_movie])
+      if @youtubemovie.update_attributes(permitted_params)
         format.html { redirect_to action:"edit", notice: 'Youtubemovie was successfully updated.' }
         format.json { head :no_content }
       else
@@ -32,6 +32,11 @@ class Admins::YoutubemoviesController < AdminsController
         format.json { render json: @youtubemovie.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  private
+  def permitted_params
+    params.require(:youtube_movie).permit(:priority, :title, :url, :description, :disabled)
   end
 
 end

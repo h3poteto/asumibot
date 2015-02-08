@@ -1,7 +1,5 @@
 # coding: utf-8
 
-require File.expand_path(File.dirname(__FILE__) + "/../../config/environment")
-require 'rubygems'
 require 'nokogiri'
 require 'open-uri'
 
@@ -46,7 +44,7 @@ namespace :youtube do
       end
     end
   end
-  
+
   desc "popular youtube movie get"
   task :popular => :environment do
     options = '&orderby=rating&time=all_time'

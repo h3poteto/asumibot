@@ -1,7 +1,4 @@
 # coding: utf-8
-require File.expand_path(File.dirname(__FILE__) + "/../../config/environment")
-require 'rubygems'
-require 'twitter'
 require 'open-uri'
 require 'rss'
 
@@ -15,7 +12,7 @@ namespace :rss do
       b = Blog.new(title: item.title, link: item.link, post_at: item.date )
       b.save!
     end
-    
+
     setting_twitter
     content = Blog.where(used: false).order("created_at DESC").first
     if content.present?

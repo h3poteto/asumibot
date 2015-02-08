@@ -7,8 +7,8 @@ Asumibot::Application.routes.draw do
       get :streamnico
     end
   end
-  match "/movies/show_niconico/:id" => "movies#show_niconico", :as => :niconico
-  match "/movies/show_youtube/:id" => "movies#show_youtube", :as => :youtube
+  get "/movies/show_niconico/:id" => "movies#show_niconico", :as => :niconico
+  get "/movies/show_youtube/:id" => "movies#show_youtube", :as => :youtube
 
   devise_for :admins
 

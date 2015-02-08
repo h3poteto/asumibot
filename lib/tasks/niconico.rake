@@ -1,6 +1,4 @@
 # coding: utf-8
-
-require File.expand_path(File.dirname(__FILE__) + "/../../config/environment")
 require 'open-uri'
 require 'json'
 
@@ -29,7 +27,7 @@ namespace :niconico do
       add_niconico(movie, true) if str_post == str_t
     end
   end
-  
+
 # niconicoAPIのアクセス制限により、5ページずつ、1分間隔でないと取得できない
 # errorではなくresultがfailになるのは、アクセス制限
   desc "all nicovideo movie get"
@@ -96,7 +94,7 @@ namespace :niconico do
   desc "popular nicovideo movie get"
   task :popular => :environment do
     cookie = login(Settings.nicovideo.mail_address, Settings.nicovideo.password)
-    
+
     for i in 0..1 do
       @result = []
       options = '?mode=watch&page=' + (i+1).to_s + '&sort=n&order=d'
@@ -129,14 +127,14 @@ namespace :niconico do
     host = 'secure.nicovideo.jp'
     path = '/secure/login?site=niconico'
     body = "mail=#{mail}&password=#{pass}"
- 
+
     https             = Net::HTTP.new(host, 443)
     https.use_ssl     = true
     https.verify_mode = OpenSSL::SSL::VERIFY_NONE
     response          = https.start { |https|
       https.post(path, body)
     }
- 
+
     cookie = ''
     response['set-cookie'].split('; ').each do |st|
       if idx=st.index('user_session_')
@@ -144,7 +142,7 @@ namespace :niconico do
         break
       end
     end
- 
+
     return cookie
   end
 
@@ -157,4 +155,3 @@ namespace :niconico do
     new_data.save
   end
 end
-  

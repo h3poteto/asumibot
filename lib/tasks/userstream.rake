@@ -1,7 +1,4 @@
 # coding: utf-8
-require File.expand_path(File.dirname(__FILE__) + "/../../config/environment")
-require 'rubygems'
-require 'tweetstream'
 
 namespace :userstream do
 
@@ -10,7 +7,7 @@ namespace :userstream do
     setting_tweetstream
     setting_twitter
     client = TweetStream::Client.new
-    
+
     ## for fav event
     client.on_event(:favorite) do |event|
       if event[:event] == "favorite"
@@ -52,7 +49,7 @@ namespace :userstream do
         puts status.user.screen_name
         puts status.text
         puts "\n"
-        
+
         # userstreamなのでlastはチェックいらない
         last_men = LastData.where(:category => "mention").first
         men = status
@@ -149,7 +146,7 @@ namespace :userstream do
         else
           user = user.first
         end
-        
+
         # find url
         expanded_urls = []
         status.urls.each do |url|
@@ -216,11 +213,11 @@ namespace :userstream do
     end
   end
   def setting_twitter
-    Twitter.configure do |config|
+    @client = Twitter::REST::Client.new do |config|
       config.consumer_key       = Settings.twitter.consumer_key
       config.consumer_secret    = Settings.twitter.consumer_secret
-      config.oauth_token        = Settings.twitter.oauth_token
-      config.oauth_token_secret = Settings.twitter.oauth_token_secret
+      config.access_token        = Settings.twitter.oauth_token
+      config.access_token_secret = Settings.twitter.oauth_token_secret
     end
   end
   def confirm_youtube(url)
@@ -233,7 +230,7 @@ namespace :userstream do
     rescue
       return false
     end
-    
+
     if doc.search('title').text == "YouTube"
       return false
     else

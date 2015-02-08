@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.13'
+gem 'rails', '4.2.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -12,18 +12,18 @@ gem 'mysql2'
 # in production environments by default.
 group :assets do
 end
-gem 'sass-rails',   '~> 3.2.3'
-gem 'coffee-rails', '~> 3.2.1'
+gem 'sass-rails'
+gem 'coffee-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', :platforms => :ruby
-gem 'less-rails-bootstrap',"2.3.3"
+gem 'less-rails-bootstrap', "2.3.3"
 gem 'twitter-bootstrap-rails'
 
-gem 'uglifier', '>= 1.0.3'
-
+gem 'uglifier'
 
 gem 'jquery-rails'
+gem 'jquery-turbolinks'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -38,7 +38,7 @@ gem 'jquery-rails'
 # gem 'capistrano'
 
 # To use debugger
- gem 'debugger'
+# gem 'debugger'
  gem 'rake'
  gem 'twitter'
  gem 'rails_config'
@@ -47,19 +47,27 @@ gem 'jquery-rails'
  gem 'url_expander'
  gem 'tweetstream'
  gem 'kaminari'
- gem 'devise','>= 2.1.2'
+ gem 'devise'
  gem 'ransack'
  gem 'bootstrap_helper'
  gem 'i18n_generators'
  gem 'gon'
  gem 'figaro'
+ gem 'passenger'
 
 group :test do
- gem "shoulda-matchers"
+  gem "shoulda-matchers"
 end
 
 group :development, :test do
- gem 'rspec-rails'
- gem 'rspec'
- gem 'rspec-mocks'
+  gem 'pry-rails'
+  gem 'pry-doc'
+  gem 'pry-stack_explorer'
+  gem 'pry-byebug'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'spring'
+  gem 'rspec-rails'
+  gem 'rspec'
+  gem 'rspec-mocks'
 end

@@ -26,7 +26,7 @@
     }
 }
 .background{
-    background: url(asset-path("blur_back04.jpg",image)) no-repeat center center fixed;
+    background: image-url("blur_back04-min.jpg") no-repeat center center fixed;
     background-size: cover;
     position: fixed;
     top: 0;

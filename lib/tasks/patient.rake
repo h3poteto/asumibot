@@ -1,7 +1,4 @@
 # coding: utf-8
-require File.expand_path(File.dirname(__FILE__) + "/../../config/environment")
-require 'rubygems'
-require 'twitter'
 require 'url_expander'
 require 'open-uri'
 
@@ -48,7 +45,7 @@ namespace :patient do
         tweet_count = users_tweet.length
         users_tweet.each do |tl|
           if asumi_tweet_check(tl.text)
-            asumi_count += 1 
+            asumi_count += 1
             # add asumi_tweet for DB
             asumi_tweet = AsumiTweet.new(patient_id: f.id, tweet: tl.text, tweet_id: tl.id.to_s, tweet_time: tl.created_at.to_s(:db))
             asumi_tweet.save

@@ -37,11 +37,11 @@ class Admins::SerifsController < AdminsController
     @serif = nil
     case params[:serif][:type]
     when "ReplySerif"
-      @serif = ReplySerif.new(params[:serif])
+      @serif = ReplySerif.new(permitted_params)
     when "PopularSerif"
-      @serif = PopularSerif.new(params[:serif])
+      @serif = PopularSerif.new(permitted_params)
     when "NewSerif"
-      @serif = NewSerif.new(params[:serif])
+      @serif = NewSerif.new(permitted_params)
     end
 
     respond_to do |format|
@@ -69,7 +69,7 @@ class Admins::SerifsController < AdminsController
     end
 
     respond_to do |format|
-      if @serif.update_attributes(params[:serif])
+      if @serif.update_attributes(permitted_params)
         format.html { redirect_to :action => "edit", notice: 'Serif was successfully updated.' }
       else
         format.html { render action: "edit" }
@@ -86,5 +86,10 @@ class Admins::SerifsController < AdminsController
     respond_to do |format|
       format.html { redirect_to :action => "index", notice: "Serif was successfully deleted." }
     end
+  end
+
+  private
+  def permitted_params
+    params.require(:serif).permit(:word)
   end
 end

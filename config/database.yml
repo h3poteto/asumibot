@@ -1,5 +1,5 @@
 # MySQL.  Versions 4.1 and 5.0 are recommended.
-# 
+#
 # Install the MYSQL driver
 #   gem install mysql2
 #
@@ -12,9 +12,9 @@ development:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: <%= ENV["DB_ASUMI_DEV_NAME"] %>
+  database: <%= ENV["DB_ASUMI_DEV_NAME"] || "asumibot_development" %>
   pool: 5
-  username: <%= ENV["DB_ASUMI_DEV_USER"] %>
+  username: <%= ENV["DB_ASUMI_DEV_USER"] || "root" %>
   password: <%= ENV["DB_ASUMI_DEV_PASS"] %>
   socket: <%= ENV["DB_ASUMI_DEV_SOCK"] %>
 

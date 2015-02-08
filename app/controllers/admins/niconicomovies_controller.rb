@@ -24,7 +24,7 @@ class Admins::NiconicomoviesController < AdminsController
     @niconicomovie = NiconicoMovie.find(params[:id])
 
     respond_to do |format|
-      if @niconicomovie.update_attributes(params[:niconico_movie])
+      if @niconicomovie.update_attributes(permitted_params)
         format.html { redirect_to action:"edit", notice: 'Niconicomovie was successfully updated.' }
         format.json { head :no_content }
       else
@@ -32,5 +32,10 @@ class Admins::NiconicomoviesController < AdminsController
         format.json { render json: @niconicomovie.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  private
+  def permitted_params
+    params.require(:niconico_movie).permit(:priority, :description, :disabled, :title, :url)
   end
 end
