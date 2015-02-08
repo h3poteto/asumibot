@@ -5,6 +5,7 @@ require 'open-uri'
 namespace :patient do
   @asumi_tweet = ["阿澄","あすみ","佳奈","アスミ","もこたん","もこちゃ"]
 
+  # TODO: このタスク，300/15minが限界で，そろそろアウトなのでuserstreamに積み替えよう
   desc "update patient level"
   task :update => :environment do
     setting_twitter

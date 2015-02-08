@@ -7,6 +7,6 @@ namespace :cache do
       File.unlink cache_file
     end
 
-    open(Rails.application.routes.url_helpers.patients_url)
+    open(Rails.application.routes.url_helpers.patients_url, {:read_timeout => 180})
   end
 end
