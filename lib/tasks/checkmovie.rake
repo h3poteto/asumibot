@@ -21,4 +21,11 @@ namespace :checkmovie do
       confirm_db(m.url)
     end
   end
+
+  desc "check all youtube"
+  task :youtube => :environment do
+    YoutubeMovie.all.each do |youtube|
+      confirm_db(youtube.url)
+    end
+  end
 end
