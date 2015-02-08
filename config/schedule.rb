@@ -96,7 +96,7 @@ every 1.day, :at => '4:01' do
   rake "checkmovie:recent"
 end
 
-every 1.day, :at => '0:04' do
+every 1.day, :at => '0:22' do
   rake "cache:delete_patients"
 end
 

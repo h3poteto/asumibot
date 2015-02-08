@@ -18,7 +18,7 @@ namespace :rss do
     if content.present?
       tweet = "【あすみんブログ更新】『" + content.title  + "』" + content.link
       content.update_attributes!(used: true)
-      Twitter.update(tweet)
+      @client.update(tweet)
     end
   end
 
@@ -35,7 +35,7 @@ namespace :rss do
 
   private
   def setting_twitter
-    Twitter.configure do |config|
+    @client = Twitter::REST::Client.new do |config|
       config.consumer_key       = Settings.twitter.consumer_key
       config.consumer_secret    = Settings.twitter.consumer_secret
       config.oauth_token        = Settings.twitter.oauth_token

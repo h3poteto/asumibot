@@ -21,7 +21,7 @@ namespace :patient do
           parameter = {:id => f.twitter_id.to_i, :since_id => f.since_id.to_i, :count => 200, :page => i}
           users_per = []
           begin
-            users_per = Twitter.user_timeline(parameter)
+            users_per = @client.user_timeline(parameter)
           rescue
             f.update_attributes(:locked => true)
             next
@@ -32,7 +32,7 @@ namespace :patient do
       else
         parameter = {:id => f.twitter_id.to_i, :count => 200}
         begin
-          users_tweet = Twitter.user_timeline(parameter)
+          users_tweet = @client.user_timeline(parameter)
         rescue
           f.update_attributes(:locked => true)
           next
@@ -75,7 +75,7 @@ namespace :patient do
     patient.each_with_index do |p, i|
       tweet = "@" + p.name + " 今日の阿澄度は" + p.level.to_s + "%だよ。"
       tweet = tweet + Settings.site.http + 'patients/' + p.id.to_s
-      Twitter.update(tweet)
+      @client.update(tweet)
     end
   end
 
@@ -87,7 +87,7 @@ namespace :patient do
   end
   task :add => :environment do
     setting_twitter
-    follower = Twitter.follower_ids().ids
+    follower = @client.follower_ids().ids
     patients = Patient.all
     patients.each do |p|
       exist_flg = false
@@ -102,7 +102,7 @@ namespace :patient do
     follower.each do |f|
       already = Patient.where(:twitter_id => f.to_i)
       if already.blank?
-        user = Twitter.user(f)
+        user = @client.user(f)
         patient = Patient.new(twitter_id: f.to_i, name: user.screen_name, nickname: user.name, description: user.description, icon: user.profile_image_url, friend: user.friends_count, follower: user.followers_count, all_tweet: user.statuses_count, protect: user.protected )
         patient.save
       end
@@ -114,7 +114,7 @@ namespace :patient do
     patients = Patient.where(:locked => false)
     patients.each do |p|
       begin
-        user = Twitter.user(p.twitter_id.to_i)
+        user = @client.user(p.twitter_id.to_i)
       rescue
         p.update_attributes(:locked => true )
         next
@@ -126,11 +126,11 @@ namespace :patient do
 
   private
   def setting_twitter
-    Twitter.configure do |config|
+    @client = Twitter::REST::Client.new do |config|
       config.consumer_key       = Settings.twitter.consumer_key
       config.consumer_secret    = Settings.twitter.consumer_secret
-      config.oauth_token        = Settings.twitter.oauth_token
-      config.oauth_token_secret = Settings.twitter.oauth_token_secret
+      config.access_token        = Settings.twitter.oauth_token
+      config.access_token_secret = Settings.twitter.oauth_token_secret
     end
   end
   def asumi_tweet_check(word)
