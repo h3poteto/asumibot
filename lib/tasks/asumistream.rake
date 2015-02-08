@@ -1,6 +1,6 @@
 # coding: utf-8
 
-namespace :userstream do
+namespace :asumistream do
 
   desc "reply userstream"
   task :reply => :environment do
@@ -25,7 +25,7 @@ namespace :userstream do
         # find url
         expanded_urls = []
         event[:target_object][:entities][:urls].each do |url|
-          expanded_urls.push(url[:expanded_url])
+          expanded_urls.push(url.expanded_url)
         end
         expanded_urls.each do |expand_url|
           # search object
@@ -150,7 +150,7 @@ namespace :userstream do
         # find url
         expanded_urls = []
         status.urls.each do |url|
-          expanded_urls.push(url[:expanded_url])
+          expanded_urls.push(url.expanded_url)
         end
         expanded_urls.each do |expand_url|
           # search object
@@ -165,7 +165,7 @@ namespace :userstream do
             movie_object.save!
           end
         end
-      elsif (status.urls.any?{|w| w[:expanded_url].include?("/movies/show_")} && (status.text.include?("@"+Settings.twitter.user_name)) && (status.user.screen_name != Settings.twitter.user_name))
+      elsif (status.urls.any?{|w| w.expanded_url.include?("/movies/show_")} && (status.text.include?("@"+Settings.twitter.user_name)) && (status.user.screen_name != Settings.twitter.user_name))
         # search user
         user_id = status.user.id.to_i
         user = User.where(twitter_id: user_id)
@@ -179,7 +179,7 @@ namespace :userstream do
 
         expanded_urls = []
         status.urls.each do |url|
-          expanded_urls.push(url[:expanded_url])
+          expanded_urls.push(url.expanded_url)
         end
         expanded_urls.each do |expand_url|
           if expand_url.include?("show_youtube")
