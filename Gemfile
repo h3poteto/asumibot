@@ -38,7 +38,6 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
- gem 'rake'
  gem 'twitter'
  gem 'rails_config'
  gem 'nokogiri'
@@ -52,7 +51,6 @@ gem 'jquery-rails'
  gem 'i18n_generators'
  gem 'gon'
  gem 'figaro'
- gem 'passenger'
 
 group :test do
   gem "shoulda-matchers"
