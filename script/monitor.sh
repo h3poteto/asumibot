@@ -2,7 +2,7 @@
 while true
 do
     sleep 10
-    isAlive=`ps -ef | grep "userstream" | grep "asumistream" | grep -v grep | wc -l`
+    isAlive=`ps -ef | grep "asumistream" | grep -v grep | wc -l`
     if [ $isAlive -lt 1 ]; then
         #死んでる
         cd /home/akira/projects/asumibot/
