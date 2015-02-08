@@ -102,6 +102,7 @@ namespace :twitter do
       return false
     end
     uri = URI(url)
+    uri.scheme = "https"
     begin
       doc = Nokogiri::XML(uri.read)
     rescue
