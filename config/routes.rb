@@ -1,4 +1,5 @@
 Asumibot::Application.routes.draw do
+
   resources :patients, only: [:show, :index]
   resources :recommends, only: [:index]
   resources :movies, only: [:index] do

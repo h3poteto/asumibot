@@ -42,6 +42,10 @@ Rails.application.configure do
   BetterErrors::Middleware.allow_ip! ENV["TRUSTED_IP"] if ENV["TRUSTED_IP"]
 
   config.after_initialize do
+    Rails.application.routes.default_url_options[:host] = Settings.site.host
+  end
+
+  config.after_initialize do
     Bullet.enable = true
     Bullet.alert = true
     Bullet.bullet_logger = true
