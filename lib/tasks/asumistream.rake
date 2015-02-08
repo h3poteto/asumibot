@@ -25,14 +25,14 @@ namespace :asumistream do
         # find url
         expanded_urls = []
         event[:target_object][:entities][:urls].each do |url|
-          expanded_urls.push(url.expanded_url)
+          expanded_urls.push(url[:expanded_url])
         end
         expanded_urls.each do |expand_url|
           # search object
-          if expand_url.include?("youtube")
-            movie_object = YoutubeMovie.where(url: expand_url).first
-          elsif expand_url.include?("nicovideo")
-            movie_object = NiconicoMovie.where(url: expand_url).first
+          if expand_url.to_s.include?("youtube")
+            movie_object = YoutubeMovie.where(url: expand_url.to_s).first
+          elsif expand_url.to_s.include?("nicovideo")
+            movie_object = NiconicoMovie.where(url: expand_url.to_s).first
           end
           # add object
           if movie_object.present?
@@ -45,7 +45,39 @@ namespace :asumistream do
 
     ## read timeline
     client.userstream do | status |
-      if (status.in_reply_to_user_id != nil) && (!status.text.include?("RT")) && (!status.text.include?("QT")) && (status.user.screen_name != Settings.twitter.user_name) && (status.text.include?("@"+Settings.twitter.user_name))
+      if (status.urls.any?{|w| w.expanded_url.to_s.include?("/movies/show_")} && (status.text.include?("@"+Settings.twitter.user_name)) && (status.user.screen_name != Settings.twitter.user_name))
+        # search user
+        user_id = status.user.id.to_i
+        user = User.where(twitter_id: user_id)
+        if user.blank?
+          new_user = User.new(screen_name: status.user.screen_name, twitter_id: user_id)
+          new_user.save
+          user = new_user
+        else
+          user = user.first
+        end
+
+        expanded_urls = []
+        status.urls.each do |url|
+          expanded_urls.push(url.expanded_url)
+        end
+        expanded_urls.each do |expand_url|
+          if expand_url.to_s.include?("show_youtube")
+            s = expand_url.to_s.index("show_youtube/")
+            id = expand_url.to_s[(s+("show_youtube/").length)..200].to_i
+            movie_object = YoutubeMovie.find(id)
+          elsif expand_url.to_s.include?("show_niconico")
+            s = expand_url.to_s.index("show_niconico/")
+            id = expand_url.to_s[(s+("show_niconico/").length)..200].to_i
+            movie_object = NiconicoMovie.find(id)
+          end
+          # add object
+          if movie_object.present?
+            movie_object.rt_users.push(user)
+            movie_object.save!
+          end
+        end
+      elsif (status.in_reply_to_user_id != nil) && (!status.text.include?("RT")) && (!status.text.include?("QT")) && (status.user.screen_name != Settings.twitter.user_name) && (status.text.include?("@"+Settings.twitter.user_name))
         puts status.user.screen_name
         puts status.text
         puts "\n"
@@ -57,67 +89,68 @@ namespace :asumistream do
         last_men.tweet_id = men.id.to_s
         last_men.save
 
-        # URL expand
-        expand_url = ""
-        # https
-        if men.text.include?("https:")
-          http_url = men.text.gsub('https:','http:')
-          expand_url = UrlExpander::Client.expand(http_url) if http_url.include?("http:")
-        else
-          expand_url = UrlExpander::Client.expand(men.text) if men.text.include?("http:")
-        end
+        ## 不要なため廃止
+        # # URL expand
+        # expand_url = ""
+        # # https
+        # if men.text.include?("https:")
+        #   http_url = men.text.gsub('https:','http:')
+        #   expand_url = UrlExpander::Client.expand(http_url) if http_url.include?("http:")
+        # else
+        #   expand_url = UrlExpander::Client.expand(men.text) if men.text.include?("http:")
+        # end
 
 
-        # youtube,nicovideoを含む場合はDBに登録する
-        if expand_url.include?("www.nicovideo.jp/watch")
-          start_pos = expand_url.index("watch/")
-          end_pos = expand_url.index("?",start_pos)
-          end_pos = 100 if end_pos == nil
-          movie_id = expand_url[start_pos+6..end_pos-1]
-          uri = URI("http://ext.nicovideo.jp/api/getthumbinfo/" + movie_id)
-          begin
-            doc = Nokogiri::XML(uri.read)
-          rescue
-            next
-          end
-          description = doc.search('description').text
-          title = doc.search('title').text
-          url = doc.search('watch_url').text
-          if title.present? && url.present?
-            new_data = NiconicoMovie.create(title: title, url: url, description: description, priority: nil)
-            if new_data.save
-              update("新しく動画が追加されたよ\n" + "【" + title + "】", url)
-            else
-              already = AlreadySerif.all.sample.word
-              update("@" + user_name + " " + already + "\n", url)
-            end
-          end
-          next
-        elsif expand_url.include?("youtube.com/watch?")
-          start_pos = expand_url.index("watch?v=")
-          end_pos = expand_url.index("&",start_pos)
-          end_pos = 100 if end_pos == nil
-          movie_id = expand_url[start_pos+8..end_pos-1]
-          uri = URI("http://gdata.youtube.com/feeds/api/videos/" + movie_id)
-          begin
-            doc = Nokogiri::XML(uri.read)
-          rescue
-            next
-          end
-          content = doc.search('content').text
-          title = doc.search('title').text
-          url = doc.search('link').first['href'] + "_player"
-          if content.present? || title.present? || url.present?
-            new_data = YoutubeMovie.create(title: title, url: url, description: content, priority: nil)
-            if new_data.save
-              update("新しく動画が追加されたよ\n" + "【" + title + "】", url)
-            else
-              already = AlreadySerif.all.sample.word
-              update("@" + user_name + " " + already + "\n", url)
-            end
-          end
-          next
-        end
+        # # youtube,nicovideoを含む場合はDBに登録する
+        # if expand_url.include?("www.nicovideo.jp/watch")
+        #   start_pos = expand_url.index("watch/")
+        #   end_pos = expand_url.index("?",start_pos)
+        #   end_pos = 100 if end_pos == nil
+        #   movie_id = expand_url[start_pos+6..end_pos-1]
+        #   uri = URI("http://ext.nicovideo.jp/api/getthumbinfo/" + movie_id)
+        #   begin
+        #     doc = Nokogiri::XML(uri.read)
+        #   rescue
+        #     next
+        #   end
+        #   description = doc.search('description').text
+        #   title = doc.search('title').text
+        #   url = doc.search('watch_url').text
+        #   if title.present? && url.present?
+        #     new_data = NiconicoMovie.create(title: title, url: url, description: description, priority: nil)
+        #     if new_data.save
+        #       update("新しく動画が追加されたよ\n" + "【" + title + "】", url)
+        #     else
+        #       already = AlreadySerif.all.sample.word
+        #       update("@" + user_name + " " + already + "\n", url)
+        #     end
+        #   end
+        #   next
+        # elsif expand_url.include?("youtube.com/watch?")
+        #   start_pos = expand_url.index("watch?v=")
+        #   end_pos = expand_url.index("&",start_pos)
+        #   end_pos = 100 if end_pos == nil
+        #   movie_id = expand_url[start_pos+8..end_pos-1]
+        #   uri = URI("http://gdata.youtube.com/feeds/api/videos/" + movie_id)
+        #   begin
+        #     doc = Nokogiri::XML(uri.read)
+        #   rescue
+        #     next
+        #   end
+        #   content = doc.search('content').text
+        #   title = doc.search('title').text
+        #   url = doc.search('link').first['href'] + "_player"
+        #   if content.present? || title.present? || url.present?
+        #     new_data = YoutubeMovie.create(title: title, url: url, description: content, priority: nil)
+        #     if new_data.save
+        #       update("新しく動画が追加されたよ\n" + "【" + title + "】", url)
+        #     else
+        #       already = AlreadySerif.all.sample.word
+        #       update("@" + user_name + " " + already + "\n", url)
+        #     end
+        #   end
+        #   next
+        # end
         # DBアクセス
         movies = nil
         begin
@@ -154,42 +187,10 @@ namespace :asumistream do
         end
         expanded_urls.each do |expand_url|
           # search object
-          if expand_url.include?("youtube")
-            movie_object = YoutubeMovie.where(url: expand_url).first
-          elsif expand_url.include?("nicovideo")
-            movie_object = NiconicoMovie.where(url: expand_url).first
-          end
-          # add object
-          if movie_object.present?
-            movie_object.rt_users.push(user)
-            movie_object.save!
-          end
-        end
-      elsif (status.urls.any?{|w| w.expanded_url.include?("/movies/show_")} && (status.text.include?("@"+Settings.twitter.user_name)) && (status.user.screen_name != Settings.twitter.user_name))
-        # search user
-        user_id = status.user.id.to_i
-        user = User.where(twitter_id: user_id)
-        if user.blank?
-          new_user = User.new(screen_name: status.user.screen_name, twitter_id: user_id)
-          new_user.save
-          user = new_user
-        else
-          user = user.first
-        end
-
-        expanded_urls = []
-        status.urls.each do |url|
-          expanded_urls.push(url.expanded_url)
-        end
-        expanded_urls.each do |expand_url|
-          if expand_url.include?("show_youtube")
-            s = expand_url.index("show_youtube/")
-            id = expand_url[(s+("show_youtube/").length)..200].to_i
-            movie_object = YoutubeMovie.find(id)
-          elsif expand_url.include?("show_niconico")
-            s = expand_url.index("show_niconico/")
-            id = expand_url[(s+("show_niconico/").length)..200].to_i
-            movie_object = NiconicoMovie.find(id)
+          if expand_url.to_s.include?("youtube")
+            movie_object = YoutubeMovie.where(url: expand_url.to_s).first
+          elsif expand_url.to_s.include?("nicovideo")
+            movie_object = NiconicoMovie.where(url: expand_url.to_s).first
           end
           # add object
           if movie_object.present?
