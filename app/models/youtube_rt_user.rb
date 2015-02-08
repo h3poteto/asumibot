@@ -3,7 +3,7 @@ class YoutubeRtUser < ActiveRecord::Base
   belongs_to :rt_user, :class_name => 'User', :foreign_key => :user_id
 
   def self.recent(period=1.week.ago)
-    to = Date.today
+    to = Time.current
     if period.present?
       new_rt = self.where(created_at: period...to).order("created_at DESC")
     else
@@ -19,7 +19,7 @@ class YoutubeRtUser < ActiveRecord::Base
     count.sort!{|a,b|
       b[1] <=> a[1]
     }
-    #raise count.inspect
+    # raise count.inspect
     return count
   end
 

@@ -3,7 +3,7 @@ class YoutubeFavUser < ActiveRecord::Base
   belongs_to :fav_user, :class_name => 'User', :foreign_key => :user_id
 
   def self.recent(period=1.week.ago)
-    to = Date.today
+    to = Time.current
     if period.present?
       new_rt = self.where(created_at: period...to).order("created_at DESC")
     else
@@ -28,4 +28,3 @@ class YoutubeFavUser < ActiveRecord::Base
     return fav_movie.count
   end
 end
-
