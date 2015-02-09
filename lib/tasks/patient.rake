@@ -16,7 +16,6 @@ namespace :patient do
       tweet_count = f.tweet_count
       asumi_word = f.asumi_word
       # ascumi_count cal
-      binding.pry
       asumi = asumi_calculate(asumi_count, tweet_count)
       f.update_attributes(level: asumi, prev_level: prev_level, prev_tweet_count: prev_tweet, clear: false, tweet_count: 0, asumi_count: 0, asumi_word: 0)
       # asumilevels update
