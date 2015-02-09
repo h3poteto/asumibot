@@ -1,0 +1,8 @@
+:verbose: false
+:concurrency: 20
+:pidfile: ./tmp/pids/sidekiq.pid
+:logfile: ./log/sidekiq.log
+:retry: 25
+:queues:
+  - [default, 20]
+  - loop

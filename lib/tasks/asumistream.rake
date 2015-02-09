@@ -7,7 +7,11 @@ namespace :asumistream do
     setting_tweetstream
     setting_twitter
     client = TweetStream::Client.new
+    puts client
 
+    client.on_error do |message|
+      puts message
+    end
     ## for fav event
     client.on_event(:favorite) do |event|
       if event[:event] == "favorite"
@@ -45,6 +49,12 @@ namespace :asumistream do
 
     ## read timeline
     client.userstream do | status |
+      ## 阿澄度計測用処理
+      ## ここから先はフォロワーのみ
+      ## TODO: 最後にsidekiqに投げる
+      puts "patients"
+      PatientJob.perform_later(status.user.id.to_i, status.text, status.id.to_s, status.created_at.to_s(:db))
+      puts "patient complete"
       if (status.urls.any?{|w| w.expanded_url.to_s.include?("/movies/show_")} && (status.text.include?("@"+Settings.twitter.user_name)) && (status.user.screen_name != Settings.twitter.user_name))
         # search user
         user_id = status.user.id.to_i

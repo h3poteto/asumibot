@@ -52,6 +52,7 @@ gem 'jquery-rails'
  gem 'gon'
  gem 'figaro'
  gem 'actionpack-page_caching'
+ gem 'sidekiq'
 
 group :test do
   gem "shoulda-matchers"

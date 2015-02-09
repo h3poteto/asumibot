@@ -3,70 +3,25 @@ require 'url_expander'
 require 'open-uri'
 
 namespace :patient do
-  @asumi_tweet = ["阿澄","あすみ","佳奈","アスミ","もこたん","もこちゃ"]
 
-  # TODO: このタスク，300/15minが限界で，そろそろアウトなのでuserstreamに積み替えよう
   desc "update patient level"
   task :update => :environment do
     setting_twitter
     follower = Patient.where(:disabled => false)
     follower.each do |f|
-      prev_level = f.level
-      prev_tweet = f.tweet_count
-      parameter = {}
-      users_tweet = []
-      if f.since_id.present?
-        i = 0
-        begin
-          i += 1
-          parameter = {:id => f.twitter_id.to_i, :since_id => f.since_id.to_i, :count => 200, :page => i}
-          users_per = []
-          begin
-            users_per = @client.user_timeline(parameter)
-          rescue
-            f.update_attributes(:locked => true)
-            next
-          end
-          f.update_attributes(:locked => false)
-          users_tweet = users_tweet + users_per
-        end while users_per.length == 200
-      else
-        parameter = {:id => f.twitter_id.to_i, :count => 200}
-        begin
-          users_tweet = @client.user_timeline(parameter)
-        rescue
-          f.update_attributes(:locked => true)
-          next
-        end
-        f.update_attributes(:locked => false)
-      end
-      if users_tweet.present?
-        asumi_count = 0
-        asumi_word = 0
-        tweet_count = users_tweet.length
-        users_tweet.each do |tl|
-          if asumi_tweet_check(tl.text)
-            asumi_count += 1
-            # add asumi_tweet for DB
-            asumi_tweet = AsumiTweet.new(patient_id: f.id, tweet: tl.text, tweet_id: tl.id.to_s, tweet_time: tl.created_at.to_s(:db))
-            asumi_tweet.save
-          end
-          tweet = asumi_tweet_count(tl.text)
-          asumi_word += tweet
-        end
-        # ascumi_count cal
-        asumi = asumi_calculate(asumi_count, tweet_count)
-        f.update_attributes(:level => asumi, :asumi_count => asumi_count, :tweet_count => tweet_count, :asumi_word => asumi_word, :since_id => users_tweet.first.id.to_s, :prev_level => prev_level, :prev_tweet_count => prev_tweet, :clear => false)
-        # asumilevels update
-        asumi_levels = AsumiLevel.new(patient_id: f.id, asumi_count: asumi_count, tweet_count: tweet_count, asumi_word: asumi_word)
-        asumi_levels.save
-      else
-        f.update_attributes(:level => 0, :asumi_count => 0, :tweet_count => 0, :asumi_word => 0, :prev_level => prev_level, :clear => false)
-        # asumilevels update
-        asumi_levels = AsumiLevel.new(patient_id: f.id, asumi_count: 0, tweet_count: 0, asumi_word: 0)
-        asumi_levels.save
-      end
+      prev_level = f.level.present? ? f.level : 0
+      prev_tweet = f.tweet_count.present? ? f.tweet_count : 0
 
+      asumi_count = f.asumi_count
+      tweet_count = f.tweet_count
+      asumi_word = f.asumi_word
+      # ascumi_count cal
+      binding.pry
+      asumi = asumi_calculate(asumi_count, tweet_count)
+      f.update_attributes(level: asumi, prev_level: prev_level, prev_tweet_count: prev_tweet, clear: false, tweet_count: 0, asumi_count: 0, asumi_word: 0)
+      # asumilevels update
+      asumi_levels = AsumiLevel.new(patient_id: f.id, asumi_count: asumi_count, tweet_count: tweet_count, asumi_word: asumi_word)
+      asumi_levels.save
     end
   end
 
@@ -88,7 +43,7 @@ namespace :patient do
   end
   task :add => :environment do
     setting_twitter
-    follower = @client.follower_ids().ids
+    follower = @client.follower_ids.to_a
     patients = Patient.all
     patients.each do |p|
       exist_flg = false
@@ -104,7 +59,7 @@ namespace :patient do
       already = Patient.where(:twitter_id => f.to_i)
       if already.blank?
         user = @client.user(f)
-        patient = Patient.new(twitter_id: f.to_i, name: user.screen_name, nickname: user.name, description: user.description, icon: user.profile_image_url, friend: user.friends_count, follower: user.followers_count, all_tweet: user.statuses_count, protect: user.protected )
+        patient = Patient.new(twitter_id: f.to_i, name: user.screen_name, nickname: user.name, description: user.description, icon: user.profile_image_url, friend: user.friends_count, follower: user.followers_count, all_tweet: user.statuses_count, protect: user.protected? )
         patient.save
       end
     end
@@ -120,7 +75,7 @@ namespace :patient do
         p.update_attributes(:locked => true )
         next
       end
-      p.update_attributes(name: user.screen_name, protect: user.protected, nickname: user.name, description: user.description, icon: user.profile_image_url, friend: user.friends_count, follower: user.followers_count, all_tweet: user.statuses_count )
+      p.update_attributes(name: user.screen_name, protect: user.protected?, nickname: user.name, description: user.description, icon: user.profile_image_url, friend: user.friends_count, follower: user.followers_count, all_tweet: user.statuses_count )
       sleep(1)
     end
   end
@@ -134,45 +89,11 @@ namespace :patient do
       config.access_token_secret = Settings.twitter.oauth_token_secret
     end
   end
-  def asumi_tweet_check(word)
-    expand_url = ""
-    doc = ""
-    if word.include?("https:")
-      http_url = word.gsub('https:','http:')
-      begin
-        expand_url = UrlExpander::Client.expand(http_url) if http_url.include?("http:")
-      rescue
-        expand_url = nil
-      end
-    else
-      begin
-        expand_url = UrlExpander::Client.expand(word) if word.include?("http:")
-      rescue
-        expand_url = nil
-      end
-    end
-    if expand_url.present?
-      begin
-        uri = URI(expand_url)
-        doc = Nokogiri::XML(uri.read).text
-      rescue
-        doc = "error"
-      end
-    end
-    @asumi_tweet.each do |asumi|
-      return true if word.include?(asumi)
-      return true if doc.include?(asumi)
-    end
-    return false
-  end
-  def asumi_tweet_count(word)
-    count = 0
-    @asumi_tweet.each do |asumi|
-      count += word.scan(/#{asumi}/).length
-    end
-    return count.to_i
-  end
+
   def asumi_calculate(asumi_count, tweet_count)
+    if tweet_count == 0
+      return 0
+    end
     m = asumi_count.to_f/tweet_count.to_f
     m = m * 100
     return m
