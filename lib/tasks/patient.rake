@@ -10,6 +10,7 @@ namespace :patient do
     follower = Patient.where(:disabled => false)
     follower.each do |f|
       prev_level = f.level.present? ? f.level : 0
+      prev_level_tweet = f.prev_tweet_count.present? ? f.prev_tweet_count : 0
       prev_tweet = f.tweet_count.present? ? f.tweet_count : 0
 
       asumi_count = f.asumi_count
@@ -17,7 +18,7 @@ namespace :patient do
       asumi_word = f.asumi_word
       # ascumi_count cal
       asumi = asumi_calculate(asumi_count, tweet_count)
-      f.update_attributes(level: asumi, prev_level: prev_level, prev_tweet_count: prev_tweet, clear: false, tweet_count: 0, asumi_count: 0, asumi_word: 0)
+      f.update_attributes(level: asumi, prev_level: prev_level, prev_level_tweet: prev_level_tweet, prev_tweet_count: prev_tweet, clear: false, tweet_count: 0, asumi_count: 0, asumi_word: 0)
       # asumilevels update
       asumi_levels = AsumiLevel.new(patient_id: f.id, asumi_count: asumi_count, tweet_count: tweet_count, asumi_word: asumi_word)
       asumi_levels.save

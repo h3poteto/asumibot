@@ -8,16 +8,16 @@ class Patient < ActiveRecord::Base
 
 
   def self.rankings
-    rank = Patient.where(disabled: false).where(locked: false).where(protect: false).where("tweet_count >?", 10).order("level DESC")
+    rank = Patient.where(disabled: false).where(locked: false).where(protect: false).where("prev_tweet_count >?", 10).order("level DESC")
     return rank
   end
   def self.avail_rankings
-    rank = Patient.where(disabled: false).where(locked: false).where(protect: false).where("tweet_count >?", 10).where("level >?", 20).order("level DESC")
+    rank = Patient.where(disabled: false).where(locked: false).where(protect: false).where("prev_tweet_count >?", 10).where("level >?", 20).order("level DESC")
     return rank
   end
 
   def self.avail_prev_rankings
-    prev_rank = Patient.where(disabled: false).where(locked: false).where(protect: false).where("prev_tweet_count >?", 10).order("prev_level DESC")
+    prev_rank = Patient.where(disabled: false).where(locked: false).where(protect: false).where("prev_level_tweet >?", 10).order("prev_level DESC")
     return prev_rank
   end
 end

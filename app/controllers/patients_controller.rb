@@ -7,7 +7,6 @@ class PatientsController < ApplicationController
   # GET /patients.json
   def index
     @patients = Patient.includes(:asumi_tweets).rankings.take(10)
-    # ここのレコード数が多すぎるので激重
     @month_ranking = AsumiLevel.month_rankings
     @prev_rank = Patient.avail_prev_rankings
     @prev_rank_index = []
