@@ -57,9 +57,13 @@ namespace :patient do
     follower.each do |f|
       already = Patient.where(:twitter_id => f.to_i)
       if already.blank?
-        user = @client.user(f)
-        patient = Patient.new(twitter_id: f.to_i, name: user.screen_name, nickname: user.name, description: user.description, icon: user.profile_image_url, friend: user.friends_count, follower: user.followers_count, all_tweet: user.statuses_count, protect: user.protected? )
-        patient.save
+        begin
+          user = @client.user(f)
+          patient = Patient.new(twitter_id: f.to_i, name: user.screen_name, nickname: user.name, description: user.description, icon: user.profile_image_url, friend: user.friends_count, follower: user.followers_count, all_tweet: user.statuses_count, protect: user.protected? )
+          patient.save
+        rescue
+          next
+        end
       end
     end
   end

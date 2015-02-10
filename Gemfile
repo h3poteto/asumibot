@@ -53,16 +53,16 @@ gem 'jquery-rails'
  gem 'figaro'
  gem 'actionpack-page_caching'
  gem 'sidekiq'
+ gem 'pry-byebug'
+ gem 'pry-rails'
+ gem 'pry-doc'
+ gem 'pry-stack_explorer'
 
 group :test do
   gem "shoulda-matchers"
 end
 
 group :development, :test do
-  gem 'pry-rails'
-  gem 'pry-doc'
-  gem 'pry-stack_explorer'
-  gem 'pry-byebug'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'spring'

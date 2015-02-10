@@ -1,3 +1,4 @@
+# coding: utf-8
 class PatientsController < ApplicationController
   layout "user"
   caches_page :index
@@ -6,6 +7,7 @@ class PatientsController < ApplicationController
   # GET /patients.json
   def index
     @patients = Patient.includes(:asumi_tweets).rankings.take(10)
+    # ここのレコード数が多すぎるので激重
     @month_ranking = AsumiLevel.month_rankings
     @prev_rank = Patient.avail_prev_rankings
     @prev_rank_index = []
@@ -15,10 +17,6 @@ class PatientsController < ApplicationController
       else
         @prev_rank_index[p.id] = 2147483648
       end
-    end
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @patients }
     end
   end
 
@@ -59,10 +57,6 @@ class PatientsController < ApplicationController
     end
     gon.leveldata = @level_data
     gon.datedata = @datedata.map{|d| d.prev_day.month.to_s + "/" + d.prev_day.day.to_s }
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @patient }
-    end
   end
 
 

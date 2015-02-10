@@ -6,14 +6,14 @@ class AsumiLevel < ActiveRecord::Base
     user_info = Struct.new("Patient", :id, :name, :level )
     to = Date.today
     from = Date.today.beginning_of_month
-    patients = Patient.includes(:asumi_levels).where(disabled: false).where(locked: false).where(protect: false)
+    patients = Patient.where(disabled: false).where(locked: false).where(protect: false)
     rankings = []
     patients.each do |p|
       month_level = 0
       month_tweet = 0
       month_asumi = 0
-      p.asumi_levels.each do |l|
-        next if l.created_at < from
+      asumi_levels = AsumiLevel.where(patient_id: p.id).where(created_at: from..to)
+      asumi_levels.each do |l|
         month_tweet += l.tweet_count
         month_asumi += l.asumi_count
       end
