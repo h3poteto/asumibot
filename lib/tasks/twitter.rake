@@ -63,9 +63,9 @@ namespace :twitter do
   desc "follower"
   task :follower => :environment do
     setting_twitter
-    follower = @client.follower_ids().ids
-    friend = @client.friend_ids().ids
-    outgoing = @client.friendships_outgoing().ids
+    follower = @client.follower_ids().to_a
+    friend = @client.friend_ids().to_a
+    outgoing = @client.friendships_outgoing().to_a
     fan = follower - friend - outgoing
     fan.each do |f|
       @client.follow(f)
