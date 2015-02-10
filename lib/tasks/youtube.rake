@@ -69,6 +69,7 @@ namespace :youtube do
         end
         #puts
       end
+      add_youtube(doc, false)
     end
   end
 

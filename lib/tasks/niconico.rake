@@ -107,6 +107,7 @@ namespace :niconico do
         @result[0]["list"].each do | movie |
           popular_data = NiconicoPopular.create(title: movie["title"], url: @watch_path + movie["id"], description: movie["description_short"], priority: pop )
           popular_data.save
+          add_niconico(movie, false)
           pop += 1
         end
       end
