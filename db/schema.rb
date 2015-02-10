@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150210013452) do
+ActiveRecord::Schema.define(version: 20150210014730) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(version: 20150210013452) do
     t.integer  "prev_level",       limit: 4
     t.integer  "prev_level_tweet", limit: 4
     t.integer  "prev_tweet_count", limit: 4
+    t.integer  "prev_asumi_word",  limit: 4
     t.string   "since_id",         limit: 255
     t.boolean  "clear",            limit: 1,     default: false, null: false
     t.boolean  "protect",          limit: 1,                     null: false

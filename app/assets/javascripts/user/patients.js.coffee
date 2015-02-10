@@ -48,7 +48,7 @@ class gon.Patients
             return ((@).value + "%")
         }
         allowDecimals: false,
-        max: 100,  
+        max: 100,
         min: 0
       }],
       tooltip: {
@@ -58,13 +58,13 @@ class gon.Patients
       legend: {
         borderWidth: 0,
         layout: 'vertical',
-        align: 'right',       
+        align: 'right',
         verticalAlign: 'top'
       },
       series: [{
-        name: "阿澄度",      
-        color: '#ff9114',      
-        type: 'line',      
+        name: "阿澄度",
+        color: '#ff9114',
+        type: 'line',
         data: gon.leveldata
       }]
     }

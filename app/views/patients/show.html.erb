@@ -18,11 +18,11 @@
 	</td>
 	<td>
 	  <b>ツイート数</b><br />
-	  <%= @patient.tweet_count %>
+	  <%= @patient.prev_tweet_count %>
 	</td>
 	<td>
 	  <b>阿澄ワード</b><br />
-	  <%= @patient.asumi_word %>語
+	  <%= @patient.prev_asumi_word %>語
 	</td>
 	<td class="last">
 	  <b>順位</b><br />
@@ -84,7 +84,7 @@
 	    <td><%= link_to i, patient_path(@patient, :day => i) %></td>
 	  <% end %>
 	</tr>
-	
+
 	<% for i in 8..@last_day.day do %>
 	  <% if ( i - 1)%7 == 0 %>
 	    <tr>
