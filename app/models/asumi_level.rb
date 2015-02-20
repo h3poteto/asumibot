@@ -4,8 +4,8 @@ class AsumiLevel < ActiveRecord::Base
 
   def self.month_rankings
     user_info = Struct.new("Patient", :id, :name, :level )
-    to = Date.today
-    from = Date.today.beginning_of_month
+    to = Time.current
+    from = Time.current.beginning_of_month
     patients = Patient.where(disabled: false).where(locked: false).where(protect: false)
     rankings = []
     patients.each do |p|

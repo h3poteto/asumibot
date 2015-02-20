@@ -28,12 +28,12 @@ class MoviesController < ApplicationController
     @youtube = YoutubeMovie.find(params[:id])
     s = @youtube.url.index("?v=")
     e = @youtube.url.index("&")
-    @id = @youtube.url[s+3..e-1]
+    @id = @youtube.url[s+3..e-1] rescue 1
   end
   def show_niconico
     @niconico = NiconicoMovie.find(params[:id])
     s = @niconico.url.index("/watch/")
-    @id = @niconico.url[s+7..100]
+    @id = @niconico.url[s+7..100] rescue 1
   end
 
   def streaming
@@ -42,7 +42,7 @@ class MoviesController < ApplicationController
     @movies.each do |m|
       s = m.url.index("?v=")
       e = m.url.index("&")
-      hashes.push({:title => m.title, :id => m.url[s+3..e-1]})
+      hashes.push({:title => m.title, :id => m.url[s+3..e-1]}) rescue nil
     end
     gon.youtube = hashes
   end

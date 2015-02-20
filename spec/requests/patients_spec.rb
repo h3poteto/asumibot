@@ -1,11 +1,20 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "Patients" do
+RSpec.describe "Patients", type: :request do
+  before(:each) do
+    @patient = create(:patient)
+  end
   describe "GET /patients" do
-    it "works! (now write some real specs)" do
-      # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
+    it "works!" do
       get patients_path
-      response.status.should be(200)
+      expect(response).to have_http_status(200)
+    end
+  end
+
+  describe "GET /patient" do
+    it "works!" do
+      get patient_path(@patient)
+      expect(response).to have_http_status(200)
     end
   end
 end

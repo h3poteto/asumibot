@@ -1,34 +1,30 @@
-require "spec_helper"
+require "rails_helper"
 
-describe PatientsController do
+RSpec.describe PatientsController, :type => :routing do
   describe "routing" do
 
     it "routes to #index" do
-      get("/patients").should route_to("patients#index")
-    end
-
-    it "routes to #new" do
-      get("/patients/new").should route_to("patients#new")
+      expect(:get => "/patients").to route_to("patients#index")
     end
 
     it "routes to #show" do
-      get("/patients/1").should route_to("patients#show", :id => "1")
+      expect(:get => "/patients/1").to route_to("patients#show", :id => "1")
     end
 
     it "routes to #edit" do
-      get("/patients/1/edit").should route_to("patients#edit", :id => "1")
+      expect(:get => "/patients/1/edit").not_to be_routable
     end
 
     it "routes to #create" do
-      post("/patients").should route_to("patients#create")
+      expect(:post => "/patients").not_to be_routable
     end
 
     it "routes to #update" do
-      put("/patients/1").should route_to("patients#update", :id => "1")
+      expect(:put => "/patients/1").not_to be_routable
     end
 
     it "routes to #destroy" do
-      delete("/patients/1").should route_to("patients#destroy", :id => "1")
+      expect(:delete => "/patients/1").not_to be_routable
     end
 
   end

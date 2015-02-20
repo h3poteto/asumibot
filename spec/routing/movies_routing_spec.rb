@@ -1,34 +1,50 @@
-require "spec_helper"
+require "rails_helper"
 
-describe MoviesController do
+RSpec.describe MoviesController, :type => :routing do
   describe "routing" do
 
     it "routes to #index" do
-      get("/movies").should route_to("movies#index")
+      expect(:get => "/movies").to route_to("movies#index")
     end
 
     it "routes to #new" do
-      get("/movies/new").should route_to("movies#new")
+      expect(:get => "/movies/new").not_to be_routable
     end
 
     it "routes to #show" do
-      get("/movies/1").should route_to("movies#show", :id => "1")
+      expect(:get => "/movies/1").not_to be_routable
     end
 
     it "routes to #edit" do
-      get("/movies/1/edit").should route_to("movies#edit", :id => "1")
+      expect(:get => "/movies/1/edit").not_to be_routable
     end
 
     it "routes to #create" do
-      post("/movies").should route_to("movies#create")
+      expect(:put => "/movies").not_to be_routable
     end
 
     it "routes to #update" do
-      put("/movies/1").should route_to("movies#update", :id => "1")
+      expect(:put => "/movies/1").not_to be_routable
     end
 
     it "routes to #destroy" do
-      delete("/movies/1").should route_to("movies#destroy", :id => "1")
+      expect(:delete => "/movies/1").not_to be_routable
+    end
+
+    it "routes to #streaming" do
+      expect(:get => "/movies/streaming").to route_to("movies#streaming")
+    end
+
+    it "routes to #streamnico" do
+      expect(:get => "/movies/streamnico").to route_to("movies#streamnico")
+    end
+
+    it "routes to #show_niconico" do
+      expect(:get => "/movies/show_niconico/1").to route_to("movies#show_niconico", id: "1")
+    end
+
+    it "routes to #show_youtube" do
+      expect(:get => "/movies/show_youtube/1").to route_to("movies#show_youtube", id: "1")
     end
 
   end

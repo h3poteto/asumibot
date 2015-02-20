@@ -10,15 +10,14 @@ gem 'mysql2'
 
 # Gems used only for assets and not required
 # in production environments by default.
-group :assets do
-end
 gem 'sass-rails'
 gem 'coffee-rails'
+gem 'less-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', :platforms => :ruby
-gem 'less-rails-bootstrap'
-gem 'twitter-bootstrap-rails'
+#gem 'less-rails-bootstrap'
+gem 'twitter-bootstrap-rails', "2.2.8"
 
 gem 'uglifier'
 
@@ -37,7 +36,6 @@ gem 'jquery-rails'
 # gem 'capistrano'
 
 # To use debugger
-# gem 'debugger'
  gem 'twitter'
  gem 'rails_config'
  gem 'nokogiri'
@@ -59,13 +57,19 @@ gem 'jquery-rails'
  gem 'pry-stack_explorer'
 
 group :test do
-  gem "shoulda-matchers"
+  gem 'shoulda-matchers', require: false
+  gem 'rspec-collection_matchers'
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
+  gem 'faker'
+  gem 'faker-japanese'
 end
 
 group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'spring'
+  gem "spring-commands-rspec"
   gem 'rspec-rails'
   gem 'rspec'
   gem 'rspec-mocks'

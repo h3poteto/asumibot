@@ -8,7 +8,8 @@ describe 'twitter' do
   before(:all) do
     @rake = Rake::Application.new
     Rake.application = @rake
-    Rake.application.rake_require("twitter", ["/home/akira/projects/asumibot/lib/tasks"])
+    Rake.application.rake_require("twitter", ["#{Rails.root.to_s}/lib/tasks"])
+    Rake.application.rake_require("asumistream", ["#{Rails.root.to_s}/lib/tasks"])
     Rake::Task.define_task(:environment)
   end
 
@@ -19,23 +20,23 @@ describe 'twitter' do
         wrong_url = "http://www.youtube.com/watch?v=p8l2OENXOa"
         cannot_url = "http://www.youtube.com/watch?v=S4AJQ-yEmEc"
         other_url = "http://morizyun.github.io/blog/rake-task-rails-rspec-test/"
-        confirm_youtube(right_url).should eq true
-        confirm_youtube(wrong_url).should eq false
-        confirm_youtube(cannot_url).should eq false
-        confirm_youtube(other_url).should eq false
+        expect(confirm_youtube(right_url)).to eq(true)
+        expect(confirm_youtube(wrong_url)).to eq(false)
+        expect(confirm_youtube(cannot_url)).to eq(false)
+        expect(confirm_youtube(other_url)).to eq(false)
       end
-      
+
       it "confirm niconico" do
         right_url = "http://www.nicovideo.jp/watch/sm19174539"
         wrong_url = "http://www.nicovideo.jp/watch/sm191745392"
         cannot_url = "http://www.nicovideo.jp/watch/sm11779915"
         other_url = "http://morizyun.github.io/blog/rake-task-rails-rspec-test/"
-        confirm_niconico(right_url).should eq true
-        confirm_niconico(wrong_url).should eq false
-        confirm_niconico(cannot_url).should eq false
-        confirm_niconico(other_url).should eq false
+        expect(confirm_niconico(right_url)).to eq true
+        expect(confirm_niconico(wrong_url)).to eq false
+        expect(confirm_niconico(cannot_url)).to eq false
+        expect(confirm_niconico(other_url)).to eq false
       end
-      
+
       it "confirm db" do
         youtube_right = "http://www.youtube.com/watch?v=p8l2OENXOao"
         youtube_cannot = "http://www.youtube.com/watch?v=S4AJQ-yEmEc"

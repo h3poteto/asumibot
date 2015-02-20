@@ -1,34 +1,34 @@
-require "spec_helper"
+require "rails_helper"
 
-describe RecommendsController do
+RSpec.describe RecommendsController, :type => :routing do
   describe "routing" do
 
     it "routes to #index" do
-      get("/recommends").should route_to("recommends#index")
+      expect(:get => "/recommends").to route_to("recommends#index")
     end
 
     it "routes to #new" do
-      get("/recommends/new").should route_to("recommends#new")
+      expect(:get => "/recommends/new").not_to be_routable
     end
 
     it "routes to #show" do
-      get("/recommends/1").should route_to("recommends#show", :id => "1")
+      expect(:get => "/recommends/1").not_to be_routable
     end
 
     it "routes to #edit" do
-      get("/recommends/1/edit").should route_to("recommends#edit", :id => "1")
+      expect(:get => "/recommends/1/edit").not_to be_routable
     end
 
     it "routes to #create" do
-      post("/recommends").should route_to("recommends#create")
+      expect(:post => "/recommends").not_to be_routable
     end
 
     it "routes to #update" do
-      put("/recommends/1").should route_to("recommends#update", :id => "1")
+      expect(:put => "/recommends/1").not_to be_routable
     end
 
     it "routes to #destroy" do
-      delete("/recommends/1").should route_to("recommends#destroy", :id => "1")
+      expect(:delete => "/recommends/1").not_to be_routable
     end
 
   end

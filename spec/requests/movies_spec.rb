@@ -1,11 +1,35 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "Movies" do
+RSpec.describe "Movies", type: :request do
+  before(:each) do
+    @youtube = create(:youtube_movie)
+    @niconico = create(:niconico_movie)
+  end
   describe "GET /movies" do
-    it "works! (now write some real specs)" do
-      # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
+    it "works!" do
       get movies_path
-      response.status.should be(200)
+      expect(response).to have_http_status(200)
+    end
+  end
+
+  describe "GET /movies/show_youtube" do
+    it "works!" do
+      get youtube_path(@youtube)
+      expect(response).to have_http_status(200)
+    end
+  end
+
+  describe "GET /movies/show_niconico" do
+    it "works!" do
+      get niconico_path(@niconico)
+      expect(response).to have_http_status(200)
+    end
+  end
+
+  describe "GET /movies/streaming" do
+    it "works!" do
+      get streaming_movies_path
+      expect(response).to have_http_status(200)
     end
   end
 end
