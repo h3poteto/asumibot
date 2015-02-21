@@ -53,11 +53,8 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
 
   # for Devise
-  # config.include Devise::TestHelpers, :type => :controller
-  # config.extend ControllerMacros, :type => :controller
-  # config.include RequestHelpers, :type => :request
-
-  # config.include Capybara::DSL
+  config.include Devise::TestHelpers, type: :controller
+  config.include RequestHelpers, type: :request
 
   Faker::Config.locale = :en
   config.include FactoryGirl::Syntax::Methods

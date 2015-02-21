@@ -74,4 +74,5 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-mocks'
   gem 'bullet'
+  gem 'capybara'
 end

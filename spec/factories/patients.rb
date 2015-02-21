@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :patient do
     twitter_id { Faker::Number.number(8) }
-    name { Faker::Japanese.name }
+    name { Faker::Japanese::Name.name }
     nickname { Faker::Name.first_name }
     description { Faker::Lorem.characters(100) }
     icon { Faker::Internet.url }

@@ -25,7 +25,7 @@ class Admins::YoutubemoviesController < AdminsController
 
     respond_to do |format|
       if @youtubemovie.update_attributes(permitted_params)
-        format.html { redirect_to action:"edit", notice: 'Youtubemovie was successfully updated.' }
+        format.html { redirect_to action:"edit", notice: 'Youtubemovie was successfully updated.', status: 200 }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
