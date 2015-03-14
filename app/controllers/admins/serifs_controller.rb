@@ -46,7 +46,7 @@ class Admins::SerifsController < AdminsController
 
     respond_to do |format|
       if @serif.save
-        format.html { redirect_to action: "edit", id: @serif.id, notice: 'Serif was successfully created.', status: :created }
+        format.html { redirect_to action: "edit", id: @serif.id, notice: 'Serif was successfully created.' }
       else
         format.html { render action: "new" }
       end
@@ -70,7 +70,7 @@ class Admins::SerifsController < AdminsController
 
     respond_to do |format|
       if @serif.update_attributes(permitted_params)
-        format.html { redirect_to :action => "edit", notice: 'Serif was successfully updated.', status: 200 }
+        format.html { redirect_to :action => "edit", notice: 'Serif was successfully updated.' }
       else
         format.html { render action: "edit" }
       end
@@ -84,7 +84,7 @@ class Admins::SerifsController < AdminsController
     @serif.destroy
 
     respond_to do |format|
-      format.html { redirect_to :action => "index", notice: "Serif was successfully deleted.", status: 200 }
+      format.html { redirect_to :action => "index", notice: "Serif was successfully deleted." }
     end
   end
 

@@ -25,7 +25,7 @@ class Admins::NiconicomoviesController < AdminsController
 
     respond_to do |format|
       if @niconicomovie.update_attributes(permitted_params)
-        format.html { redirect_to action:"edit", notice: 'Niconicomovie was successfully updated.', status: 200 }
+        format.html { redirect_to action:"edit", notice: 'Niconicomovie was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
