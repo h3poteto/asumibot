@@ -355,6 +355,7 @@ GEM
     kaminari (0.16.2)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
+    kgio (2.9.3)
     less (2.6.0)
       commonjs (~> 0.2.7)
     less-rails (2.6.0)
@@ -437,6 +438,7 @@ GEM
       activesupport (= 4.2.0)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
+    raindrops (0.13.0)
     rake (10.4.2)
     ransack (1.6.3)
       actionpack (>= 3.0)
@@ -541,6 +543,10 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.6)
+    unicorn (4.8.3)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
     uniform_notifier (1.6.2)
     url_expander (0.1.5)
       hpricot
@@ -601,5 +607,6 @@ DEPENDENCIES
   twitter
   twitter-bootstrap-rails (= 2.2.8)
   uglifier
+  unicorn
   url_expander
   whenever
