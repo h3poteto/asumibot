@@ -22,6 +22,7 @@
 set :output, {:error => 'log/crontab.err.log', :standard => 'log/crontab.log'}
 
 set :environment, :production
+env :PATH, ENV['PATH']
 
 
 every '49 * * * *' do
