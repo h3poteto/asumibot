@@ -228,7 +228,6 @@ namespace :asumistream do
     end
   end
   def confirm_youtube(url)
-    binding.pry
     if !url.include?("youtube.com/watch?")
       return false
     end
