@@ -7,7 +7,7 @@ class PatientsController < ApplicationController
   # GET /patients.json
   def index
     @patients = Patient.includes(:asumi_tweets).rankings.take(10)
-    @month_ranking = MonthRanking.includes(:patient).level_order
+    @month_ranking = MonthRanking.includes(:patient).level_order.limit(20)
     @prev_rank = Patient.avail_prev_rankings
     @prev_rank_index = []
     @patients.each_with_index do |p, i|
