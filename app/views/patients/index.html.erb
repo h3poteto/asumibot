@@ -38,7 +38,7 @@
       <% @month_ranking[0..19].each_with_index do |p,i| %>
         <tr>
           <th><span class='<%= "ranking_#{i+1}" %>'><%= i+1%>位</span><span class="gray">（阿澄度<%= p.level %>）</span></th>
-          <td><%= link_to("@" + p.name, patient_path(p.id)) %></td>
+          <td><%= link_to("@" + p.patient.name, patient_path(p.patient)) %></td>
         </tr>
       <% end %>
       </table>

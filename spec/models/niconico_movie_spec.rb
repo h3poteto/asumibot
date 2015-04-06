@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe NiconicoMovie, type: :model do
-  describe 'whne migrate', :migration do
+  describe 'when migrate', :migration do
     # association
     it { should have_many(:niconico_fav_users) }
     it { should have_many(:fav_users) }

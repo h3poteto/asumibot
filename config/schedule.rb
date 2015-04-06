@@ -98,7 +98,7 @@ every 1.day, :at => '4:01' do
 end
 
 every 1.day, :at => '0:4' do
-  rake "cache:delete_patients"
+  rake "asumi_level:month_ranking"
 end
 
 every '32 * * * *' do

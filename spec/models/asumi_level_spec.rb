@@ -50,7 +50,7 @@ RSpec.describe AsumiLevel, type: :model do
     end
   end
 
-  describe 'month rankings' do
+  describe "month ranking order" do
     before(:each) do
       @low_patient = create(:patient)
       @high_patient = create(:patient)
@@ -66,11 +66,12 @@ RSpec.describe AsumiLevel, type: :model do
         normal_level.patient = @normal_patient
         normal_level.save
       end
-    end
-    it "should light order" do
-      patient_rankings = [@high_patient.id, @normal_patient.id, @low_patient.id]
-      month_rankings = AsumiLevel.month_rankings.map {|m| m.id }
-      expect(month_rankings).to eq(patient_rankings)
+
+      it "should right order" do
+        patient_rankings = [@high_patient.id, @normal_patient.id, @low_patient.id]
+        month_rankings = MonthRanking.level_order
+        expect(month_rankings).to eq(patient_rankings)
+      end
     end
   end
 end
