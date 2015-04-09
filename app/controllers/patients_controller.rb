@@ -28,7 +28,7 @@ class PatientsController < ApplicationController
     end
     @search = AsumiTweet.where(patient_id: params[:id]).search(params[:q])
     if params[:day].present?
-      from = Time.mktime(Date.today.year, Date.today.month, params[:day].to_i)
+      from = Time.mktime(Date.current.year, Date.current.month, params[:day].to_i)
       to = from.end_of_day
       @asumi_tweet = @search.result.where(tweet_time: from...to).order("tweet_time DESC").page(params[:page]).per(25)
     else
@@ -40,10 +40,10 @@ class PatientsController < ApplicationController
       @ranking = i + 1 if p.id == params[:id].to_i
     end
 
-    @first_day = Date.today.beginning_of_month
-    @last_day = Date.today.end_of_month
-    @today = Date.today
-    @datedata = Date.today.weeks_ago(2)..@today
+    @first_day = Date.current.beginning_of_month
+    @last_day = Date.current.end_of_month
+    @today = Date.current
+    @datedata = Date.current.weeks_ago(2)..@today
     @level_data = []
     @datedata.each do | day |
       level = AsumiLevel.where(patient_id: params[:id]).where(created_at: day.beginning_of_day...day.end_of_day )

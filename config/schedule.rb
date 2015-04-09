@@ -29,15 +29,15 @@ every '49 * * * *' do
   rake "twitter:normal"
 end
 
-every '31 18-23 * * *' do
+every '31 9-14 * * *' do
   rake "twitter:new"
 end
 
-every '07 18-23 * * *' do
+every '07 9-14 * * *' do
   rake "twitter:new"
 end
 
-every '*/30 0-2 * * *' do
+every '*/30 15-17 * * *' do
   rake "twitter:new"
 end
 
@@ -45,59 +45,59 @@ every '11 * * * *' do
   rake "twitter:follower"
 end
 
-every 1.day, :at => '23:53' do
+every 1.day, :at => '14:53' do
   rake "niconico:clear"
 end
-every 1.day, :at => '23:55' do
+every 1.day, :at => '14:55' do
   rake "youtube:clear"
 end
-every 1.day, :at => '23:57' do
+every 1.day, :at => '14:57' do
   rake "youtube:new"
 end
-every 1.day, :at => '23:59' do
+every 1.day, :at => '14:59' do
   rake "niconico:new"
 end
 
-every 1.day, :at => '0:37' do
+every 1.day, :at => '15:37' do
   rake "youtube:popular"
 end
 
-every 1.day, :at => '0:47' do
+every 1.day, :at => '15:47' do
   rake "niconico:popular"
 end
 
-every 1.day, :at => '18:01' do
+every 1.day, :at => '9:01' do
   rake "youtube:clear"
 end
-every 1.day, :at => '18:03' do
+every 1.day, :at => '9:03' do
   rake "youtube:new"
 end
 
-every 1.day, :at => '18:05' do
+every 1.day, :at => '9:05' do
   rake "youtube:popular"
 end
 
-every 1.day, :at => '23:35' do
+every 1.day, :at => '14:35' do
   rake "patient:add"
 end
 
-every 1.day, :at => '0:01' do
+every 1.day, :at => '15:01' do
   rake "patient:update"
 end
 
-every 1.day, :at => '0:24' do
+every 1.day, :at => '15:24' do
   rake "patient:tweet"
 end
 
-every 1.day, :at => '11:34' do
+every 1.day, :at => '2:34' do
   rake "patient:change_name"
 end
 
-every 1.day, :at => '4:01' do
+every 1.day, :at => '19:01' do
   rake "checkmovie:recent"
 end
 
-every 1.day, :at => '0:4' do
+every 1.day, :at => '15:4' do
   rake "asumi_level:month_ranking"
 end
 
