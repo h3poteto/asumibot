@@ -1,3 +1,5 @@
-DB_ASUMI_DEV_NAME: asumibot_development
-DB_ASUMI_PRO_NAME: asumibot_production
-DB_ASUMI_DEV_USER: root
+#DB_ASUMI_PRO_HOST:
+#DB_ASUMI_PRO_NAME: asumibot_production
+#DB_ASUMI_PRO_USER: root
+#DB_ASUMI_PRO_PASS:
+#DB_ASUMI_PRO_SOCK:

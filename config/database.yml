@@ -34,6 +34,7 @@ test:
 production:
   adapter: mysql2
   encoding: utf8
+  host: <%= ENV["DB_ASUMI_PRO_HOST"] %>
   reconnect: false
   database: <%= ENV["DB_ASUMI_PRO_NAME"] %>
   pool: 5
