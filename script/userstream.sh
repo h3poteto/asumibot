@@ -1,4 +1,4 @@
 #!/bin/sh
 
-cd /home/akira/projects/asumibot/script/
+cd /srv/www/asumibot
 bundle exec rake asumistream:reply RAILS_ENV=production
