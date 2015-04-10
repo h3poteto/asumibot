@@ -16,3 +16,5 @@ twitter:
   ## irbで取得したAccess Token/Access Secret
   oauth_token: <%# settings.local overrides %>
   oauth_token_secret: <%# settings.local overrides %>
+redis:
+  host: <%# Settings.local overrides%>
