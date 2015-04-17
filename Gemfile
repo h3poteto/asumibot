@@ -32,9 +32,6 @@ gem 'jquery-rails'
 # Use unicorn as the app server
 gem 'unicorn'
 
-# Deploy with Capistrano
-# gem 'capistrano'
-
 # To use debugger
  gem 'twitter'
  gem 'rails_config'
@@ -63,6 +60,15 @@ group :test do
   gem 'database_cleaner'
   gem 'faker'
   gem 'faker-japanese'
+end
+
+group :development do
+  # Deploy with Capistrano
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
+  gem 'capistrano-bundler'
+  gem 'capistrano3-unicorn'
 end
 
 group :development, :test do
