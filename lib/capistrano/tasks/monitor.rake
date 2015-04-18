@@ -53,7 +53,7 @@ namespace :monitor do
         if test("[ -e #{fetch(:monitor_pid)} ] && kill -0 #{monitor_pid}")
           info "monitor is running..."
         else
-          execute "(cd #{release_path} && nohup sh ./script/monitor.sh &) && sleep 1"
+          execute "sh -c 'cd #{release_path} && nohup sh ./script/monitor.sh &' >& /dev/null "
         end
       end
     end

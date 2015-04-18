@@ -35,7 +35,7 @@ set :branch, 'master'
 set :deploy_to, '/srv/www/asumibot'
 set :scm, :git
 set :log_level, :debug
-set :pty, true
+set :pty, false
 
 set :rbenv_path, '~/.rbenv'
 set :rbenv_type, :system
@@ -51,6 +51,8 @@ set :unicorn_config_path, "#{release_path}/config/unicorn.rb"
 set :keep_releases, 5
 set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
+set :sidekiq_config, -> { File.join(release_path, 'config', 'sidekiq.yml') }
+set :sidekiq_role, :web
 
 namespace :deploy do
   desc 'Restart unicorn'
