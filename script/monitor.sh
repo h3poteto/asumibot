@@ -1,4 +1,5 @@
 #!/usr/bin/sh
+cd $(dirname ${BASH_SOURCE:-$0}); pwd
 echo $$ > tmp/pids/monitor.pid
 while true
 do

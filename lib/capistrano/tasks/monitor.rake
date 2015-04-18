@@ -1,8 +1,8 @@
 namespace :load do
   task :defaults do
     set :monitor_pid, -> { File.join(current_path, "tmp", "pids", "monitor.pid")}
+    set :monitor_script, -> { File.join(current_path, "script", "monitor.sh")}
     set :monitor_roles, -> { :app }
-    set :monitor_restart_sleep_time, 3
   end
 end
 
@@ -12,9 +12,9 @@ namespace :monitor do
     on roles(fetch(:monitor_roles)) do
       within current_path do
         if test("[ -e #{fetch(:monitor_pid)} ]")
-          if test("kill -0 #{pid}")
+          if test("kill -0 #{monitor_pid}")
             info "stopping monitor script..."
-            execute :kill, pid
+            execute :kill, monitor_pid
           else
             info "cleaning up dead monitor pid..."
             execute :rm, fetch(:monitor_pid)
@@ -30,10 +30,10 @@ namespace :monitor do
   task :start do
     on roles(fetch(:monitor_roles)) do
       within current_path do
-        if test("[ -e #{fetch(:monitor_pid)} ] && kill -0 #{pid}")
+        if test("[ -e #{fetch(:monitor_pid)} ] && kill -0 #{monitor_pid}")
           info "monitor is running..."
         else
-          execute :sh, "./script/monitor.sh &"
+          execute :sh, "./script/monitor.sh > #{shared_path}/log/monitor.log &"
         end
       end
     end
@@ -41,12 +41,10 @@ namespace :monitor do
 
   desc "Restart monitor script"
   task :restart do
-    invoke "monitor:stop"
-    execute :sleep, fetch(:monitor_restart_sleep_time)
     invoke "monitor:start"
   end
 end
 
-def pid
-  "`cat #{fetch(:monitor_pid)}"
+def monitor_pid
+  "`cat #{fetch(:monitor_pid)}`"
 end
