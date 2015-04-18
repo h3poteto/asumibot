@@ -65,8 +65,8 @@ server 'asumi.ch',
   user: 'ubuntu',
   roles: %w{app web db},
   ssh_options: {
-                user: 'ubuntu', # overrides user setting above
-                keys: %w(~/.ssh/aws_asumi),
-                forward_agent: true,
-                auth_methods: %w(publickey password)
-               }
+    user: 'ubuntu', # overrides user setting above
+    keys: %w(~/.ssh/aws_asumi),
+    forward_agent: true,
+    auth_methods: %w(publickey password)
+  }
