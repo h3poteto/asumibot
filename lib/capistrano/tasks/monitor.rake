@@ -33,7 +33,7 @@ namespace :monitor do
         if test("[ -e #{fetch(:monitor_pid)} ] && kill -0 #{monitor_pid}")
           info "monitor is running..."
         else
-          execute "cd #{release_path} && /bin/sh ./script/monitor.sh > #{shared_path}/log/monitor.log"
+          execute "(cd #{release_path} && nohup sh ./script/monitor.sh &) && sleep 1"
         end
       end
     end
@@ -41,6 +41,7 @@ namespace :monitor do
 
   desc "Restart monitor script"
   task :restart do
+    invoke "monitor:stop"
     invoke "monitor:start"
   end
 end
