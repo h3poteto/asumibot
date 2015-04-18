@@ -33,7 +33,7 @@ namespace :monitor do
         if test("[ -e #{fetch(:monitor_pid)} ] && kill -0 #{monitor_pid}")
           info "monitor is running..."
         else
-          execute :sh, "./script/monitor.sh > #{shared_path}/log/monitor.log &"
+          execute "cd #{release_path} && /bin/sh ./script/monitor.sh > #{shared_path}/log/monitor.log"
         end
       end
     end
