@@ -54,7 +54,7 @@ set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 namespace :deploy do
   desc 'Restart unicorn'
   task :restart do
-    invoke 'unicorn:legacy_restart'
+    invoke 'unicorn:restart'
   end
 
   desc 'Upload local config yml'
@@ -70,5 +70,6 @@ namespace :deploy do
 
   before :starting, 'deploy:upload'
   after 'deploy:publishing', 'deploy:restart'
+  after :restart, 'monitor:restart'
   after :finishing, 'deploy:cleanup'
 end
