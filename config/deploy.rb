@@ -51,6 +51,10 @@ set :unicorn_config_path, "#{release_path}/config/unicorn.rb"
 set :keep_releases, 5
 set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
+set :monitor_pid, -> { File.join(current_path, "tmp", "pids", "monitor.pid") }
+set :monitor_roles, -> { :app }
+set :monitor_restart_sleep_time, 3
+
 namespace :deploy do
   desc 'Restart unicorn'
   task :restart do
