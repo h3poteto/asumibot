@@ -1,9 +1,6 @@
 # config valid only for current version of Capistrano
 lock '3.4.0'
 
-set :application, 'my_app_name'
-set :repo_url, 'git@example.com:me/my_repo.git'
-
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
@@ -31,22 +28,6 @@ set :repo_url, 'git@example.com:me/my_repo.git'
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
-# Default value for keep_releases is 5
-# set :keep_releases, 5
-=begin
-namespace :deploy do
-
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
-    end
-  end
-
-end
-=end
 
 set :application, 'asumibot'
 set :repo_url, 'git@github.com:h3poteto/asumibot'
@@ -64,17 +45,30 @@ set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all
 
 set :linked_dirs, %w{bin log tmp/backup tmp/pids tmp/cache tmp/sockets vendor/bundle}
-set :unicorn_pid, "#{shared_path}/tmp/pids/unicorn.pid"
+set :linked_files, %w{config/application.yml config/settings/production.local.yml}
+set :unicorn_pid, "#{current_path}/tmp/pids/unicorn.pid"
+set :unicorn_config_path, "#{release_path}/config/unicorn.rb"
 set :keep_releases, 5
 set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
 namespace :deploy do
   desc 'Restart unicorn'
   task :restart do
-    invoke 'unicorn:restart'
+    invoke 'unicorn:legacy_restart'
   end
-  after :restart, :clear_cache do
-    execute :rake, 'cache:clear'
+
+  desc 'Upload local config yml'
+  task :upload do
+    on roles(:app) do |host|
+      if test "[ -d #{shared_path}/config ]"
+        execute "mkdir -p #{shared_path}/cofnig"
+      end
+      upload!('config/application.yml', "#{shared_path}/config/application.yml")
+      upload!('config/settings/production.local.yml', "#{shared_path}/config/settings/production.local.yml")
+    end
   end
+
+  before :starting, 'deploy:upload'
+  after 'deploy:publishing', 'deploy:restart'
   after :finishing, 'deploy:cleanup'
 end
