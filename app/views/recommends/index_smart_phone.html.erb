@@ -1,0 +1,94 @@
+<div id="main">
+  <div class="popular-recommend">
+    <h1>人気</h1>
+    <table class="popular-table table">
+      <tbody>
+        <% @new_rt_youtube.each do |v| %>
+          <tr>
+            <td class="article non-textdecoration">
+              <%= link_to movie_show_url(v[0]) do %>
+                <div class="title"><%= v[0].title %></div>
+                <div class="description"><%= v[0].description %></div>
+                <% id_s = v[0].url.index('v=') %>
+                <% id_e = v[0].url.index('&') %>
+                <div class="image"><%= image_tag("http://i.ytimg.com/vi/#{v[0].url[id_s+2..id_e-1]}/default.jpg") %></div>
+                <div class="clearfix"></div>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+        <% @new_rt_niconico.each do |v| %>
+          <tr>
+            <td class="article non-textdecoration">
+              <%= link_to movie_show_url(v[0]) do %>
+                <div class="title"><%= v[0].title %></div>
+                <div class="description"><%= v[0].description %></div>
+                <% id_s = v[0].url.index('watch/') %>
+                <% id = v[0].url[id_s+8..100] %>
+                <% rand = id.to_i % 4 + 1 %>
+                <div class="image"><%= image_tag('http://tn-skr' + rand.to_s + '.smilevideo.jp/smile?i=' + id) %></div>
+                <div class="clearfix"></div>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+        <% @new_fav_youtube.each do |v| %>
+          <tr>
+            <td class="article non-textdecoration">
+              <%= link_to movie_show_url(v[0]) do %>
+                <div class="title"><%= v[0].title %></div>
+                <div class="description"><%= v[0].description %></div>
+                <% id_s = v[0].url.index('v=') %>
+                <% id_e = v[0].url.index('&') %>
+                <div class="image"><%= image_tag('http://i.ytimg.com/vi/' + v[0].url[id_s+2..id_e-1] + '/default.jpg') %></div>
+                <div class="clearfix"></div>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+        <% @new_fav_niconico.each do |v| %>
+          <tr>
+            <td class="article non-textdecoration">
+              <%= link_to movie_show_url(v[0]) do %>
+                <div class="title"><%= v[0].title %></div>
+                <div class="description"><%= v[0].description %></div>
+                <% id_s = v[0].url.index('watch/') %>
+                <% id = v[0].url[id_s+8..100] %>
+                <% rand = id.to_i % 4 + 1 %>
+                <div class="image"><%= image_tag('http://tn-skr' + rand.to_s + '.smilevideo.jp/smile?i=' + id) %></div>
+                <div class="clearfix"></div>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="new-recommend">
+    <h1>新着動画</h1>
+    <table class="new-table table">
+      <tbody>
+        <% @today_movie.each do |movie| %>
+          <tr>
+            <td class="article non-textdecoration">
+              <%= link_to movie_show_url(movie) do %>
+                <div class="title"><%= movie.title %></div>
+                <div class="description"><%= movie.description %></div>
+                <% if movie.kind_of?(NiconicoMovie) %>
+                  <% id_s = movie.url.index('watch/') %>
+                  <% id = movie.url[id_s+8..100] %>
+                  <% rand = id.to_i % 4 + 1 %>
+                  <div class="image"><%= image_tag('http://tn-skr' + rand.to_s + '.smilevideo.jp/smile?i=' + id) %></div>
+                <% elsif movie.kind_of?(YoutubeMovie) %>
+                  <% id_s = movie.url.index('v=') %>
+                  <% id_e = movie.url.index('&') %>
+                  <div class="image"><%= image_tag('http://i.ytimg.com/vi/' + movie.url[id_s+2..id_e-1] + '/default.jpg') %></div>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

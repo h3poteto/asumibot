@@ -31,27 +31,26 @@ gem 'jquery-rails'
 
 # Use unicorn as the app server
 gem 'unicorn'
-
-# To use debugger
- gem 'twitter'
- gem 'rails_config'
- gem 'nokogiri'
- gem 'whenever', :require => false
- gem 'url_expander'
- gem 'tweetstream'
- gem 'kaminari'
- gem 'devise'
- gem 'ransack'
- gem 'bootstrap_helper'
- gem 'i18n_generators'
- gem 'gon'
- gem 'figaro'
- gem 'actionpack-page_caching'
- gem 'sidekiq'
- gem 'pry-byebug'
- gem 'pry-rails'
- gem 'pry-doc'
- gem 'pry-stack_explorer'
+gem 'twitter'
+gem 'rails_config'
+gem 'nokogiri'
+gem 'whenever', :require => false
+gem 'url_expander'
+gem 'tweetstream'
+gem 'kaminari'
+gem 'devise'
+gem 'ransack'
+gem 'bootstrap_helper'
+gem 'i18n_generators'
+gem 'gon'
+gem 'figaro'
+gem 'actionpack-page_caching'
+gem 'sidekiq'
+gem 'pry-byebug'
+gem 'pry-rails'
+gem 'pry-doc'
+gem 'pry-stack_explorer'
+gem 'jpmobile'
 
 group :test do
   gem 'shoulda-matchers', require: false

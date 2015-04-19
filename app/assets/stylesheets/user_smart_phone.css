@@ -11,5 +11,5 @@
  *= require_self
  *= require bootstrap_and_overrides
  *= require common
- *= require_tree ./user
+ *= require_tree ./user_smart_phone
  */
