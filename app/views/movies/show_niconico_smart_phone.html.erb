@@ -1,0 +1,16 @@
+<% content_for :title do %>
+  <%= @niconico.title %>
+<% end %>
+<p id="notice"><%= notice %></p>
+<div id="show_movie">
+  <h3><%= link_to @niconico.title, @niconico.url, :target => "_blnak" %></h3>
+  <div class="movie">
+    <script type="text/javascript" src="http://ext.nicovideo.jp/thumb_watch/<%= @id %>"></script><noscript><%= link_to @niconico.title, @niconico.url %></noscript>
+    <div class="description">
+      <%= @niconico.description %>
+    </div>
+    <div class="buttons">
+      <%= render 'movies/twitter_share' %>
+    </div>
+  </div>
+</div>
