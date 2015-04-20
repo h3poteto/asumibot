@@ -10,20 +10,22 @@ pid File.expand_path('tmp/pids/unicorn.pid', ENV['RAILS_ROOT'])
 stderr_path File.expand_path('log/unicorn.log', ENV['RAILS_ROOT'])
 stdout_path File.expand_path('log/unicorn.log', ENV['RAILS_ROOT'])
 
+# capistrano 用に RAILS_ROOT を指定
+app_path = "/srv/www/asumibot/current"
+working_directory app_path
+
 # ダウンタイムなくす
 preload_app true
 
 timeout 45
 
 before_fork do |server, worker|
+  ENV['BUNDLE_GEMFILE'] = "#{app_path}/Gemfile"
   old_pid = "#{server.config[:pid]}.oldbin"
   if File.exists?(old_pid) && server.pid != old_pid
     begin
-      Process.kill("WINCH", File.read(old_pid).to_i)
-      Thread.new {
-        sleep 30
-        Process.kill("KILL", File.read(old_pid).to_i)
-      }
+      sig = (worker.nr + 1) >= server.worker_processes ? :QUIT : :TTOU
+      Process.kill(sig, File.read(old_pid).to_i)
     rescue Errno::ENOENT, Errno::ESRCH
       # someone else did our job for us
     end
