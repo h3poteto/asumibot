@@ -1,0 +1,34 @@
+<h3>阿澄度ランキング</h3>
+<div class="update_time">
+  <%=l @patients.first.updated_at.beginning_of_day if @patients.present? %>更新
+</div>
+<div id="patient_ranking">
+  <div id="ranking">
+    <table class="ranking_tbl table">
+      <% @patients.each_with_index do |p, i| %>
+        <tr>
+          <% if i < @prev_rank_index[p.id] && p.level > 0 %>
+            <% updown = "rankup.png" %>
+          <% elsif i > @prev_rank_index[p.id] %>
+            <% updown = "rankdown.png" %>
+          <% else %>
+            <% updown =  "normal.png" %>
+          <% end %>
+          <th><span class='<%= "ranking_#{i+1}" %>'><%= i + 1 %>位  </span><%= image_tag(updown, class: "updown") if updown.present? %><br />
+            <span class="gray">(阿澄度<%= p.level %>)</span></th>
+          <td class="icon">
+            <%= link_to image_tag(p.icon), patient_path(p) %>
+          </td>
+          <td class="profile non-textdecoration">
+            <%= link_to patient_path(p) do %>
+              <div class="name"><%= p.nickname %></div>
+              <div class="description"><%= p.asumi_tweets.sample(1).first.tweet if p.asumi_tweets.present? %>
+                <div class="screen_name">@<%= p.name %></div>
+              </div>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

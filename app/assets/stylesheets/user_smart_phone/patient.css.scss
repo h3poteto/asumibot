@@ -1,2 +1,41 @@
 body[data-controller='patients']{
+  h3 {
+    padding: 0 10px;
+  }
+  .update_time {
+    text-align: right;
+    padding: 10px;
+  }
+  #patient_ranking {
+    #ranking {
+      .ranking_tbl {
+        th {
+          width: 20%;
+          .gray {
+            font-size: 12px;
+          }
+        }
+        td.icon {
+          width: 20%;
+        }
+        td.profile {
+          .name {
+            font-weight: bold;
+            font-size: 12px;
+          }
+          .description {
+            font-size: 12px;
+            color: rgb(100, 100, 100);
+          }
+          .screen_name {
+            color: rgb(100, 100, 100);
+            text-align: right;
+          }
+        }
+        .updown {
+          width: 15px;
+        }
+      }
+    }
+  }
 }

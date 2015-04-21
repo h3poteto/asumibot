@@ -1,7 +1,6 @@
 # coding: utf-8
 class PatientsController < ApplicationController
   layout "user"
-  caches_page :index
 
   # GET /patients
   # GET /patients.json
