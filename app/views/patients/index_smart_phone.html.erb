@@ -14,7 +14,7 @@
           <% else %>
             <% updown =  "normal.png" %>
           <% end %>
-          <th><span class='<%= "ranking_#{i+1}" %>'><%= i + 1 %>位  </span><%= image_tag(updown, class: "updown") if updown.present? %><br />
+          <th class="rank"><span class='<%= "ranking_#{i+1}" %>'><%= i + 1 %>位  </span><%= image_tag(updown, class: "updown") if updown.present? %><br />
             <span class="gray">(阿澄度<%= p.level %>)</span></th>
           <td class="icon">
             <%= link_to image_tag(p.icon), patient_path(p) %>

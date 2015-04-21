@@ -11,6 +11,8 @@ body[data-controller='patients']{
       .ranking_tbl {
         th {
           width: 20%;
+          min-width: 58px;
+          padding-right: 0;
           .gray {
             font-size: 12px;
           }
