@@ -1,0 +1,57 @@
+<h4><%= link_to @patient.name + "さんの阿澄病レポート", patient_path(@patient) %></h4>
+
+<div class="update_time">
+  <%=l @patient.updated_at.beginning_of_day %>更新
+</div>
+<div id="patient_show">
+  <div id="chart"></div>
+  <table class="report center">
+    <tbody>
+      <tr>
+        <th>
+          昨日
+        </th>
+        <td>
+          <b>阿澄度</b><br />
+          <%= @patient.level %>%
+        </td>
+        <td>
+          <b>ツイート数</b><br />
+          <%= @patient.prev_tweet_count %>
+        </td>
+        <td>
+          <b>阿澄ワード</b><br />
+          <%= @patient.prev_asumi_word %>語
+        </td>
+        <td class="last">
+          <b>順位</b><br />
+          <% if @ranking.present? %>
+            <%= @ranking %>位
+          <% else %>
+            圏外
+          <% end %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="main_tweet">
+    <caption><h5>阿澄ツイート</h5></caption>
+    <table class="table tweet_area">
+      <tbody>
+        <% @asumi_tweet.each do | tweet | %>
+          <tr>
+            <td class="icon">
+              <%= image_tag(@patient.icon) %>
+            </td>
+            <td class="tweet"><%= tweet.tweet %>
+              <div class="tweet_detail"><%= link_to "詳細", "http://twitter.com/#{@patient.name}/status/#{tweet.tweet_id}", target: :blank %></div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="center">
+  <%= paginate @asumi_tweet, :window => 2 %>
+</div>
