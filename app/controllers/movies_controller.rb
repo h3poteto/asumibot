@@ -1,6 +1,9 @@
 require 'open-uri'
 class MoviesController < ApplicationController
   layout "user"
+
+  before_action :redirect_top, only: [:streaming, :streamnico]
+
   # GET /movies
   # GET /movies.json
   def index
@@ -52,5 +55,12 @@ class MoviesController < ApplicationController
     s = @movies.url.index("/watch/")
     @id = @movies.url[s+7..100]
     @url = @movies.url
+  end
+
+  private
+  def redirect_top
+    if request.smart_phone? || request.mbile?
+      redirect_to root_path
+    end
   end
 end
