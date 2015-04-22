@@ -59,7 +59,7 @@ class MoviesController < ApplicationController
 
   private
   def redirect_top
-    if request.smart_phone? || request.mbile?
+    if request.smart_phone? || request.mobile?
       redirect_to root_path
     end
   end
