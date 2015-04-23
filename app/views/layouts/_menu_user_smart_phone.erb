@@ -1,0 +1,22 @@
+<div class="footer-menu non-textdecoration">
+  <ul>
+    <%= content_tag(:li, class: params[:controller] == "recommends" ? "current-select" : "") do %>
+      <%= link_to "トップ", root_path %>
+      <div class="arrow-box">
+        <span class="icon-chevron-right"></span>
+      </div>
+    <% end %>
+    <%= content_tag(:li, class: params[:controller] == "patients" ? "current-select" : "") do %>
+      <%= link_to "患者たち", patients_path %>
+      <div class="arrow-box">
+        <span class="icon-chevron-right"></span>
+      </div>
+    <% end %>
+    <li>
+      <%= link_to "twitter", "https://twitter.com/asumi_syndrome" %>
+      <div class="arrow-box">
+        <span class="icon-chevron-right"></span>
+      </div>
+    </li>
+  </ul>
+</div>
