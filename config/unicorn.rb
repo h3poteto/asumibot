@@ -21,7 +21,7 @@ timeout 45
 
 
 before_fork do |server, worker|
-  ENV['BUNDLE_GEMFILE'] = "#{current_path}/Gemfile"
+  ENV['BUNDLE_GEMFILE'] = File.expand_path('Gemfile', ENV['RAILS_ROOT'])
   old_pid = "#{server.config[:pid]}.oldbin"
   if File.exists?(old_pid) && server.pid != old_pid
     begin

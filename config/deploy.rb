@@ -45,17 +45,22 @@ set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all
 
 set :linked_dirs, %w{bin log tmp/backup tmp/pids tmp/sockets vendor/bundle}
-set :linked_files, %w{config/application.yml config/settings/production.local.yml config/unicorn.rb}
+set :linked_files, %w{config/application.yml config/settings/production.local.yml}
 set :unicorn_pid, "#{shared_path}/tmp/pids/unicorn.pid"
-set :unicorn_config_path, "#{shared_path}/config/unicorn.rb"
+set :unicorn_config_path, "#{release_path}/config/unicorn.rb"
 set :keep_releases, 5
 set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
 set :sidekiq_config, -> { File.join(release_path, 'config', 'sidekiq.yml') }
 set :sidekiq_role, :web
 
-namespace :deploy do
 
+after 'deploy:publishing', 'deploy:restart'
+after "unicorn:restart", 'monitor:restart'
+namespace :deploy do
+  task :restart do
+    invoke 'unicorn:restart'
+  end
   desc 'Upload local config yml'
   task :upload do
     on roles(:app) do |host|
@@ -66,9 +71,6 @@ namespace :deploy do
       upload!('config/settings/production.local.yml', "#{shared_path}/config/settings/production.local.yml")
     end
   end
-  after "deploy:restart", "unicorn:restart"
   before :starting, 'deploy:upload'
-  after 'deploy:publishing', 'deploy:restart'
-  after "unicorn:restart", 'monitor:restart'
   after :finishing, 'deploy:cleanup'
 end
