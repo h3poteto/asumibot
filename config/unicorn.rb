@@ -11,16 +11,17 @@ stderr_path File.expand_path('log/unicorn.log', ENV['RAILS_ROOT'])
 stdout_path File.expand_path('log/unicorn.log', ENV['RAILS_ROOT'])
 
 # capistrano 用に RAILS_ROOT を指定
-app_path = "/srv/www/asumibot/current"
-working_directory app_path
+current_path = "/srv/www/asumibot/current"
+working_directory current_path
 
 # ダウンタイムなくす
 preload_app true
 
 timeout 45
 
+
 before_fork do |server, worker|
-  ENV['BUNDLE_GEMFILE'] = "#{app_path}/Gemfile"
+  ENV['BUNDLE_GEMFILE'] = "#{current_path}/Gemfile"
   old_pid = "#{server.config[:pid]}.oldbin"
   if File.exists?(old_pid) && server.pid != old_pid
     begin
