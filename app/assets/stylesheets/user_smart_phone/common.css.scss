@@ -92,6 +92,7 @@ footer{
     list-style: none;
     li {
       display: block;
+      box-sizing: border-box;
       width: 100%;
       height: 50px;
       background: #f0f0f0;
