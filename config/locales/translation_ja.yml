@@ -59,8 +59,13 @@ ja:
 
   views:
     pagination:
-      truncate: "..."
-      
+      first: "&laquo;"
+      last: "&raquo;"
+      next: "&rsaquo;"
+      previous: "&lsaquo;"
+      truncate: "&hellip;"
+
+
   activerecord:
     models:
       admin: admin  #g

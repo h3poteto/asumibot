@@ -13,12 +13,8 @@ class MoviesController < ApplicationController
     niconico_sql = search_niconico.result.available.to_sql
     youtube_sql = search_youtube.result.available.to_sql
     union_sql = "#{niconico_sql} union all #{youtube_sql} order by created_at DESC;"
-    @movies = ActiveRecord::Base.connection.select_all(union_sql)
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @movies }
-    end
+    collection = ActiveRecord::Base.connection.select_all(union_sql)
+    @movies = Kaminari.paginate_array(collection.to_a).page(params[:page]).per(20)
   end
 
   # GET /movies/1
