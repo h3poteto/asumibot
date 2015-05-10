@@ -1,28 +1,15 @@
 <h3>「<%= params[:search] %>」検索結果</h3>
 <div class="result"><%= @movies.length %>件</div>
 <table class="table search_result">
-<% @movies.each do |movie| %>
-  <tr>
-    <% if movie.kind_of?(NiconicoMovie) %>
+  <% @movies.each do |movie| %>
+    <tr>
       <td>
-        <p class="title"><%= link_to movie.title, niconico_path(movie.id) %></p>
-        <% id_s = movie.url.index('watch/') %>
-        <% id = movie.url[id_s+8..100] rescue 1.to_s %>
-        <% rand = id.to_i % 4 + 1 %>
-        <div class="icon"><%= image_tag('http://tn-skr' + rand.to_s + '.smilevideo.jp/smile?i=' + id) %></div>
-        <div class="description"><%= movie.description %></div>
+        <p class="title"><%= movie_show_url(movie) %></p>
+        <div class="icon"><%= movie_image_url(movie) %></div>
+        <div class="description"><%= movie["description"] %></div>
         <div class="clearfix"></div>
       </td>
-    <% else %>
-      <td>
-        <p class="title"><%= link_to movie.title, youtube_path(movie.id) %></p>
-        <% id_s = movie.url.index('v=') %>
-        <% id_e = movie.url.index('&') %>
-        <div class="icon"><%= image_tag('http://i.ytimg.com/vi/' + movie.url[id_s+2..id_e-1] + '/default.jpg') rescue nil %></div>
-        <div class="description"><%= movie.description %></div>
-      </td>
-    <% end %>
-  </tr>
-<% end %>
+    </tr>
+  <% end %>
 </table>
 <br />

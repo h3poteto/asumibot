@@ -8,16 +8,12 @@ class MoviesController < ApplicationController
   # GET /movies.json
   def index
 
-    @search_niconico = NiconicoMovie.search(:title_or_url_or_description_cont => params[:search])
-    @search_youtube = YoutubeMovie.search(:title_or_url_or_description_cont => params[:search])
-    @niconico = @search_niconico.result.where(disabled: false).order("id DESC")
-    @youtube = @search_youtube.result.where(disabled: false).order("id DESC")
-    @movies = @niconico + @youtube
-    @movies.sort! do |a, b|
-       b.created_at <=> a.created_at
-    end
-
-
+    search_niconico = NiconicoMovie.search(:title_or_url_or_description_cont => params[:search])
+    search_youtube = YoutubeMovie.search(:title_or_url_or_description_cont => params[:search])
+    niconico_sql = search_niconico.result.available.to_sql
+    youtube_sql = search_youtube.result.available.to_sql
+    union_sql = "#{niconico_sql} union all #{youtube_sql} order by created_at DESC;"
+    @movies = ActiveRecord::Base.connection.select_all(union_sql)
 
     respond_to do |format|
       format.html # index.html.erb
