@@ -28,7 +28,7 @@ module ApplicationHelper
     "http://tn-skr#{rand.to_s}.smilevideo.jp/smile?i=#{id}"
   end
 
-  def movie_image_url(movie)
+  def movie_image_tag(movie)
     case determin_url(movie["url"])
     when "niconico"
       return image_tag(niconico_image_url(movie["url"]))
@@ -37,7 +37,7 @@ module ApplicationHelper
     end
   end
 
-  def movie_show_url(movie)
+  def movie_show_link_tag(movie)
     case determin_url(movie["url"])
     when "niconico"
       return link_to movie["title"], niconico_path(movie["id"])

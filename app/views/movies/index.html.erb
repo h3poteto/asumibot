@@ -4,8 +4,8 @@
   <% @movies.each do |movie| %>
     <tr>
       <td>
-        <p class="title"><%= movie_show_url(movie) %></p>
-        <div class="icon"><%= movie_image_url(movie) %></div>
+        <p class="title"><%= movie_show_link_tag(movie) %></p>
+        <div class="icon"><%= movie_image_tag(movie) %></div>
         <div class="description"><%= movie["description"] %></div>
         <div class="clearfix"></div>
       </td>

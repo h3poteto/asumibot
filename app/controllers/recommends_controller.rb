@@ -32,10 +32,8 @@ class RecommendsController < ApplicationController
 
     if @top_new.kind_of?(NiconicoFavUser) || @top_new.kind_of?(NiconicoRtUser)
       @top_movie = NiconicoMovie.find(@top_new.niconico_movie_id)
-      @movie_type = "nicovideo"
     elsif @top_new.kind_of?(YoutubeFavUser) || @top_new.kind_of?(YoutubeRtUser)
       @top_movie = YoutubeMovie.find(@top_new.youtube_movie_id)
-      @movie_type = "youtube"
     end
 
     if @top_new.kind_of?(NiconicoFavUser)
