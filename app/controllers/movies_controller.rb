@@ -47,6 +47,8 @@ class MoviesController < ApplicationController
     s = @movies.url.index("/watch/")
     @id = @movies.url[s+7..100]
     @url = @movies.url
+
+    gon.nicovideo = {id: @id}
   end
 
   private

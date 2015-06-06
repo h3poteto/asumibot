@@ -1,15 +1,19 @@
-exports = this
-exports.nico_player = null
 class gon.Movies
   streaming: ->
 
   streamnico: ->
-    setInterval ()->
-      if exports.nico_player != null
-        st = exports.nico_player.ext_getStatus()
-        if st == "end"
-          location.reload()
-    , 1000
+    document._write = document.write
+    document.write = (msg) ->
+      $("#nico_player").html(msg)
+      document.write = document._write
+
+    id = gon.nicovideo.id
+    src = "http://ext.nicovideo.jp/thumb_watch/" + id
+    dst = $("<script>")
+    dst.attr("type", "text/javascript")
+    dst.attr("src", src)
+
+    $("#player").append(dst)
 
 gon.movies_streamnico = ->
   @movies = new @Movies
@@ -52,4 +56,9 @@ gon.movies_streaming = ->
   playNext(event.target)
 
 @onNicoPlayerReady = (id)->
-  exports.nico_player = document.getElementById(id)
+  exports.niconico_player = document.getElementById(id)
+
+@onNicoPlayerStatus = (id, status)->
+  if status == "end"
+    console.log(status)
+    location.reload()
