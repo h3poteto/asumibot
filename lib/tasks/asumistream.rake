@@ -4,6 +4,10 @@ namespace :asumistream do
 
   desc "reply userstream"
   task :reply => :environment do
+    pid_file = "#{Rails.root}/tmp/pids/userstream.pid"
+    File.write(pid_file, $$)
+    at_exit { File.delete(pid_file) }
+    start_time = Time.current
     setting_tweetstream
     setting_twitter
     client = TweetStream::Client.new
@@ -95,68 +99,6 @@ namespace :asumistream do
         last_men.tweet_id = men.id.to_s
         last_men.save
 
-        ## 不要なため廃止
-        # # URL expand
-        # expand_url = ""
-        # # https
-        # if men.text.include?("https:")
-        #   http_url = men.text.gsub('https:','http:')
-        #   expand_url = UrlExpander::Client.expand(http_url) if http_url.include?("http:")
-        # else
-        #   expand_url = UrlExpander::Client.expand(men.text) if men.text.include?("http:")
-        # end
-
-
-        # # youtube,nicovideoを含む場合はDBに登録する
-        # if expand_url.include?("www.nicovideo.jp/watch")
-        #   start_pos = expand_url.index("watch/")
-        #   end_pos = expand_url.index("?",start_pos)
-        #   end_pos = 100 if end_pos == nil
-        #   movie_id = expand_url[start_pos+6..end_pos-1]
-        #   uri = URI("http://ext.nicovideo.jp/api/getthumbinfo/" + movie_id)
-        #   begin
-        #     doc = Nokogiri::XML(uri.read)
-        #   rescue
-        #     next
-        #   end
-        #   description = doc.search('description').text
-        #   title = doc.search('title').text
-        #   url = doc.search('watch_url').text
-        #   if title.present? && url.present?
-        #     new_data = NiconicoMovie.create(title: title, url: url, description: description, priority: nil)
-        #     if new_data.save
-        #       update("新しく動画が追加されたよ\n" + "【" + title + "】", url)
-        #     else
-        #       already = AlreadySerif.all.sample.word
-        #       update("@" + user_name + " " + already + "\n", url)
-        #     end
-        #   end
-        #   next
-        # elsif expand_url.include?("youtube.com/watch?")
-        #   start_pos = expand_url.index("watch?v=")
-        #   end_pos = expand_url.index("&",start_pos)
-        #   end_pos = 100 if end_pos == nil
-        #   movie_id = expand_url[start_pos+8..end_pos-1]
-        #   uri = URI("http://gdata.youtube.com/feeds/api/videos/" + movie_id)
-        #   begin
-        #     doc = Nokogiri::XML(uri.read)
-        #   rescue
-        #     next
-        #   end
-        #   content = doc.search('content').text
-        #   title = doc.search('title').text
-        #   url = doc.search('link').first['href'] + "_player"
-        #   if content.present? || title.present? || url.present?
-        #     new_data = YoutubeMovie.create(title: title, url: url, description: content, priority: nil)
-        #     if new_data.save
-        #       update("新しく動画が追加されたよ\n" + "【" + title + "】", url)
-        #     else
-        #       already = AlreadySerif.all.sample.word
-        #       update("@" + user_name + " " + already + "\n", url)
-        #     end
-        #   end
-        #   next
-        # end
         # DBアクセス
         movies = nil
         begin
@@ -204,6 +146,12 @@ namespace :asumistream do
             movie_object.save!
           end
         end
+      end
+
+      ## 時間が過ぎたらプロセスを殺す
+      end_time = start_time + 1.day
+      if Time.current > end_time
+        exit
       end
     end
   end

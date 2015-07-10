@@ -1,8 +1,4 @@
 #!/usr/bin/sh
-cd $(dirname ${BASH_SOURCE:-$0})
-cd ../
-pwd
-echo $$ > tmp/pids/monitor.pid
 while true
 do
     sleep 10
