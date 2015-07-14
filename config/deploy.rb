@@ -67,7 +67,7 @@ namespace :deploy do
       if test "[ -d #{shared_path}/config ]"
         execute "mkdir -p #{shared_path}/cofnig"
       end
-      upload!('config/application.yml', "#{shared_path}/config/application.yml")
+      upload!('config/application.production.yml', "#{shared_path}/config/application.yml")
       upload!('config/settings/production.local.yml', "#{shared_path}/config/settings/production.local.yml")
     end
   end
