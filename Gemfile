@@ -50,6 +50,7 @@ gem 'pry-rails'
 gem 'pry-doc'
 gem 'pry-stack_explorer'
 gem 'jpmobile'
+gem 'google-api-client'
 
 group :test do
   gem 'shoulda-matchers', require: false
