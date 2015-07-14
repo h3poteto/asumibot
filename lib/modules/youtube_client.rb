@@ -1,6 +1,6 @@
 require 'google/api_client'
 class YoutubeClient
-  attr_reader :client, :youtube
+  attr_reader :client, :youtube, :search_result
   def initialize
     @client = Google::APIClient.new(
       key: ENV["DEVELOPER_KEY"],
@@ -13,7 +13,8 @@ class YoutubeClient
 
     @asumi_word = ['阿澄','アスミス','阿澄佳奈']
     @except_word = ['中田あすみ','東方','シルクロード','歌ってみた','明日美','hito20','明日実','ピストン西沢','ふぉんだんみんと','mariavequoinette','http://www.reponet.tv','アカツキ','弾いてみた','やってみた','湾岸','太鼓さん次郎','明治神宮','踊ってみた']
-    @search_words = ['阿澄佳奈','阿澄さん','アスミス','もこたん']
+    @search_words = ['阿澄佳奈','阿澄さん','アスミス']
+    @search_result = []
   end
 
   def search(opts)
@@ -21,20 +22,17 @@ class YoutubeClient
       begin
         search_response = client.execute!(
           api_method: youtube.search.list,
-          parameters: {
+          parameters: opts.merge!({
             part: 'snippet',
-            q: search_word,
-            maxResults: opts[:max_results],
-            order: opts[:order],
-            type: opts[:type],
-            publishedAfter: opts[:published_after]
-          }
+            q: search_word
+          })
         )
 
-        search_response.data.items.each do |search_result|
-          case search_result.id.kind
+        search_response.data.items.each do |result|
+          case result.id.kind
           when 'youtube#video'
-            add_youtube(search_result)
+            add_youtube(result)
+            search_result << result
           else
             # list channelには興味が無い
           end
@@ -70,6 +68,44 @@ class YoutubeClient
         url: "https://www.youtube.com/watch?v=#{result.id.videoId}&feature=youtube_gdata_player",
         description: result.snippet.description
       )
+    end
+  end
+
+  def add_today_youtubes(result)
+    if except_check(result.snippet.title) && except_check(result.snippet.description)
+      TodayYoutube.create(
+        title: result.snippet.title,
+        url: "https://www.youtube.com/watch?v=#{result.id.videoId}&feature=youtube_gdata_player",
+        description: result.snippet.description
+      )
+    end
+  end
+
+  def add_popular_youtubes(result)
+    if except_check(result.snippet.title) && except_check(result.snippet.description)
+      YoutubePopular.create(
+        title: result.snippet.title,
+        url: "https://www.youtube.com/watch?v=#{result.id.videoId}&feature=youtube_gdata_player",
+        description: result.snippet.description
+      )
+    end
+  end
+
+  def update_today
+    search_result.each do |result|
+      case result.id.kind
+      when 'youtube#video'
+        add_today_youtubes(result)
+      end
+    end
+  end
+
+  def update_popular
+    search_result.each do |result|
+      case result.id.kind
+      when 'youtube#video'
+        add_popular_youtubes(result)
+      end
     end
   end
 end

@@ -9,40 +9,25 @@ namespace :youtube do
     client = YoutubeClient.new
 
     opts = {
-      max_results: 50,
+      maxResults: 50,
       order: 'date',
       type: 'video',
-      published_after: Time.current.yesterday.to_datetime.rfc3339
+      publishedAfter: Time.current.yesterday.to_datetime.rfc3339
     }
     client.search(opts)
+    client.update_today
   end
 
   desc "popular youtube movie get"
   task :popular => :environment do
-    options = '&orderby=rating&time=all_time'
-
-    @searchwords.each do | words |
-      keywords = URI.encode(words)
-      uri = URI(URL + keywords + options )
-      doc = Nokogiri::XML(uri.read)
-      i = 1
-      doc.search('entry').each do |entry|
-        next if !asumi_check(entry.search('content').text) && !asumi_check(entry.search('title').text)
-        next if !except_check(entry.search('content').text) || !except_check(entry.search('title').text)
-        #puts entry.search('title').text
-        #puts entry.xpath('media:group/media:player').first['url']
-        new_data = YoutubePopular.create(title: entry.search('title').text, url: entry.xpath('media:group/media:player').first['url'], description: entry.search('content').text, priority: i)
-        if new_data.save
-          i+=1
-          sleep(0.01)
-          #p true
-        else
-          #p false
-        end
-        #puts
-      end
-      add_youtube(doc, false)
-    end
+    client = YoutubeClient.new
+    opts = {
+      maxResults: 50,
+      order: 'rating',
+      type: 'video'
+    }
+    client.search(opts)
+    client.update_popular
   end
 
 =begin
