@@ -4,12 +4,19 @@ namespace :asumistream do
 
   desc "reply userstream"
   task :reply => :environment do
+    include Movies
+
     pid_file = "#{Rails.root}/tmp/pids/userstream.pid"
     File.write(pid_file, $$)
     at_exit { File.delete(pid_file) }
     start_time = Time.current
-    setting_tweetstream
-    setting_twitter
+    TweetStream.configure do |config|
+      config.consumer_key       = Settings.twitter.consumer_key
+      config.consumer_secret    = Settings.twitter.consumer_secret
+      config.oauth_token        = Settings.twitter.oauth_token
+      config.oauth_token_secret = Settings.twitter.oauth_token_secret
+      config.auth_method        = :oauth
+    end
     client = TweetStream::Client.new
 
     client.on_error do |message|
@@ -100,20 +107,20 @@ namespace :asumistream do
         last_men.save
 
         # DBアクセス
-        movies = nil
+        movie = nil
         begin
           random = rand(4)
           if random == 1
-            movies = YoutubeMovie.where(:disabled => false).sample
+            movie = YoutubeMovie.where(:disabled => false).sample
           else
-            movies = NiconicoMovie.where(:disabled => false).sample
+            movie = NiconicoMovie.where(:disabled => false).sample
           end
 
-        end while !confirm_db(movies.url)
+        end while !confirm_db(movie.url)
 
-        movie_info = "【" + movies.title + "】"
+        movie_info = "【" + movie.title + "】"
         tweet = ReplySerif.all.sample.word + " \n"
-        update("@" + user_name + " " + tweet + movie_info, movies.url)
+        TwitterClient.new.update("@" + user_name + " " + tweet + movie_info, movie.url)
 
       elsif ((status.text.include?("RT") || status.text.include?("QT")) && (status.text.include?("@"+Settings.twitter.user_name)) && (status.user.screen_name != Settings.twitter.user_name))
         ## for RT
@@ -153,101 +160,6 @@ namespace :asumistream do
       if Time.current > end_time
         exit
       end
-    end
-  end
-
-
-  private
-  def setting_tweetstream
-    TweetStream.configure do |config|
-      config.consumer_key       = Settings.twitter.consumer_key
-      config.consumer_secret    = Settings.twitter.consumer_secret
-      config.oauth_token        = Settings.twitter.oauth_token
-      config.oauth_token_secret = Settings.twitter.oauth_token_secret
-      config.auth_method        = :oauth
-    end
-  end
-  def setting_twitter
-    @client = Twitter::REST::Client.new do |config|
-      config.consumer_key       = Settings.twitter.consumer_key
-      config.consumer_secret    = Settings.twitter.consumer_secret
-      config.access_token        = Settings.twitter.oauth_token
-      config.access_token_secret = Settings.twitter.oauth_token_secret
-    end
-  end
-  def confirm_youtube(url)
-    if !url.include?("youtube.com/watch?")
-      return false
-    end
-    uri = URI(url)
-    uri.scheme = "https"
-    begin
-      doc = Nokogiri::XML(uri.read)
-    rescue
-      return false
-    end
-
-    if doc.search('title').text == "YouTube"
-      return false
-    else
-      return true
-    end
-  end
-  def confirm_niconico(url)
-    if !url.include?("nicovideo.jp/watch")
-      return false
-    end
-    start_pos = url.index("watch/")
-    end_pos = url.index("?", start_pos)
-    end_pos = 100 if end_pos == nil
-    movie_id = url[start_pos+6..end_pos-1]
-
-    uri = URI("http://ext.nicovideo.jp/api/getthumbinfo/" + movie_id)
-    begin
-      doc = Nokogiri::XML(uri.read)
-    rescue
-      return false
-    end
-    if doc.search('code').text == "DELETED" || doc.search('code').text == "NOT_FOUND"
-      return false
-    else
-      return true
-    end
-  end
-
-  def confirm_db(url)
-    if url.include?("youtube.com/watch?")
-      if confirm_youtube(url)
-        ## 問題なし
-        youtube = YoutubeMovie.where(:url => url).first
-        youtube.update_attributes!(:disabled => false)
-        youtube.save
-        return "youtube"
-      else
-        ## DBから探し出しdisabled => true
-        youtube = YoutubeMovie.where(:url => url).first
-        youtube.update_attributes!(:disabled => true)
-        youtube.save
-        return false
-      end
-    elsif url.include?("nicovideo.jp/watch")
-      if confirm_niconico(url)
-        ## 問題なし
-        niconico = NiconicoMovie.where(:url => url).first
-        niconico.update_attributes!(:disabled => false)
-        niconico.save
-        return "niconico"
-      else
-        ## DBから探し出しdisabled => true
-        niconico = NiconicoMovie.where(:url => url).first
-        niconico.update_attributes!(:disabled => true)
-        niconico.save
-        return false
-      end
-    else
-      ## 予定外のurl
-      ## DBからの抜き出しなら例外
-      return false
     end
   end
 end

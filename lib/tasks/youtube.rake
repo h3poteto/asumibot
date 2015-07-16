@@ -30,6 +30,12 @@ namespace :youtube do
     client.update_popular
   end
 
+  desc "clear db"
+  task :clear => :environment do
+    YoutubePopular.delete_all(["created_at < ?","Today"])
+    TodayYoutube.delete_all(["created_at < ?", "Today"])
+  end
+
 =begin
 これ初回のみしか使わないのでいらない
   desc "all youtube movie get"
@@ -52,11 +58,6 @@ namespace :youtube do
         add_youtube(doc,false)
       end
     end
-  end
-  desc "clear db"
-  task :clear => :environment do
-    YoutubePopular.delete_all(["created_at < ?","Today"])
-    TodayYoutube.delete_all(["created_at < ?", "Today"])
   end
 =end
 

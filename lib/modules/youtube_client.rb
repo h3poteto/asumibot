@@ -31,7 +31,6 @@ class YoutubeClient
         search_response.data.items.each do |result|
           case result.id.kind
           when 'youtube#video'
-            add_youtube(result)
             search_result << result
           else
             # list channelには興味が無い
@@ -96,6 +95,7 @@ class YoutubeClient
       case result.id.kind
       when 'youtube#video'
         add_today_youtubes(result)
+        add_youtube(result)
       end
     end
   end
@@ -105,6 +105,7 @@ class YoutubeClient
       case result.id.kind
       when 'youtube#video'
         add_popular_youtubes(result)
+        add_youtube(result)
       end
     end
   end
