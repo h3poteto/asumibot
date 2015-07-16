@@ -9,7 +9,6 @@ class TwitterClient
     end
   end
 
-  # TODO: urlはtweetの長さとは分離する
   def update(tweet, url)
     begin
       @client.update(trim(tweet, url).chomp)
