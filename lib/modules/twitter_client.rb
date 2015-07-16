@@ -12,17 +12,25 @@ class TwitterClient
   # TODO: urlはtweetの長さとは分離する
   def update(tweet, url)
     begin
-      if (tweet + url).length > 140
-        tweet = tweet[0..(130 - url.length)].to_s + "...\n" + url
-      else
-        tweet += url
-      end
-      tweet = (tweet.length > 140) ? tweet[0..139].to_s : tweet
-      @client.update(tweet.chomp)
+      @client.update(trim(tweet, url).chomp)
     rescue => e
       Rails.logger.error "<<twitter.rake::tweet.update ERROR : " + e.message + ">>"
       return false
     end
     return true
+  end
+
+  def trim(tweet, url)
+    if url.present?
+      if (tweet + url).length > 140
+        # urlは短縮されるので23文字残っていれば十分
+        tweet = tweet[0..(140 - 26)].to_s + "… " + url
+      else
+        tweet += " " + url
+      end
+    else
+      tweet = tweet[0..138].to_s + "…"
+    end
+    tweet
   end
 end

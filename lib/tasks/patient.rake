@@ -6,7 +6,6 @@ namespace :patient do
 
   desc "update patient level"
   task :update => :environment do
-    setting_twitter
     follower = Patient.where(:disabled => false)
     follower.each do |f|
       prev_level = f.level.present? ? f.level : 0
@@ -27,12 +26,12 @@ namespace :patient do
   end
 
   task :tweet => :environment do
-    setting_twitter
+    client = TwitterClient.new
     patient = Patient.avail_rankings
     patient.each_with_index do |p, i|
       tweet = "@" + p.name + " 今日の阿澄度は" + p.level.to_s + "%だよ。"
       tweet = tweet + Settings.site.http + 'patients/' + p.id.to_s
-      @client.update(tweet)
+      client.update(tweet, nil)
     end
   end
 
@@ -43,8 +42,8 @@ namespace :patient do
     end
   end
   task :add => :environment do
-    setting_twitter
-    follower = @client.follower_ids.to_a
+    client = TwitterClient.new
+    follower = client.follower_ids.to_a
     patients = Patient.all
     patients.each do |p|
       exist_flg = false
@@ -60,7 +59,7 @@ namespace :patient do
       already = Patient.where(:twitter_id => f.to_i)
       if already.blank?
         begin
-          user = @client.user(f)
+          user = client.user(f)
           patient = Patient.new(twitter_id: f.to_i, name: user.screen_name, nickname: user.name, description: user.description, icon: user.profile_image_url, friend: user.friends_count, follower: user.followers_count, all_tweet: user.statuses_count, protect: user.protected? )
           patient.save
         rescue
@@ -71,11 +70,11 @@ namespace :patient do
   end
 
   task :change_name => :environment do
-    setting_twitter
+    client = TwitterClient
     patients = Patient.where(:locked => false)
     patients.each do |p|
       begin
-        user = @client.user(p.twitter_id.to_i)
+        user = client.user(p.twitter_id.to_i)
       rescue
         p.update_attributes(:locked => true )
         next
@@ -86,14 +85,6 @@ namespace :patient do
   end
 
   private
-  def setting_twitter
-    @client = Twitter::REST::Client.new do |config|
-      config.consumer_key       = Settings.twitter.consumer_key
-      config.consumer_secret    = Settings.twitter.consumer_secret
-      config.access_token        = Settings.twitter.oauth_token
-      config.access_token_secret = Settings.twitter.oauth_token_secret
-    end
-  end
 
   def asumi_calculate(asumi_count, tweet_count)
     if tweet_count == 0

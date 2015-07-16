@@ -13,12 +13,12 @@ namespace :rss do
       b.save!
     end
 
-    setting_twitter
+    client = TwitterClient.new
     content = Blog.where(used: false).order("created_at DESC").first
     if content.present?
       tweet = "【あすみんブログ更新】『" + content.title  + "』" + content.link
       content.update_attributes!(used: true)
-      @client.update(tweet)
+      client.update(tweet)
     end
   end
 
@@ -31,15 +31,4 @@ namespace :rss do
     end
   end
 
-
-
-  private
-  def setting_twitter
-    @client = Twitter::REST::Client.new do |config|
-      config.consumer_key       = Settings.twitter.consumer_key
-      config.consumer_secret    = Settings.twitter.consumer_secret
-      config.oauth_token        = Settings.twitter.oauth_token
-      config.oauth_token_secret = Settings.twitter.oauth_token_secret
-    end
-  end
 end

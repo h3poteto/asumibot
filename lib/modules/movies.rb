@@ -1,3 +1,4 @@
+require 'open-uri'
 module Movies
   def confirm_db(url)
     if url.include?("youtube.com/watch?")
