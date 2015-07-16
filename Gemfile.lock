@@ -278,6 +278,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     raindrops (0.13.0)
     rake (10.4.2)
+    rake_shared_context (0.2.1)
     ransack (1.6.3)
       actionpack (>= 3.0)
       activerecord (>= 3.0)
@@ -448,6 +449,7 @@ DEPENDENCIES
   pry-stack_explorer
   rails (= 4.2.0)
   rails_config
+  rake_shared_context
   ransack
   rspec
   rspec-collection_matchers

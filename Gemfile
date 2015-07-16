@@ -81,4 +81,5 @@ group :development, :test do
   gem 'rspec-mocks'
   gem 'bullet'
   gem 'capybara'
+  gem 'rake_shared_context'
 end

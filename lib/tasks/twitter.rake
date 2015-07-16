@@ -5,9 +5,10 @@ namespace :twitter do
   task :normal => :environment do
     client = TwitterClient.new
     movies_array = []
-    movies_array.push(NiconicoPopular.where(:used => false).sample)
-    movies_array.push(NiconicoPopular.where(:used => false).sample)
-    movies_array.push(YoutubePopular.where(:used => false).sample)
+    [YoutubePopular, NiconicoPopular, NiconicoPopular].each do |object|
+      movie = object.where(used: false).sample
+      movies_array << movie if movie.present?
+    end
     movie = movies_array.sample
 
     # つぶやき
