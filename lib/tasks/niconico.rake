@@ -93,7 +93,7 @@ namespace :niconico do
 
   desc "popular nicovideo movie get"
   task :popular => :environment do
-    cookie = login(Settings.nicovideo.mail_address, Settings.nicovideo.password)
+    cookie = login(ENV["NICONICO_ID"], ENV["NICONICO_PASSWORD"])
 
     for i in 0..1 do
       @result = []

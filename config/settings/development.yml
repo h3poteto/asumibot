@@ -5,9 +5,6 @@ site:
   fqdn: 'http://localhost:3000/'
   host: 'localhost:3000'
   blog: 'http://yaplog.jp/asumibiyori/index1_0.rdf'
-nicovideo:
-  mail_address: <%# settings.local overrides %>
-  password: <%# settings.local overrides %>
 twitter:
   user_name: <%# settings.local overrides %>
   ## アプリ登録時に取得したCONSUMER_KEY/CONSUMER_SECRET
