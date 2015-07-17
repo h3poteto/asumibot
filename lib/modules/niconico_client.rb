@@ -63,6 +63,7 @@ class NiconicoClient
         open(@host + @tag + URI.encode(tag) + options, 'Cookie' => @cookie){ |f|
           f.each_line{ |line| result.push(JSON.parse(line))}
         }
+
         if result[0]["status"] != "fail" && result[0]["list"].present?
           pop = i * 32 + 1
           result[0]["list"].each do | movie |
