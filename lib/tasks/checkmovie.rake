@@ -3,7 +3,8 @@
 namespace :checkmovie do
   desc "check recent movie"
   task :recent => :environment do
-    current = Time.now
+    include Movies
+    current = Time.current
     from = 2.weeks.ago
     youtube_rt = YoutubeRtUser.where(created_at: from..current).order("created_at DESC")
     youtube_fav = YoutubeFavUser.where(created_at: from..current).order("created_at DESC")
@@ -24,6 +25,7 @@ namespace :checkmovie do
 
   desc "check all youtube"
   task :youtube => :environment do
+    include Movies
     YoutubeMovie.all.each do |youtube|
       confirm_db(youtube.url)
     end
