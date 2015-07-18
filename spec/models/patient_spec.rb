@@ -37,4 +37,9 @@ RSpec.describe Patient, type: :model do
     it { should validate_uniqueness_of(:twitter_id) }
     it { should validate_presence_of(:twitter_id) }
   end
+
+  describe "#asumi_calculate" do
+    let(:patient) { create(:patient, asumi_count: 50, tweet_count: 100) }
+    it { expect(patient.asumi_calculate).to eq(50) }
+  end
 end
