@@ -46,13 +46,11 @@ namespace :patient do
     follower = client.follower_ids.to_a
     patients = Patient.all
     patients.each do |p|
-      exist_flg = false
+      exist_flg = true
       follower.each do |f|
-        exist_flg = true if f.to_i == p.twitter_id.to_i
+        exist_flg = false if f.to_i == p.twitter_id.to_i
       end
-      if !exist_flg
-        p.update_attributes(:disabled => true)
-      end
+      p.update_attributes!(disabled: exist_flg)
     end
 
     follower.each do |f|
@@ -70,16 +68,17 @@ namespace :patient do
   end
 
   task :change_name => :environment do
-    client = TwitterClient
+    client = TwitterClient.new
     patients = Patient.where(:locked => false)
     patients.each do |p|
+      user = nil
       begin
         user = client.user(p.twitter_id.to_i)
       rescue
         p.update_attributes(:locked => true )
         next
       end
-      p.update_attributes(name: user.screen_name, protect: user.protected?, nickname: user.name, description: user.description, icon: user.profile_image_url, friend: user.friends_count, follower: user.followers_count, all_tweet: user.statuses_count )
+      p.update_attributes(name: user.screen_name, protect: user.protected?, nickname: user.name, description: user.description, icon: user.profile_image_url, friend: user.friends_count, follower: user.followers_count, all_tweet: user.statuses_count)
       sleep(1)
     end
   end

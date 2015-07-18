@@ -18,6 +18,7 @@ FactoryGirl.define do
     prev_asumi_word { Faker::Number.number(2).to_i }
     since_id { Faker::Number.number(10).to_s }
     protect { false }
+    clear { true }
   end
 
 end

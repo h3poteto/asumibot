@@ -1,5 +1,4 @@
 class TwitterClient
-  attr_reader :client
   def initialize
     @client = Twitter::REST::Client.new do |config|
       config.consumer_key       = Settings.twitter.consumer_key
@@ -31,5 +30,13 @@ class TwitterClient
       tweet = tweet[0..138].to_s + "…"
     end
     tweet
+  end
+
+  def follower_ids
+    @client.follower_ids
+  end
+
+  def user(user)
+    @client.user(user)
   end
 end
