@@ -132,6 +132,12 @@ GEM
     equalizer (0.0.9)
     erubis (2.7.0)
     eventmachine (1.0.6)
+    exception_notification (4.1.1)
+      actionmailer (>= 3.0.4)
+      activesupport (>= 3.0.4)
+    exception_notification-rake (0.2.1)
+      exception_notification (~> 4.1.0)
+      rake (>= 0.9.0)
     execjs (2.3.0)
     extlib (0.9.16)
     factory_girl (4.5.0)
@@ -338,6 +344,7 @@ GEM
       jwt (~> 1.5)
       multi_json (~> 1.10)
     simple_oauth (0.3.1)
+    slack-notifier (1.2.1)
     slop (3.6.0)
     spring (1.3.0)
     spring-commands-rspec (1.0.4)
@@ -431,6 +438,8 @@ DEPENDENCIES
   coffee-rails
   database_cleaner
   devise
+  exception_notification
+  exception_notification-rake
   factory_girl_rails
   faker
   faker-japanese
@@ -459,6 +468,7 @@ DEPENDENCIES
   sass-rails
   shoulda-matchers
   sidekiq
+  slack-notifier
   spring
   spring-commands-rspec
   therubyracer
