@@ -13,12 +13,13 @@ RSpec.describe NiconicoClient do
     before(:each) do
       client.login(ENV["NICONICO_ID"], ENV["NICONICO_PASSWORD"])
     end
-    describe "#get_today_movies" do
-      subject { client.get_today_movies }
-      it do
-        expect{ subject }.to change{ TodayNiconico.count }.from(0)
-      end
-    end
+    # 今日の分が必ずしも存在するわけではないのでCIには載せない
+    # describe "#get_today_movies" do
+    #   subject { client.get_today_movies }
+    #   it do
+    #     expect{ subject }.to change{ TodayNiconico.count }.from(0)
+    #   end
+    # end
 
     describe "#get_popular_movies" do
       subject { client.get_popular_movies }
