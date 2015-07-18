@@ -72,4 +72,25 @@ module Movies
       return true
     end
   end
+
+  def find_movie(expand_url)
+    if expand_url.to_s.include?("youtube")
+      movie_object = YoutubeMovie.where(url: expand_url.to_s).first
+    elsif expand_url.to_s.include?("nicovideo")
+      movie_object = NiconicoMovie.where(url: expand_url.to_s).first
+    end
+    movie_object
+  end
+
+  def find_random
+    begin
+      random = rand(4)
+      if random == 1
+        movie = YoutubeMovie.where(:disabled => false).sample
+      else
+        movie = NiconicoMovie.where(:disabled => false).sample
+      end
+    end while !confirm_db(movie.url)
+    movie
+  end
 end

@@ -36,11 +36,7 @@ namespace :asumistream do
         end
         expanded_urls.each do |expand_url|
           # search object
-          if expand_url.to_s.include?("youtube")
-            movie_object = YoutubeMovie.where(url: expand_url.to_s).first
-          elsif expand_url.to_s.include?("nicovideo")
-            movie_object = NiconicoMovie.where(url: expand_url.to_s).first
-          end
+          movie_object = find_movie(expand_url)
           # add object
           if movie_object.present?
             movie_object.fav_users.push(user)
@@ -81,9 +77,9 @@ namespace :asumistream do
           end
         end
       elsif (status.in_reply_to_user_id != nil) && (!status.text.include?("RT")) && (!status.text.include?("QT")) && (status.user.screen_name != Settings.twitter.user_name) && (status.text.include?("@"+Settings.twitter.user_name))
+        ## reply
         puts status.user.screen_name
         puts status.text
-        puts "\n"
 
         # userstreamなのでlastはチェックいらない
         last_men = LastData.where(:category => "mention").first
@@ -92,17 +88,7 @@ namespace :asumistream do
         last_men.tweet_id = men.id.to_s
         last_men.save
 
-        # DBアクセス
-        movie = nil
-        begin
-          random = rand(4)
-          if random == 1
-            movie = YoutubeMovie.where(:disabled => false).sample
-          else
-            movie = NiconicoMovie.where(:disabled => false).sample
-          end
-
-        end while !confirm_db(movie.url)
+        movie = find_random
 
         movie_info = "【" + movie.title + "】"
         tweet = ReplySerif.all.sample.word + " \n"
@@ -121,11 +107,7 @@ namespace :asumistream do
         end
         expanded_urls.each do |expand_url|
           # search object
-          if expand_url.to_s.include?("youtube")
-            movie_object = YoutubeMovie.where(url: expand_url.to_s).first
-          elsif expand_url.to_s.include?("nicovideo")
-            movie_object = NiconicoMovie.where(url: expand_url.to_s).first
-          end
+          movie_object = find_movie(expand_url)
           # add object
           if movie_object.present?
             movie_object.rt_users.push(user)
