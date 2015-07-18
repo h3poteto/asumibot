@@ -93,4 +93,21 @@ module Movies
     end while !confirm_db(movie.url)
     movie
   end
+
+  def include_asumich?(urls)
+    user.any? {|w| w.expanded_url.to_s.include?("/movies/show_") }
+  end
+
+  def find_movie_for_asumich(expand_url)
+    if expand_url.to_s.include?("show_youtube")
+      s = expand_url.to_s.index("show_youtube/")
+      id = expand_url.to_s[(s+("show_youtube/").length)..200].to_i
+      movie_object = YoutubeMovie.find(id)
+    elsif expand_url.to_s.include?("show_niconico")
+      s = expand_url.to_s.index("show_niconico/")
+      id = expand_url.to_s[(s+("show_niconico/").length)..200].to_i
+      movie_object = NiconicoMovie.find(id)
+    end
+    movie_object
+  end
 end

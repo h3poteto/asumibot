@@ -51,7 +51,7 @@ namespace :asumistream do
       ## 阿澄度計測用処理
       PatientJob.perform_later(status.user.id.to_i, status.text, status.id.to_s, status.created_at.to_s(:db))
       ## タイムライン処理
-      if (status.urls.any?{|w| w.expanded_url.to_s.include?("/movies/show_")} && (status.text.include?("@"+Settings.twitter.user_name)) && (status.user.screen_name != Settings.twitter.user_name))
+      if ( include_asumich?(status.urls) && (status.text.include?("@"+Settings.twitter.user_name)) && (status.user.screen_name != Settings.twitter.user_name))
         # search user
         user_id = status.user.id.to_i
         user = User.find_or_create(screen_name: status.user.screen_name, twitter_id: user_id)
@@ -61,15 +61,7 @@ namespace :asumistream do
           expanded_urls.push(url.expanded_url)
         end
         expanded_urls.each do |expand_url|
-          if expand_url.to_s.include?("show_youtube")
-            s = expand_url.to_s.index("show_youtube/")
-            id = expand_url.to_s[(s+("show_youtube/").length)..200].to_i
-            movie_object = YoutubeMovie.find(id)
-          elsif expand_url.to_s.include?("show_niconico")
-            s = expand_url.to_s.index("show_niconico/")
-            id = expand_url.to_s[(s+("show_niconico/").length)..200].to_i
-            movie_object = NiconicoMovie.find(id)
-          end
+          movie_object = find_movie_for_asumich(expand_url)
           # add object
           if movie_object.present?
             movie_object.rt_users.push(user)
