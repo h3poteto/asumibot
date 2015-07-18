@@ -95,7 +95,7 @@ module Movies
   end
 
   def include_asumich?(urls)
-    user.any? {|w| w.expanded_url.to_s.include?("/movies/show_") }
+    urls.any? {|w| w.expanded_url.to_s.include?("/movies/show_") }
   end
 
   def find_movie_for_asumich(expand_url)

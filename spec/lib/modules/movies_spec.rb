@@ -44,4 +44,64 @@ RSpec.describe Movies do
     it { expect(test_instance.confirm_db(niconico_cannot)).to eq false }
   end
 
+  describe "#find_movie" do
+    context "youtubeのとき" do
+      let!(:youtube) { create(:youtube_movie, url: youtube_right) }
+      it { expect(test_instance.find_movie(youtube_right)).to eq(youtube) }
+    end
+    context "niconicoのとき" do
+      let!(:niconico) { create(:niconico_movie, url: niconico_right) }
+      it { expect(test_instance.find_movie(niconico_right)).to eq(niconico) }
+    end
+  end
+
+  describe "#find_random" do
+    let!(:youtube) { create(:youtube_movie, url: youtube_right) }
+    let!(:niconico) { create(:niconico_movie, url: niconico_right) }
+    before(:each) do
+      create(:youtube_movie, url: youtube_cannot)
+      create(:niconico_movie, url: niconico_cannot)
+    end
+    it do
+      expect([youtube, niconico]).to include(test_instance.find_random)
+    end
+  end
+
+  describe "#include_asumich?" do
+    context "asumichのURLを含むとき" do
+      let(:urls) { [
+        StatusUrl.new(expanded_url: "https://asumi.ch/movies/show_12345"),
+        StatusUrl.new(expanded_url: youtube_right)
+      ] }
+      it do
+        expect(test_instance.include_asumich?(urls)).to eq(true)
+      end
+    end
+    context "asumichのURLを含まない時" do
+      let(:urls) { [
+        StatusUrl.new(expanded_url: youtube_right),
+        StatusUrl.new(expanded_url: niconico_right)
+      ] }
+      it do
+        expect(test_instance.include_asumich?(urls)).to eq(false)
+      end
+    end
+  end
+
+  describe "#find_movie_for_asumich" do
+    context "youtubeのとき" do
+      let!(:youtube) { create(:youtube_movie) }
+      let(:expand_url) { "http://www.asumi.ch/show_youtube/#{youtube.id}" }
+      it do
+        expect(test_instance.find_movie_for_asumich(expand_url)).to eq(youtube)
+      end
+    end
+    context "niconicoのとき" do
+      let!(:niconico) { create(:niconico_movie) }
+      let(:expand_url) { "http://www.asumi.ch/show_niconico/#{niconico.id}" }
+      it do
+        expect(test_instance.find_movie_for_asumich(expand_url)).to eq(niconico)
+      end
+    end
+  end
 end
