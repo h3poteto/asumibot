@@ -14,7 +14,7 @@ namespace :asumi_level do
         month_tweet += l.tweet_count.present? ? l.tweet_count : 0
         month_asumi += l.asumi_count.present? ? l.asumi_count : 0
       end
-      month_level = month_asumi * 100 / month_tweet if month_tweet != 0 && month_tweet > 20
+      month_level = month_asumi * 100 / month_tweet if  month_tweet > 20
       MonthRanking.create!(patient_id: p.id, level: month_level)
     end
   end

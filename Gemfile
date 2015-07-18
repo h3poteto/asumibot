@@ -59,6 +59,7 @@ group :test do
   gem 'database_cleaner'
   gem 'faker'
   gem 'faker-japanese'
+  gem 'timecop'
 end
 
 group :development do

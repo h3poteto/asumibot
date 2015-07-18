@@ -1,6 +1,7 @@
 class Patient < ActiveRecord::Base
   has_many :asumi_tweets
   has_many :asumi_levels
+  has_one :month_ranking
 
   validates_uniqueness_of :twitter_id
 
