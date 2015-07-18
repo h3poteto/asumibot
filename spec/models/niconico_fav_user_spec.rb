@@ -15,29 +15,27 @@ RSpec.describe NiconicoFavUser, type: :model do
   end
 
   describe 'fav_count' do
+    let(:user) { create(:user) }
+    let(:movie) { create(:niconico_movie) }
     before(:each) do
-      @movie = create(:niconico_movie)
       for i in 0..9 do
-        niconico_fav = build(:niconico_fav_each_user)
-        niconico_fav.niconico_movie_id = @movie.id
-        niconico_fav.save
+        create(:niconico_fav_user, fav_user: user, fav_niconico: movie)
       end
     end
     it "have 10 count" do
-      expect(NiconicoFavUser.fav_count(@movie.id)).to eq(10)
+      expect(NiconicoFavUser.fav_count(movie.id)).to eq(10)
     end
   end
 
   describe 'recent fav order' do
+    let(:user) { create(:user) }
     before(:each) do
       @movies = []
       for i in 1..10 do
         movie = create(:niconico_movie)
         @movies.push([movie, i])
         for j in 1..i do
-          niconico_fav = build(:niconico_fav_each_user)
-          niconico_fav.niconico_movie_id = movie.id
-          niconico_fav.save
+          create(:niconico_fav_user, fav_user: user, fav_niconico: movie )
         end
       end
     end

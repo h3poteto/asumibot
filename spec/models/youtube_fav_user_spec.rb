@@ -15,29 +15,27 @@ RSpec.describe YoutubeFavUser, type: :model do
   end
 
   describe 'fav_count' do
+    let(:user) { create(:user) }
+    let(:movie) { create(:youtube_movie) }
     before(:each) do
-      @movie = create(:youtube_movie)
       for i in 0..9 do
-        youtube_fav = build(:youtube_fav_each_user)
-        youtube_fav.youtube_movie_id = @movie.id
-        youtube_fav.save
+        create(:youtube_fav_user, fav_user: user, fav_youtube: movie)
       end
     end
     it "have 10 count" do
-      expect(YoutubeFavUser.fav_count(@movie.id)).to eq(10)
+      expect(YoutubeFavUser.fav_count(movie.id)).to eq(10)
     end
   end
 
   describe 'recent fav order' do
+    let(:user) { create(:user) }
     before(:each) do
       @movies = []
       for i in 1..10 do
         movie = create(:youtube_movie)
         @movies.push([movie, i])
         for j in 1..i do
-          youtube_fav = build(:youtube_fav_each_user)
-          youtube_fav.youtube_movie_id = movie.id
-          youtube_fav.save
+          create(:youtube_fav_user, fav_user: user, fav_youtube: movie)
         end
       end
     end

@@ -15,41 +15,6 @@ RSpec.describe AsumiLevel, type: :model do
     it { should have_db_column(:updated_at).of_type(:datetime) }
   end
 
-
-  describe 'when create' do
-    context 'with valid attributes' do
-      subject { build(:asumi_level) }
-      it "should create a new instance" do
-        expect(subject.save).not_to be_falsey
-      end
-    end
-  end
-
-  describe 'when update' do
-    context 'after create' do
-      before do
-        @attr = attributes_for(:asumi_level)
-        @asumi_level = create(:asumi_level)
-        @asumi_level.update_attributes(@attr)
-      end
-      subject { AsumiLevel.find(@asumi_level.id) }
-      it "should new values" do
-        @attr.each do |k,v|
-          expect(subject.send(k).to_i).to eq(v.to_i)
-        end
-      end
-    end
-  end
-
-  describe 'when delete', :delete do
-    subject { create(:asumi_level) }
-    it "should delete" do
-      id = subject.id
-      expect(subject.destroy).not_to be_falsey
-      expect { AsumiLevel.find(id) }.to raise_error(ActiveRecord::RecordNotFound)
-    end
-  end
-
   describe "month ranking order" do
     before(:each) do
       @low_patient = create(:patient)

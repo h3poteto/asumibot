@@ -13,22 +13,4 @@ RSpec.describe MonthRanking, type: :model do
     it { should have_db_column(:updated_at).of_type(:datetime).with_options(null: false) }
   end
 
-  describe 'when create' do
-    context 'with valid attributes' do
-      subject { build(:month_ranking) }
-      it "should create a new instance" do
-        expect(subject.save).not_to be_falsey
-      end
-    end
-  end
-
-  describe 'when delete', :delete do
-    subject { create(:month_ranking) }
-    it "should delete" do
-      id = subject.id
-      expect(subject.destroy).not_to be_falsey
-      expect { MonthRanking.find(id) }.to raise_error(ActiveRecord::RecordNotFound)
-    end
-  end
-
 end

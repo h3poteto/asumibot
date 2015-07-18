@@ -22,38 +22,4 @@ RSpec.describe NiconicoMovie, type: :model do
   describe 'when validate', :validation do
     it { should validate_uniqueness_of(:url) }
   end
-
-  describe 'when create' do
-    context 'with valid attributes' do
-      subject { build(:niconico_movie) }
-      it "should create a new instance" do
-        expect(subject.save).not_to be_falsey
-      end
-    end
-  end
-
-  describe 'when update' do
-    context 'after create' do
-      before do
-        @attr = attributes_for(:niconico_movie)
-        @niconico_movie = create(:niconico_movie)
-        @niconico_movie.update_attributes(@attr)
-      end
-      subject { NiconicoMovie.find(@niconico_movie.id) }
-      it "should new values" do
-        @attr.each do |k,v|
-          expect(subject.send(k)).to eq(v)
-        end
-      end
-    end
-  end
-
-  describe 'when delete', :delete do
-    subject { create(:niconico_movie) }
-    it "should delete" do
-      id = subject.id
-      expect(subject.destroy).not_to be_falsey
-      expect { NiconicoMovie.find(id) }.to raise_error(ActiveRecord::RecordNotFound)
-    end
-  end
 end

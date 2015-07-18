@@ -14,29 +14,27 @@ RSpec.describe NiconicoRtUser, type: :model do
   end
 
   describe 'retweet_count' do
+    let(:user) { create(:user) }
+    let(:movie) { create(:niconico_movie) }
     before(:each) do
-      @movie = create(:niconico_movie)
       for i in 0..9 do
-        niconico_rt = build(:niconico_rt_each_user)
-        niconico_rt.niconico_movie_id = @movie.id
-        niconico_rt.save
+        create(:niconico_rt_user, rt_user: user, rt_niconico: movie)
       end
     end
     it "have 10 count" do
-      expect(NiconicoRtUser.rt_count(@movie.id)).to eq(10)
+      expect(NiconicoRtUser.rt_count(movie.id)).to eq(10)
     end
   end
 
   describe 'recent retweet order' do
+    let(:user) { create(:user) }
     before(:each) do
       @movies = []
       for i in 1..10 do
         movie = create(:niconico_movie)
         @movies.push([movie, i])
         for j in 1..i do
-          niconico_rt = build(:niconico_rt_each_user)
-          niconico_rt.niconico_movie_id = movie.id
-          niconico_rt.save
+          create(:niconico_rt_user, rt_user: user, rt_niconico: movie)
         end
       end
     end
