@@ -51,6 +51,9 @@ gem 'pry-doc'
 gem 'pry-stack_explorer'
 gem 'jpmobile'
 gem 'google-api-client'
+gem 'exception_notification'
+gem 'slack-notifier'
+gem 'exception_notification-rake'
 
 group :test do
   gem 'shoulda-matchers', require: false
