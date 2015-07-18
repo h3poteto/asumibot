@@ -26,15 +26,8 @@ namespace :asumistream do
     client.on_event(:favorite) do |event|
       if event[:event] == "favorite"
         # search user
-        user_id = event[:source][:id]
-        user = User.where(twitter_id: user_id)
-        if user.blank?
-          new_user = User.new(screen_name: event[:source][:screen_name], twitter_id: user_id.to_i)
-          new_user.save
-          user = new_user
-        else
-          user = user.first
-        end
+        user_id = event[:source][:id].to_i
+        user = User.find_or_create(screen_name: event[:source][:screen_name], twitter_id: user_id)
 
         # find url
         expanded_urls = []
@@ -65,14 +58,7 @@ namespace :asumistream do
       if (status.urls.any?{|w| w.expanded_url.to_s.include?("/movies/show_")} && (status.text.include?("@"+Settings.twitter.user_name)) && (status.user.screen_name != Settings.twitter.user_name))
         # search user
         user_id = status.user.id.to_i
-        user = User.where(twitter_id: user_id)
-        if user.blank?
-          new_user = User.new(screen_name: status.user.screen_name, twitter_id: user_id)
-          new_user.save
-          user = new_user
-        else
-          user = user.first
-        end
+        user = User.find_or_create(screen_name: status.user.screen_name, twitter_id: user_id)
 
         expanded_urls = []
         status.urls.each do |url|
@@ -126,14 +112,7 @@ namespace :asumistream do
         ## for RT
         # search user
         user_id = status.user.id.to_i
-        user = User.where(twitter_id: user_id)
-        if user.blank?
-          new_user = User.new(screen_name: status.user.screen_name, twitter_id: user_id)
-          new_user.save
-          user = new_user
-        else
-          user = user.first
-        end
+        user = User.first_or_create(screen_name: status.user.screen_name, twitter_id: user_id)
 
         # find url
         expanded_urls = []

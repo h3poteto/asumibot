@@ -23,4 +23,23 @@ RSpec.describe User, type: :model do
   describe 'when validate', :validation do
     it { should validate_uniqueness_of(:twitter_id) }
   end
+
+  describe '.find_or_create' do
+    let(:screen_name) { Faker::Internet.user_name }
+    let(:twitter_id) { Faker::Number.number(5).to_i }
+    context 'すでにユーザが登録されているとき' do
+      let!(:user) { create(:user, twitter_id: twitter_id, screen_name: screen_name) }
+      it do
+        expect{ User.find_or_create(screen_name, twitter_id) }.not_to change{ User.count }.from(1)
+      end
+      it do
+        expect(User.find_or_create(screen_name, twitter_id)).to eq(user)
+      end
+    end
+    context 'ユーザが登録されていないとき' do
+      it do
+        expect(User.find_or_create(screen_name, twitter_id).twitter_id).to eq(twitter_id)
+      end
+    end
+  end
 end
