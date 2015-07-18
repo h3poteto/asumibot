@@ -38,6 +38,9 @@ class TwitterClient
   def friend_ids
     @client.friend_ids
   end
+  def friendships_outgoing
+    @client.friendships_outgoing
+  end
 
   def user(user)
     @client.user(user)
