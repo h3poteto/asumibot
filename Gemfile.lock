@@ -184,6 +184,9 @@ GEM
     i18n_generators (1.2.1)
       mechanize
       rails (>= 3.0.0)
+    jbuilder (2.3.1)
+      activesupport (>= 3.0.0, < 5)
+      multi_json (~> 1.2)
     jpmobile (4.2.0)
     jquery-rails (4.0.3)
       rails-dom-testing (~> 1.0)
@@ -447,6 +450,7 @@ DEPENDENCIES
   gon
   google-api-client
   i18n_generators
+  jbuilder
   jpmobile
   jquery-rails
   kaminari

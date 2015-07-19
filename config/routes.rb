@@ -8,6 +8,17 @@ Asumibot::Application.routes.draw do
       get :streamnico
     end
   end
+  resources :youtubes, only: :index, defaults: { format: :json } do
+    collection do
+      get :today
+    end
+  end
+  resources :niconico, only: :index, defaults: {format: :json } do
+    collection do
+      get :today
+    end
+  end
+
   get "/movies/show_niconico/:id" => "movies#show_niconico", :as => :niconico
   get "/movies/show_youtube/:id" => "movies#show_youtube", :as => :youtube
 

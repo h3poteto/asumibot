@@ -86,9 +86,9 @@ module Movies
     begin
       random = rand(4)
       if random == 1
-        movie = YoutubeMovie.where(:disabled => false).sample
+        movie = YoutubeMovie.available.sample
       else
-        movie = NiconicoMovie.where(:disabled => false).sample
+        movie = NiconicoMovie.available.sample
       end
     end while !confirm_db(movie.url)
     movie
