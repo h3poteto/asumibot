@@ -43,6 +43,7 @@ class NiconicoClient
       }
       t = Time.current
       str_t = t.strftime("%y/%m/%d")
+      next if result[0]["list"].blank?
       result[0]["list"].each do | movie |
         post = movie["first_retrieve"]
         str_post = Date.parse(post[0..9]).strftime("%y/%m/%d")
