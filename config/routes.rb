@@ -13,7 +13,7 @@ Asumibot::Application.routes.draw do
       get :today
     end
   end
-  resources :niconico, only: :index, defaults: {format: :json } do
+  resources :niconicos, only: :index, defaults: {format: :json } do
     collection do
       get :today
     end

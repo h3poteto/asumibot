@@ -55,6 +55,7 @@ RSpec.configure do |config|
   # for Devise
   config.include Devise::TestHelpers, type: :controller
   config.include RequestHelpers, type: :request
+  config.include JsonSpec::Helpers
 
   Faker::Config.locale = :en
   config.include FactoryGirl::Syntax::Methods

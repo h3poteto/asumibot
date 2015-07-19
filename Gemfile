@@ -63,6 +63,7 @@ group :test do
   gem 'faker'
   gem 'faker-japanese'
   gem 'timecop'
+  gem 'json_spec'
 end
 
 group :development do
