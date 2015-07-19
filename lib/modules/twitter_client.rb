@@ -41,6 +41,9 @@ class TwitterClient
   def friendships_outgoing
     @client.friendships_outgoing
   end
+  def follow(user)
+    @client.follow(user)
+  end
 
   def user(user)
     @client.user(user)
