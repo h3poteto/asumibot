@@ -56,7 +56,7 @@ set :sidekiq_role, :web
 
 
 after 'deploy:publishing', 'deploy:restart'
-after "unicorn:restart", 'monitor:restart'
+after "unicorn:restart", 'monitor:stop_stream'
 namespace :deploy do
   task :restart do
     invoke 'unicorn:restart'
