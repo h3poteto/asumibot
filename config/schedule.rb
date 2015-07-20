@@ -110,5 +110,5 @@ every '17 * * * *' do
 end
 
 every '*/5 * * * *' do
-  command "cd /srv/www/asumibot/current && if [ ! -e tmp/pids/userstream.pid ] || ! ps $(cat tmp/pids/userstream.pid) ; then bundle exec rake asumistream:reploy RAILS_ENV=production ; fi"
+  command "cd /srv/www/asumibot/current && if [ ! -e tmp/pids/userstream.pid ] || ! ps $(cat tmp/pids/userstream.pid) ; then bundle exec rake asumistream:reply RAILS_ENV=production ; fi"
 end
