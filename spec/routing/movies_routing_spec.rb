@@ -6,6 +6,9 @@ RSpec.describe MoviesController, :type => :routing do
     it "routes to #index" do
       expect(:get => "/movies").to route_to("movies#index")
     end
+    it "routes to #index" do
+      expect(get: "/movies.json").to route_to("movies#index", format: "json")
+    end
 
     it "routes to #new" do
       expect(:get => "/movies/new").not_to be_routable

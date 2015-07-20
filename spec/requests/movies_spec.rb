@@ -6,9 +6,21 @@ RSpec.describe "Movies", type: :request do
     @niconico = create(:niconico_movie)
   end
   describe "GET /movies" do
-    it "works!" do
-      get movies_path
-      expect(response).to have_http_status(200)
+    context "htmlのとき" do
+      it "works!" do
+        get movies_path
+        expect(response).to have_http_status(200)
+      end
+    end
+    context "jsonのとき" do
+      it do
+        get(movies_path, format: :json)
+        expect(response).to have_http_status(200)
+      end
+      it do
+        get(movies_path, format: :json)
+        expect([@youtube.url, @niconico.url]).to include(JSON.parse(response.body)["url"])
+      end
     end
   end
 

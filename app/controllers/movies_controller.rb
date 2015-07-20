@@ -7,14 +7,22 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
-
-    search_niconico = NiconicoMovie.search(:title_or_url_or_description_cont => params[:search])
-    search_youtube = YoutubeMovie.search(:title_or_url_or_description_cont => params[:search])
-    niconico_sql = search_niconico.result.available.to_sql
-    youtube_sql = search_youtube.result.available.to_sql
-    union_sql = "#{niconico_sql} union all #{youtube_sql} order by created_at DESC;"
-    collection = ActiveRecord::Base.connection.select_all(union_sql)
-    @movies = Kaminari.paginate_array(collection.to_a).page(params[:page]).per(20)
+    respond_to do |format|
+      format.html do
+        search_niconico = NiconicoMovie.search(:title_or_url_or_description_cont => params[:search])
+        search_youtube = YoutubeMovie.search(:title_or_url_or_description_cont => params[:search])
+        niconico_sql = search_niconico.result.available.to_sql
+        youtube_sql = search_youtube.result.available.to_sql
+        union_sql = "#{niconico_sql} union all #{youtube_sql} order by created_at DESC;"
+        collection = ActiveRecord::Base.connection.select_all(union_sql)
+        @movies = Kaminari.paginate_array(collection.to_a).page(params[:page]).per(20)
+      end
+      format.json do
+        niconico = NiconicoMovie.available.sample
+        youtube = YoutubeMovie.available.sample
+        @movie = [niconico, youtube].sample
+      end
+    end
   end
 
   # GET /movies/1
