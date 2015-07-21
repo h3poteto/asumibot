@@ -47,7 +47,7 @@ class PatientsController < ApplicationController
     @datedata.each do | day |
       level = AsumiLevel.where(patient_id: params[:id]).where(created_at: day.beginning_of_day...day.end_of_day )
 
-      if level.present? && level.first.tweet_count != 0
+      if level.present? && level.first.tweet_count != 0 && level.first.asumi_count.present?
         @level_data.push(level.first.asumi_count * 100 / level.first.tweet_count)
       else
         @level_data.push(0)
