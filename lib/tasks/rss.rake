@@ -16,9 +16,8 @@ namespace :rss do
     client = TwitterClient.new
     content = Blog.where(used: false).order("created_at DESC").first
     if content.present?
-      tweet = "【あすみんブログ更新】『" + content.title  + "』" + content.link
+      client.update("【あすみんブログ更新】『#{content.title}』", content.link)
       content.update_attributes!(used: true)
-      client.update(tweet)
     end
   end
 
