@@ -27,7 +27,7 @@ namespace :asumistream do
       if event[:event] == "favorite"
         # search user
         user_id = event[:source][:id].to_i
-        user = User.find_or_create(screen_name: event[:source][:screen_name], twitter_id: user_id)
+        user = User.find_or_create(event[:source][:screen_name], user_id)
 
         # find url
         expanded_urls = []
@@ -54,7 +54,7 @@ namespace :asumistream do
       if ( include_asumich?(status.urls) && (status.text.include?("@"+Settings.twitter.user_name)) && (status.user.screen_name != Settings.twitter.user_name))
         # search user
         user_id = status.user.id.to_i
-        user = User.find_or_create(screen_name: status.user.screen_name, twitter_id: user_id)
+        user = User.find_or_create(status.user.screen_name, user_id)
 
         expanded_urls = []
         status.urls.each do |url|
