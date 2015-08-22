@@ -1,5 +1,7 @@
 require 'exception_notification/rails'
 
+require 'exception_notification/sidekiq'
+
 
 
 ExceptionNotification.configure do |config|
@@ -21,6 +23,7 @@ ExceptionNotification.configure do |config|
   #   :sender_address       => %{"Notifier" <notifier@example.com>},
   #   :exception_recipients => %w{exceptions@example.com}
   # }
+
   config.add_notifier :slack, {
     :webhook_url => ENV["SLACK_WEBHOOK_URL"],
     :channel => "#asumibot",
@@ -28,6 +31,7 @@ ExceptionNotification.configure do |config|
       :mrkdwn => true
     }
   }
+
   # Campfire notifier sends notifications to your Campfire room. Requires 'tinder' gem.
   # config.add_notifier :campfire, {
   #   :subdomain => 'my_subdomain',
