@@ -53,3 +53,6 @@ Rails.application.configure do
     Bullet.rails_logger = true
   end
 end
+
+local_env_file = Pathname(File.join(File.dirname(__FILE__), "development.local.rb"))
+load local_env_file if local_env_file.exist?
