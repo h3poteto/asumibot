@@ -23,7 +23,7 @@ set :output, {:error => 'log/crontab.err.log', :standard => 'log/crontab.log'}
 
 set :environment, :production
 env :PATH, ENV['PATH']
-
+job_type :rails4_runner, "cd :path && bin/rails runner -e :environment :task :output"
 
 every '49 * * * *' do
   rake "twitter:normal"
@@ -111,4 +111,8 @@ end
 
 every '*/5 * * * *' do
   command "cd /srv/www/asumibot/current && if [ ! -e tmp/pids/userstream.pid ] || ! ps $(cat tmp/pids/userstream.pid) ; then bundle exec rake asumistream:reply RAILS_ENV=production ; fi"
+end
+
+every '*/1 * * * *' do
+  rails4_runner "MonitorSidekiq.check_and_restart"
 end
