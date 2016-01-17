@@ -3,6 +3,8 @@ class AsumiTweet < ActiveRecord::Base
 
   before_save :encode_emoji
 
+  validates_uniqueness_of :tweet_id
+
   def encode_emoji
     self.tweet = utf8mb4_encode_numericentity(self.tweet)
   end
