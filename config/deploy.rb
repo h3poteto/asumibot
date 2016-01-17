@@ -51,11 +51,8 @@ set :unicorn_config_path, "#{release_path}/config/unicorn.rb"
 set :keep_releases, 5
 set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
-
-
 after 'deploy:publishing', 'deploy:restart'
 after "deploy:restart", 'monitor:stop_stream'
-after "deploy:restart", 'deploy:shoryuken:stop'
 namespace :deploy do
   task :restart do
     invoke 'unicorn:restart'
@@ -70,12 +67,15 @@ namespace :deploy do
       upload!('config/settings/production.local.yml', "#{shared_path}/config/settings/production.local.yml")
     end
   end
-  before :starting, 'deploy:upload'
-  after :finishing, 'deploy:cleanup'
 
   namespace :shoryuken do
-    task :stop, :role => :app do
-      run "cd #{shared_path}; if [ -f tmp/pids/shoryuken.pid ]; then kill $(cat tmp/pids/shoryuken.pid); fi"
+    task :stop do
+      on roles(:app) do |host|
+        execute "cd #{shared_path}; if [ -f tmp/pids/shoryuken.pid ]; then kill $(cat tmp/pids/shoryuken.pid); fi"
+      end
     end
   end
+  before :starting, 'deploy:upload'
+  after :finishing, 'deploy:cleanup'
+  after :restart, 'deploy:shoryuken:stop'
 end
