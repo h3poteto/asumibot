@@ -74,6 +74,7 @@ group :development do
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'
   gem 'capistrano3-unicorn'
+  gem 'brancher'
 end
 
 group :development, :test do
