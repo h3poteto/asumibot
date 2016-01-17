@@ -51,12 +51,11 @@ set :unicorn_config_path, "#{release_path}/config/unicorn.rb"
 set :keep_releases, 5
 set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
 
-set :sidekiq_config, -> { File.join(release_path, 'config', 'sidekiq.yml') }
-set :sidekiq_role, :web
 
 
 after 'deploy:publishing', 'deploy:restart'
-after "unicorn:restart", 'monitor:stop_stream'
+after "deploy:restart", 'monitor:stop_stream'
+after "deploy:restart", 'deploy:shoryuken:stop'
 namespace :deploy do
   task :restart do
     invoke 'unicorn:restart'
@@ -73,4 +72,10 @@ namespace :deploy do
   end
   before :starting, 'deploy:upload'
   after :finishing, 'deploy:cleanup'
+
+  namespace :shoryuken do
+    task :stop, :role => :app do
+      run "cd #{shared_path}; if [ -f tmp/pids/shoryuken.pid ]; then kill $(cat tmp/pids/shoryuken.pid); fi"
+    end
+  end
 end
