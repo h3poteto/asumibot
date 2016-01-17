@@ -1,5 +1,5 @@
 aws:
-  access_key_id: <%= ENV["AWS_ACESS_KEY_ID"] || "access key id" %>
+  access_key_id: <%= ENV["AWS_ACCESS_KEY_ID"] || "access key id" %>
   secret_access_key: <%= ENV["AWS_SECRET_ACCESS_KEY"] || "secret access key" %>
   region: <%= ENV["AWS_REGION"] || "region" %>
   sqs_endpoint: <%= ENV["AWS_SQS_ENDPOINT"] || "http://localhost:4568" %>
