@@ -113,6 +113,6 @@ every '*/5 * * * *' do
   command "cd /srv/www/asumibot/current && if [ ! -e tmp/pids/userstream.pid ] || ! ps $(cat tmp/pids/userstream.pid) ; then bundle exec rake asumistream:reply RAILS_ENV=production ; fi"
 end
 
-every '*/1 * * * *' do
+every '*/5 * * * *' do
   command "cd /srv/www/asumibot/current && if [ ! -e tmp/pids/shoryuken.pid ] || ! ps $(cat tmp/pids/shoryuken.pid) ; then RAILS_ENV=production bundle exec shoryuken -R -C config/shoryuken.yml -d ; fi"
 end

@@ -71,7 +71,7 @@ namespace :deploy do
   namespace :shoryuken do
     task :stop do
       on roles(:app) do |host|
-        execute "cd #{shared_path}; if [ -f tmp/pids/shoryuken.pid ]; then kill $(cat tmp/pids/shoryuken.pid); fi"
+        execute "cd #{shared_path}; if [ -f tmp/pids/shoryuken.pid ]; then kill -15 $(cat tmp/pids/shoryuken.pid); fi"
       end
     end
   end
