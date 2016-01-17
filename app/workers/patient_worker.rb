@@ -6,25 +6,32 @@ class PatientWorker
 
   def perform(sqs_msg, body_data)
     sqs_msg.visibility_timeout = 300
-    user_id = body_data["user_id"].to_i
-    text = body_data["text"]
-    id = body_data["id"]
-    created_at = body_data["created_at"]
-    @asumi_tweet = ["阿澄","あすみ","佳奈","アスミ","もこたん","もこちゃ"]
-    follower = Patient.where(twitter_id: user_id).first
-    if follower.present?
-      if asumi_tweet_check(text)
-        asumi_tweet = AsumiTweet.new(patient_id: follower.id, tweet: text, tweet_id: id, tweet_time: created_at)
-        asumi_tweet.save!
-        follower.asumi_count += 1 rescue follower.asumi_count = 1
-        follower.tweet_count += 1 rescue follower.tweet_count = 1
-      else
-        follower.tweet_count += 1 rescue follower.tweet_count = 1
+    begin
+      Timeout::timeout(300) do
+        user_id = body_data["user_id"].to_i
+        text = body_data["text"]
+        id = body_data["id"]
+        created_at = body_data["created_at"]
+        @asumi_tweet = ["阿澄","あすみ","佳奈","アスミ","もこたん","もこちゃ"]
+        follower = Patient.where(twitter_id: user_id).first
+        if follower.present?
+          if asumi_tweet_check(text)
+            asumi_tweet = AsumiTweet.new(patient_id: follower.id, tweet: text, tweet_id: id, tweet_time: created_at)
+            asumi_tweet.save!
+            follower.asumi_count += 1 rescue follower.asumi_count = 1
+            follower.tweet_count += 1 rescue follower.tweet_count = 1
+          else
+            follower.tweet_count += 1 rescue follower.tweet_count = 1
+          end
+          tweet = asumi_tweet_count(text)
+          follower.asumi_word += tweet rescue follower.asumi_word = tweet
+          follower.since_id = id.to_s
+          follower.save!
+        end
       end
-      tweet = asumi_tweet_count(text)
-      follower.asumi_word += tweet rescue follower.asumi_word = tweet
-      follower.since_id = id.to_s
-      follower.save!
+    rescue => e
+      ExceptionNotifier.notify_exception(e)
+      raise e
     end
   end
 
