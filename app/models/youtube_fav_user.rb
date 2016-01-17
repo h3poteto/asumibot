@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: youtube_fav_users
+#
+#  id               :integer          not null, primary key
+#  user_id          :integer
+#  youtube_movie_id :integer
+#  created_at       :datetime
+#  updated_at       :datetime
+#
+
 class YoutubeFavUser < ActiveRecord::Base
   belongs_to :fav_youtube, :class_name => 'YoutubeMovie', :foreign_key => :youtube_movie_id
   belongs_to :fav_user, :class_name => 'User', :foreign_key => :user_id

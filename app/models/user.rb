@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id          :integer          not null, primary key
+#  twitter_id  :integer
+#  screen_name :string(255)
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
 class User < ActiveRecord::Base
   has_many :youtube_fav_users, :foreign_key => :user_id
   has_many :fav_youtubes, :through => :youtube_fav_users

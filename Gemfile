@@ -69,6 +69,7 @@ end
 
 group :development do
   # Deploy with Capistrano
+  gem 'annotate'
   gem 'capistrano'
   gem 'capistrano-rails'
   gem 'capistrano-rbenv'

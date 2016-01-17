@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: asumi_tweets
+#
+#  id         :integer          not null, primary key
+#  patient_id :integer
+#  tweet      :string(255)
+#  tweet_id   :string(255)
+#  tweet_time :datetime         not null
+#  created_at :datetime
+#  updated_at :datetime
+#
+
 class AsumiTweet < ActiveRecord::Base
   belongs_to :patient
 
