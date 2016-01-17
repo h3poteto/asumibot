@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: niconico_rt_users
+#
+#  id                :integer          not null, primary key
+#  user_id           :integer
+#  niconico_movie_id :integer
+#  created_at        :datetime
+#  updated_at        :datetime
+#
+
 class NiconicoRtUser < ActiveRecord::Base
   belongs_to :rt_niconico, :class_name => 'NiconicoMovie', :foreign_key => :niconico_movie_id
   belongs_to :rt_user, :class_name => 'User', :foreign_key => :user_id

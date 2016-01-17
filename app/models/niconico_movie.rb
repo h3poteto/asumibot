@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: niconico_movies
+#
+#  id          :integer          not null, primary key
+#  title       :string(255)
+#  url         :string(255)
+#  description :string(255)
+#  priority    :boolean
+#  disabled    :boolean          default(FALSE), not null
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
 class NiconicoMovie < ActiveRecord::Base
   has_many :niconico_fav_users, :foreign_key => :niconico_movie_id
   has_many :fav_users, :through => :niconico_fav_users
