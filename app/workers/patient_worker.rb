@@ -1,8 +1,14 @@
 # coding: utf-8
-class PatientJob < ActiveJob::Base
-  queue_as :default
+class PatientWorker
+  include Shoryuken::Worker
 
-  def perform(user_id, text, id, created_at)
+  shoryuken_options queue: Settings.sqs.queue.patient, auto_delete: true, body_parser: :json
+
+  def perform(sqs_msg, body_data)
+    user_id = body_data["user_id"].to_i
+    text = body_data["text"]
+    id = body_data["id"]
+    created_at = body_data["created_at"]
     @asumi_tweet = ["阿澄","あすみ","佳奈","アスミ","もこたん","もこちゃ"]
     follower = Patient.where(twitter_id: user_id).first
     if follower.present?

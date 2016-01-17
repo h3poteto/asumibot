@@ -49,7 +49,13 @@ namespace :asumistream do
     ## read timeline
     client.userstream do | status |
       ## 阿澄度計測用処理
-      PatientJob.perform_later(status.user.id.to_i, status.text, status.id.to_s, status.created_at.to_s(:db))
+      body_data = {
+        user_id: status.user.id.to_s,
+        text: status.text,
+        id: status.id.to_s,
+        created_at: status.created_at.to_s(:local)
+      }
+      PatientWorker.perform_async(body_data)
       ## タイムライン処理
       if ( include_asumich?(status.urls) && (status.text.include?("@"+Settings.twitter.user_name)) && (status.user.screen_name != Settings.twitter.user_name))
         # search user

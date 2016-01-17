@@ -114,5 +114,5 @@ every '*/5 * * * *' do
 end
 
 every '*/1 * * * *' do
-  rails4_runner "MonitorSidekiq.check_and_restart"
+  command "cd /srv/www/asumibot/current && if [ ! -e tmp/pids/shoryuken.pid ] || ! ps $(cat tmp/pids/shoryuken.pid) ; then bundle exec shoryuken -R -C config/shoryuken.yml -d RAILS_ENV=production ; fi"
 end

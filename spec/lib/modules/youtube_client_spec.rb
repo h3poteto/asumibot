@@ -12,7 +12,7 @@ RSpec.describe YoutubeClient do
           maxResults: 50,
           order: 'date',
           type: 'video',
-          publishedAfter: Time.current.yesterday.to_datetime.rfc3339
+          publishedAfter: 1.weeks.ago.to_datetime.rfc3339
         }
       }
       it "検索結果が帰ってきていること" do
