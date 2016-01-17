@@ -5,7 +5,7 @@ class PatientWorker
   shoryuken_options queue: Settings.sqs.queue.patient, auto_delete: true, body_parser: :json
 
   def perform(sqs_msg, body_data)
-    sqs_msg.visibility_timeout = 600
+    sqs_msg.visibility_timeout = 700
     begin
       Timeout::timeout(600) do
         user_id = body_data["user_id"].to_i
