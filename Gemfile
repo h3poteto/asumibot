@@ -30,6 +30,7 @@ gem 'jquery-rails'
 gem 'jbuilder'
 
 # Use unicorn as the app server
+gem 'aws-sdk'
 gem 'unicorn'
 gem 'twitter'
 gem 'rails_config'
@@ -44,7 +45,7 @@ gem 'bootstrap_helper'
 gem 'i18n_generators'
 gem 'gon'
 gem 'figaro'
-gem 'sidekiq'
+gem 'shoryuken'
 gem 'pry-byebug'
 gem 'pry-rails'
 gem 'pry-doc'
@@ -73,10 +74,10 @@ group :development do
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'
   gem 'capistrano3-unicorn'
-  gem 'capistrano-sidekiq'
 end
 
 group :development, :test do
+  gem 'fake_sqs'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'spring'
