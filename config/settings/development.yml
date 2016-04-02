@@ -1,9 +1,9 @@
 user_name: 'asumi_syndrome'
 analytics: false
 site:
-  http: 'http://localhost:3000/'
-  fqdn: 'http://localhost:3000/'
-  host: 'localhost:3000'
+  http: 'http://192.168.99.100:3002/'
+  fqdn: 'http://192.168.99.100:3002/'
+  host: '192.168.99.100:3002'
   blog: 'http://yaplog.jp/asumibiyori/index1_0.rdf'
 twitter:
   user_name: <%# settings.local overrides %>
