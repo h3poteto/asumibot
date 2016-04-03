@@ -2,11 +2,12 @@ sqs_client = Aws::SQS::Client.new(
   endpoint: ENV["AWS_SQS_ENDPOINT"] || "http://localhost:4568",
   secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"] || "secret access key",
   access_key_id: ENV["AWS_ACCESS_KEY_ID"] || "access key id",
-  region: ENV["AWS_REGION"] || "region"
+  region: ENV["AWS_REGION"] || "region",
+  raise_response_errors: false
 )
 queues = sqs_client.list_queues
 if queues.successful?
-  Settings.sqs.queue.to_a.each do |key, value|
+  Settings.sqs.queue.to_a.each do |_, value|
     # queues.queue_urlsは
     # "http://0.0.0.0:4568/asumibt-patient-queue"
     # というstringが返ってくるので、比較のためにpathを抜き出す
@@ -21,4 +22,3 @@ if queues.successful?
   end
   Shoryuken::EnvironmentLoader.load(config_file: "config/shoryuken.yml", logfile: "log/shoryuken.log")
 end
-

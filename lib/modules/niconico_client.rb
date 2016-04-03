@@ -51,6 +51,7 @@ class NiconicoClient
     end
   end
 
+
   private
 
   # 本当はdbとしてユニーク制約を張っておきたいが，現状はモデルのバリデータでユニーク制約を担保できている
