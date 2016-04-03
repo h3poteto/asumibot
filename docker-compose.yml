@@ -1,0 +1,29 @@
+storage:
+ image: busybox
+ volumes:
+   - /var/lib/mysql
+mysql:
+  image: mysql:5.6.29
+  ports:
+    - "3307:3306"
+  volumes_from:
+    - storage
+  environment:
+    MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+fake_sqs:
+  build: dockerfiles/fake_sqs/
+  ports:
+    - "4568:4568"
+  hostname: fake_sqs.com
+  command: /usr/local/bundle/bin/fake_sqs --bind fake_sqs.com
+asumibot:
+  build: dockerfiles/asumibot/
+  volumes:
+    - ~/.ssh:/home/rails/.ssh
+    - .:/home/rails/app
+  ports:
+    - "3002:3000"
+  links:
+    - fake_sqs:fake_sqs.com
+    - mysql:mysql
+  command: /bin/bash

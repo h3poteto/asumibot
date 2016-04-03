@@ -1,20 +1,16 @@
 # coding: utf-8
-require 'open-uri'
 
 namespace :niconico do
 
   desc "new nicovideo movie get"
   task :new => :environment do
-    @result = []
     client = NiconicoClient.new
-    client.login(ENV["NICONICO_ID"], ENV["NICONICO_PASSWORD"])
     client.get_today_movies
   end
 
   desc "popular nicovideo movie get"
   task :popular => :environment do
     client = NiconicoClient.new
-    client.login(ENV["NICONICO_ID"], ENV["NICONICO_PASSWORD"])
     client.get_popular_movies
   end
 
