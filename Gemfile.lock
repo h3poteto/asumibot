@@ -162,6 +162,9 @@ GEM
     exception_notification-rake (0.2.1)
       exception_notification (~> 4.1.0)
       rake (>= 0.9.0)
+    exception_notification-shoryuken (0.1.0)
+      exception_notification (~> 4.1.0)
+      shoryuken (~> 2.0.4)
     execjs (2.3.0)
     extlib (0.9.16)
     factory_girl (4.5.0)
@@ -487,6 +490,7 @@ DEPENDENCIES
   devise
   exception_notification
   exception_notification-rake
+  exception_notification-shoryuken
   factory_girl_rails
   fake_sqs
   faker

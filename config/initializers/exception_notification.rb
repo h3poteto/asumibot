@@ -1,4 +1,5 @@
 require 'exception_notification/rails'
+require 'exception_notification/shoryuken'
 
 
 

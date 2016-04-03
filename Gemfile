@@ -55,6 +55,7 @@ gem 'google-api-client'
 gem 'exception_notification'
 gem 'slack-notifier'
 gem 'exception_notification-rake'
+gem 'exception_notification-shoryuken'
 gem 'nico_search_snapshot'
 gem 'sanitize'
 
