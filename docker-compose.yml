@@ -14,6 +14,8 @@ fake_sqs:
   build: dockerfiles/fake_sqs/
   ports:
     - "4568:4568"
+  hostname: fake_sqs.com
+  command: /usr/local/bundle/bin/fake_sqs --bind fake_sqs.com
 asumibot:
   build: dockerfiles/asumibot/
   volumes:
@@ -22,6 +24,6 @@ asumibot:
   ports:
     - "3002:3000"
   links:
-    - fake_sqs:fake_sqs
+    - fake_sqs:fake_sqs.com
     - mysql:mysql
   command: /bin/bash
