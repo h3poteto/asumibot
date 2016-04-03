@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160117150403) do
+ActiveRecord::Schema.define(version: 20160403084823) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "", null: false
@@ -96,9 +96,9 @@ ActiveRecord::Schema.define(version: 20160117150403) do
   create_table "niconico_movies", force: :cascade do |t|
     t.string   "title",       limit: 255
     t.string   "url",         limit: 255
-    t.string   "description", limit: 255
+    t.text     "description", limit: 65535
     t.boolean  "priority",    limit: 1
-    t.boolean  "disabled",    limit: 1,   default: false, null: false
+    t.boolean  "disabled",    limit: 1,     default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -106,10 +106,10 @@ ActiveRecord::Schema.define(version: 20160117150403) do
   create_table "niconico_populars", force: :cascade do |t|
     t.string   "title",       limit: 255
     t.string   "url",         limit: 255
-    t.string   "description", limit: 255
+    t.text     "description", limit: 65535
     t.integer  "priority",    limit: 4
-    t.boolean  "used",        limit: 1,   default: false, null: false
-    t.boolean  "disabled",    limit: 1,   default: false, null: false
+    t.boolean  "used",        limit: 1,     default: false, null: false
+    t.boolean  "disabled",    limit: 1,     default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -176,10 +176,10 @@ ActiveRecord::Schema.define(version: 20160117150403) do
   create_table "today_niconicos", force: :cascade do |t|
     t.string   "title",       limit: 255
     t.string   "url",         limit: 255
-    t.string   "description", limit: 255
+    t.text     "description", limit: 65535
     t.boolean  "priority",    limit: 1
-    t.boolean  "used",        limit: 1,   default: false, null: false
-    t.boolean  "disabled",    limit: 1,   default: false
+    t.boolean  "used",        limit: 1,     default: false, null: false
+    t.boolean  "disabled",    limit: 1,     default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

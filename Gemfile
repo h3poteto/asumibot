@@ -55,6 +55,8 @@ gem 'google-api-client'
 gem 'exception_notification'
 gem 'slack-notifier'
 gem 'exception_notification-rake'
+gem 'nico_search_snapshot'
+gem 'sanitize'
 
 group :test do
   gem 'shoulda-matchers', require: false

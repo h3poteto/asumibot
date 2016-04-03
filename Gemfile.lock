@@ -125,6 +125,7 @@ GEM
     columnize (0.9.0)
     commonjs (0.2.7)
     cookiejar (0.3.2)
+    crass (1.0.2)
     daemons (1.1.9)
     database_cleaner (1.4.0)
     debug_inspector (0.0.2)
@@ -206,6 +207,7 @@ GEM
     httparty (0.13.3)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
+    httpclient (2.7.1)
     i18n (0.7.0)
     i18n_generators (1.2.1)
       mechanize
@@ -267,8 +269,12 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.2)
+    nico_search_snapshot (0.1.1)
+      httpclient (>= 2.6.0)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
+    nokogumbo (1.4.7)
+      nokogiri
     ntlm-http (0.1.1)
     orm_adapter (0.5.0)
     polyamorous (1.1.0)
@@ -356,6 +362,10 @@ GEM
       rspec-mocks (~> 3.2.0)
       rspec-support (~> 3.2.0)
     rspec-support (3.2.1)
+    sanitize (4.0.1)
+      crass (~> 1.0.2)
+      nokogiri (>= 1.4.4)
+      nokogumbo (~> 1.4.1)
     sass (3.4.11)
     sass-rails (5.0.1)
       railties (>= 4.0.0, < 5.0)
@@ -492,6 +502,7 @@ DEPENDENCIES
   kaminari
   less-rails
   mysql2
+  nico_search_snapshot
   nokogiri
   pry-byebug
   pry-doc
@@ -505,6 +516,7 @@ DEPENDENCIES
   rspec-collection_matchers
   rspec-mocks
   rspec-rails
+  sanitize
   sass-rails
   shoryuken
   shoulda-matchers
