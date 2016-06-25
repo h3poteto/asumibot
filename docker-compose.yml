@@ -27,3 +27,11 @@ asumibot:
     - fake_sqs:fake_sqs.com
     - mysql:mysql
   command: /bin/bash
+shoryuken:
+  build: dockerfiles/asumibot/
+  volumes:
+    - .:/home/rails/app
+  links:
+    - fake_sqs:fake_sqs.com
+    - mysql:mysql
+  command: /home/rails/.rbenv/shims/bundle exec shoryuken -R -C config/shoryuken.yml
