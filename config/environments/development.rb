@@ -56,3 +56,13 @@ end
 
 local_env_file = Pathname(File.join(File.dirname(__FILE__), "development.local.rb"))
 load local_env_file if local_env_file.exist?
+
+Brancher.configure do |c|
+  # if branch is "master" or "develop", database name has no suffix.
+  c.except_branches << "master"
+  c.except_branches << "develop"
+
+  # if auto_copy is true and database does not exist,
+  # copy database from no suffix name database to suffixed name one.
+  c.auto_copy = true
+end
