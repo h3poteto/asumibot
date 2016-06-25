@@ -12,7 +12,7 @@ if queues.successful?
     # queues.queue_urlsは
     # "http://0.0.0.0:4568/asumibot-patient-queue"
     # というstringが返ってくるので、比較のためにpathを抜き出す
-    unless queues.queue_urls.map{|q| URI.parse(q).path }.any?{|p| /.*#{value}/ =~ p }
+    unless queues.queue_urls.map{ |q| URI.parse(q).path }.any?{ |p| /.*#{value}/ =~ p }
       new_queue = sqs_client.create_queue(queue_name: value)
       if new_queue
         Rails.logger.info "#{new_queue.queue_url}を作成しました"
