@@ -68,7 +68,7 @@ namespace :twitter do
       begin
         @client.follow(f)
       rescue Twitter::Error::NotFound => e
-        logger.warn("user: #{f} : #{e}")
+        logger.warn("#{e.class} user: #{f}, #{e.message}")
       end
     end
   end
