@@ -63,8 +63,13 @@ namespace :twitter do
     friend = @client.friend_ids().to_a
     outgoing = @client.friendships_outgoing().to_a
     fan = follower - friend - outgoing
+    # ユーザが凍結されている場合があり，その場合にはフォローできないので例外処理してやる
     fan.each do |f|
-      @client.follow(f)
+      begin
+        @client.follow(f)
+      rescue Twitter::Error::NotFound => e
+        logger.warn("user: #{f} : #{e}")
+      end
     end
   end
 end
