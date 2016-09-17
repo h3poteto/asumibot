@@ -8,16 +8,16 @@ sqs_client = Aws::SQS::Client.new(
 queues = sqs_client.list_queues
 
 if queues.successful?
-  Settings.sqs.queue.each do |_, value|
+  Rails.application.config.shoryuken_queues.values.each do |shoryuken_queue|
     # queues.queue_urlsは
-    # "http://0.0.0.0:4568/asumibot-patient-queue"
+    # "http://0.0.0.0:4568/crowdworks-dev-copy-check-queue"
     # というstringが返ってくるので、比較のためにpathを抜き出す
-    unless queues.queue_urls.map{ |q| URI.parse(q).path }.any?{ |p| /.*#{value}/ =~ p }
-      new_queue = sqs_client.create_queue(queue_name: value)
+    unless queues.queue_urls.map{|q| URI.parse(q).path }.any?{|p| /.*#{shoryuken_queue[:name]}/ =~ p }
+      new_queue = sqs_client.create_queue(queue_name: shoryuken_queue[:name])
       if new_queue
         Rails.logger.info "#{new_queue.queue_url}を作成しました"
       else
-        Rails.logger.error "#{sqs_client.config.endpoint}/#{value}の作成に失敗しました"
+        Rails.logger.error "#{sqs_client.config.endpoint}/#{shoryuken_queue[:name]}の作成に失敗しました"
       end
     end
   end
