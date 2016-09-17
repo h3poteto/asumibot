@@ -380,7 +380,7 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (~> 1.1)
-    shoryuken (2.0.11)
+    shoryuken (2.0.4)
       aws-sdk-core (~> 2)
       celluloid (~> 0.16)
     shoulda-matchers (2.8.0)
@@ -526,7 +526,7 @@ DEPENDENCIES
   rspec-rails
   sanitize
   sass-rails
-  shoryuken
+  shoryuken (= 2.0.4)
   shoulda-matchers
   slack-notifier
   spring
