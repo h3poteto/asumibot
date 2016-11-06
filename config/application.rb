@@ -33,6 +33,7 @@ module Asumibot
       g.controller_specs = false
       g.helper_specs = false
       g.view_specs = false
+      g.active_record[:migration] = false
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
     end
   end
