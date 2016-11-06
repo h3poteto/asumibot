@@ -5,9 +5,9 @@ services:
    volumes:
      - /var/lib/mysql
   mysql:
-    image: mysql:5.6
+    image: mysql:5.7.16
     ports:
-      - "3307:3306"
+      - "3306:3306"
     volumes_from:
       - storage
     environment:
