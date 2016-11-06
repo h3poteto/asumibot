@@ -13,7 +13,7 @@ services:
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
   fake_sqs:
-    build: dockerfiles/fake_sqs/
+    image: h3poteto/fake_sqs
     ports:
       - "4568:4568"
     hostname: fake_sqs.com
