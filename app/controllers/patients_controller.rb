@@ -26,13 +26,7 @@ class PatientsController < ApplicationController
       redirect_to :action => :index and return
     end
     @search = AsumiTweet.where(patient_id: params[:id]).search(params[:q])
-    if params[:day].present?
-      from = Time.mktime(Date.current.year, Date.current.month, params[:day].to_i)
-      to = from.end_of_day
-      @asumi_tweet = @search.result.where(tweet_time: from...to).order("tweet_time DESC").page(params[:page]).per(25)
-    else
-      @asumi_tweet = @search.result.order("tweet_time DESC").page(params[:page]).per(25)
-    end
+    @asumi_tweet = @search.result.order("tweet_time DESC").page(params[:page]).per(25)
 
     @all_patients = Patient.rankings
     @all_patients.each_with_index do |p, i|
