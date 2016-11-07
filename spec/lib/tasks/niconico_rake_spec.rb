@@ -10,16 +10,16 @@ describe 'niconico:clear' do
     end
   end
   it do
-    expect{ subject.invoke }.to change{ NiconicoPopular.count }.from(3).to(0)
+    expect { subject.invoke }.to change { NiconicoPopular.count }.from(3).to(0)
   end
   it do
-    expect{ subject.invoke }.to change{ TodayNiconico.count }.from(3).to(0)
+    expect { subject.invoke }.to change { TodayNiconico.count }.from(3).to(0)
   end
 end
 
 describe 'niconico:popular' do
   include_context "rake"
   it do
-    expect{ subject.invoke }.to change{ NiconicoPopular.count }.from(0)
+    expect { subject.invoke }.to change { NiconicoPopular.count }.from(0)
   end
 end

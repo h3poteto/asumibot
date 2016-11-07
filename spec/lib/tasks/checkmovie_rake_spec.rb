@@ -18,7 +18,7 @@ describe 'checkmovie:recent' do
       )
     end
     it do
-      expect{ subject.invoke }.to change{ youtube.reload.disabled }.from(false).to(true)
+      expect { subject.invoke }.to change { youtube.reload.disabled }.from(false).to(true)
     end
   end
   context "動画が存在するとき" do
@@ -32,7 +32,7 @@ describe 'checkmovie:recent' do
       )
     end
     it do
-      expect{ subject.invoke }.not_to change{ youtube.reload.disabled }.from(false)
+      expect { subject.invoke }.not_to change { youtube.reload.disabled }.from(false)
     end
   end
 end
