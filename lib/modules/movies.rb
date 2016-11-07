@@ -66,11 +66,7 @@ module Movies
       return false
     end
 
-    if doc.search('title').text == "YouTube"
-      return false
-    else
-      return true
-    end
+    doc.search('title').text != "YouTube"
   end
 
   def find_movie(expand_url)
