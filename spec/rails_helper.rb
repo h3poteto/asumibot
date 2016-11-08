@@ -63,18 +63,18 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation, {:except => %w(serifs)})
+    DatabaseCleaner.clean_with(:truncation, { except: %w(serifs) })
   end
 
   config.before(:each) do |spec|
     # asumi_level.rake内でtruncate tableを実行する必要がある
     # transaction実行のテスト内で，truncateされるとsave pointが消えてしまうので，DatabaseCleanerがrollbackできなくなってしまう
     # そのため，一部ではtruncationで実行できるようにしておく
-    if spec.metadata[:truncation]
-      DatabaseCleaner.strategy = :truncation
-    else
-      DatabaseCleaner.strategy = :transaction
-    end
+    DatabaseCleaner.strategy = if spec.metadata[:truncation]
+                                 :truncation
+                               else
+                                 :transaction
+                               end
     DatabaseCleaner.start
   end
 

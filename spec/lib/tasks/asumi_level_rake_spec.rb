@@ -1,40 +1,40 @@
-require 'rails_helper'
+require "rails_helper"
 
-describe 'asumi_level:month_ranking', truncation: true do
+describe "asumi_level:month_ranking", truncation: true do
   include_context "rake"
   let(:patient) { create(:patient) }
 
   context "月のつぶやきが20以上のとき" do
     context "レベルがひとつだけ登録されているとき" do
-      let(:high_asumi_level) {
+      let(:high_asumi_level) do
         Timecop.travel(2.days.ago) do
           create(:high_asumi_level, patient: patient)
         end
-      }
+      end
       before(:each) do
         high_asumi_level
       end
       it "MonthRankingが生成されること" do
-        expect{ subject.invoke }.to change{ MonthRanking.count }.to(1)
+        expect { subject.invoke }.to change { MonthRanking.count }.to(1)
       end
     end
 
     context "レベルが複数登録されているとき" do
-      let(:level_two_days_ago) {
+      let(:level_two_days_ago) do
         Timecop.travel(2.days.ago) do
           create(:high_asumi_level, patient: patient)
         end
-      }
-      let(:level_one_days_ago) {
+      end
+      let(:level_one_days_ago) do
         Timecop.travel(1.days.ago) do
           create(:high_asumi_level, patient: patient)
         end
-      }
-      let(:monthly_asumi_level) {
+      end
+      let(:monthly_asumi_level) do
         month_asumi = level_one_days_ago.asumi_count + level_two_days_ago.asumi_count
         month_tweet = level_one_days_ago.tweet_count + level_two_days_ago.tweet_count
         month_asumi * 100.0 / month_tweet
-      }
+      end
       before(:each) do
         monthly_asumi_level
       end

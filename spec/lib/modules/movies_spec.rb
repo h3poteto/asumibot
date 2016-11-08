@@ -31,7 +31,7 @@ RSpec.describe Movies do
     end
 
     context "youtube以外のurlだったとき" do
-      let(:other_url) { "http://morizyun.github.io/blog/rake-task-rails-rspec-test/"    }
+      let(:other_url) { "http://morizyun.github.io/blog/rake-task-rails-rspec-test/" }
       it { expect(test_instance.confirm_youtube(other_url)).to eq(false) }
     end
   end
