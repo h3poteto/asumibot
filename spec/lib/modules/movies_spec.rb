@@ -10,38 +10,103 @@ RSpec.describe Movies do
   let(:niconico_cannot) { "http://www.nicovideo.jp/watch/sm11779915" }
 
   describe "#confirm_youtube" do
-    let(:right_url) { youtube_right }
-    let(:wrong_url) { "https://www.youtube.com/watch?v=p8l2OENXOa" }
-    let(:cannot_url) { youtube_cannot }
-    let(:other_url) { "http://morizyun.github.io/blog/rake-task-rails-rspec-test/"    }
-    it { expect(test_instance.confirm_youtube(right_url)).to eq(true) }
-    it { expect(test_instance.confirm_youtube(wrong_url)).to eq(false) }
-    it { expect(test_instance.confirm_youtube(cannot_url)).to eq(false) }
-    it { expect(test_instance.confirm_youtube(other_url)).to eq(false) }
+    context "urlが正しい時" do
+      let(:right_url) { youtube_right }
+      before(:each) do
+        allow_any_instance_of(URI::HTTPS).to receive(:read).and_return(
+          "<html><head><title>YouTube Asumi</title></head><body></body></html>"
+        )
+      end
+      it { expect(test_instance.confirm_youtube(right_url)).to eq(true) }
+    end
+
+    context "動画が存在しないとき" do
+      let(:cannot_url) { youtube_cannot }
+      before(:each) do
+        allow_any_instance_of(URI::HTTPS).to receive(:read).and_return(
+          "<html><head><title>YouTube</title></head><body></body></html>"
+        )
+      end
+      it { expect(test_instance.confirm_youtube(cannot_url)).to eq(false) }
+    end
+
+    context "youtube以外のurlだったとき" do
+      let(:other_url) { "http://morizyun.github.io/blog/rake-task-rails-rspec-test/" }
+      it { expect(test_instance.confirm_youtube(other_url)).to eq(false) }
+    end
   end
 
   describe "#confirm_niconico" do
-    let(:right_url) { niconico_right }
-    let(:wrong_url) { "http://www.nicovideo.jp/watch/sm191745392" }
-    let(:cannot_url) { niconico_cannot }
-    let(:other_url) { "http://morizyun.github.io/blog/rake-task-rails-rspec-test/" }
-    it { expect(test_instance.confirm_niconico(right_url)).to eq true }
-    it { expect(test_instance.confirm_niconico(wrong_url)).to eq false }
-    it { expect(test_instance.confirm_niconico(cannot_url)).to eq false }
-    it { expect(test_instance.confirm_niconico(other_url)).to eq false }
+    context "urlが正しい時" do
+      let(:right_url) { niconico_right }
+      before(:each) do
+        allow_any_instance_of(URI::HTTP).to receive(:read).and_return(
+          "<html><head><title>Niconico</title></head><body><code>ACTIVE</code></body></html>"
+        )
+      end
+      it { expect(test_instance.confirm_niconico(right_url)).to eq true }
+    end
+
+    context "動画が存在しないとき" do
+      let(:cannot_url) { niconico_cannot }
+      before(:each) do
+        allow_any_instance_of(URI::HTTP).to receive(:read).and_return(
+          "<html><head><title>Niconico</title></head><body><code>DELETED</code></body></html>"
+        )
+      end
+      it { expect(test_instance.confirm_niconico(cannot_url)).to eq false }
+    end
+
+    context "niconico以外のurlだったとき" do
+      let(:other_url) { "http://morizyun.github.io/blog/rake-task-rails-rspec-test/" }
+      it { expect(test_instance.confirm_niconico(other_url)).to eq false }
+    end
   end
 
   describe "#confirm_db" do
-    before(:each) do
-      create(:youtube_movie, url: youtube_right)
-      create(:youtube_movie, url: youtube_cannot)
-      create(:niconico_movie, url: niconico_right)
-      create(:niconico_movie, url: niconico_cannot)
+    context "youtube" do
+      context "urlが正しい時" do
+        before(:each) do
+          create(:youtube_movie, url: youtube_right)
+          allow_any_instance_of(URI::HTTPS).to receive(:read).and_return(
+            "<html><head><title>YouTube Asumi</title></head><body></body></html>"
+          )
+        end
+        it { expect(test_instance.confirm_db(youtube_right)).to eq "youtube" }
+      end
+
+      context "動画が存在しないとき" do
+        before(:each) do
+          create(:youtube_movie, url: youtube_cannot)
+          allow_any_instance_of(URI::HTTPS).to receive(:read).and_return(
+            "<html><head><title>YouTube</title></head><body></body></html>"
+          )
+        end
+        it { expect(test_instance.confirm_db(youtube_cannot)).to eq false }
+      end
     end
-    it { expect(test_instance.confirm_db(youtube_right)).to eq "youtube" }
-    it { expect(test_instance.confirm_db(youtube_cannot)).to eq false }
-    it { expect(test_instance.confirm_db(niconico_right)).to eq "niconico" }
-    it { expect(test_instance.confirm_db(niconico_cannot)).to eq false }
+
+    context "niconico" do
+      context "urlが正しい時" do
+        before(:each) do
+          create(:niconico_movie, url: niconico_right)
+          allow_any_instance_of(URI::HTTP).to receive(:read).and_return(
+            "<html><head><title>Niconico</title></head><body><code>ACTIVE</code></body></html>"
+          )
+        end
+        it { expect(test_instance.confirm_db(niconico_right)).to eq "niconico" }
+      end
+
+      context "動画が存在しないとき" do
+        before(:each) do
+          create(:niconico_movie, url: niconico_cannot)
+          allow_any_instance_of(URI::HTTP).to receive(:read).and_return(
+            "<html><head><title>Niconico</title></head><body><code>DELETED</code></body></html>"
+          )
+        end
+        it { expect(test_instance.confirm_db(niconico_cannot)).to eq false }
+      end
+    end
   end
 
   describe "#find_movie" do
