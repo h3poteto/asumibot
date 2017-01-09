@@ -35,4 +35,4 @@ production:
   database: <%= ENV["DB_ASUMI_PRODUCTION"] || "asumibot_production" %>
   username: <%= ENV["DB_USERNAME"] %>
   password: <%= ENV["DB_PASSWORD"] %>
-  pool: <%= ENV["DB_POOL"] || 10 %>
+  pool: <%= ENV["DB_POOL"] || 22 %>
