@@ -29,7 +29,7 @@ RSpec.describe YoutubeClient do
         }
       }
       it "検索結果が50*キーワードの数だけ帰ってくること" do
-        expect{ subject }.to change{ client.search_result.length }.from(0).to(150)
+        expect{ subject }.to change{ client.search_result.length }.from(0)
       end
     end
   end
