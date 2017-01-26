@@ -61,12 +61,12 @@
 #   }
 
 set :stage, :production
-server 'asumi.ch',
+server '52.68.111.237',
   user: 'ubuntu',
   roles: %w{app web db},
   ssh_options: {
     user: 'ubuntu', # overrides user setting above
-    keys: %w(~/.ssh/aws_asumi),
+    keys: %w(~/.ssh/id_rsa),
     forward_agent: true,
-    auth_methods: %w(publickey password)
+    auth_methods: %w(publickey)
   }
