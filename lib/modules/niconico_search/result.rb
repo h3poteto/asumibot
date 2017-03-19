@@ -1,8 +1,11 @@
+# -*- frozen_string_literal: true -*-
 class NiconicoSearch
   class Result
-    @@names = [:contentId, :title, :description, :tags, :categoryTags,
+    @@names = [
+      :contentId, :title, :description, :tags, :categoryTags,
       :viewCounter, :mylistCounter, :commentCounter, :startTime,
-      :lastCommentTime, :lengthSeconds]
+      :lastCommentTime, :lengthSeconds
+    ]
 
     attr_accessor(*@@names)
 
@@ -14,7 +17,7 @@ class NiconicoSearch
     end
 
     def to_hash
-      Hash[*@@names.map{ |v| [v, send(v)] }.flatten]
+      Hash[*@@names.map { |v| [v, send(v)] }.flatten]
     end
 
     def inspec

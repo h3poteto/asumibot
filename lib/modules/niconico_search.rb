@@ -1,3 +1,4 @@
+# -*- frozen_string_literal: true -*-
 require "uri"
 require "open-uri"
 
@@ -17,7 +18,7 @@ class NiconicoSearch
     res = uri.open(header).read
     response = JSON.parse(res).deep_symbolize_keys
     fail ::ResponseError, "HTTP status error #{response[:meta][:status]}" if response[:meta][:status] != 200
-    response[:data].map{ |r| NiconicoSearch::Result.new(r) }
+    response[:data].map { |r| NiconicoSearch::Result.new(r) }
   end
 
   def build_query(query:, targets:, options:)
