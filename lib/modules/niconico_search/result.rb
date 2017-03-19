@@ -1,18 +1,20 @@
 class NiconicoSearch
   class Result
-    @@names = [:contentId, :title, :description, :tags, :categoryTags, :viewCounter, :mylistCounter, :commentCounter, :startTime, :lastCommentTime, :lengthSeconds]
+    @@names = [:contentId, :title, :description, :tags, :categoryTags,
+      :viewCounter, :mylistCounter, :commentCounter, :startTime,
+      :lastCommentTime, :lengthSeconds]
 
-    attr_accessor *@@names
+    attr_accessor(*@@names)
 
     def initialize(hash = nil)
       hash ||= {}
-      hash.each { |k, v|
+      hash.each do |k, v|
         send("#{k}=", v) if respond_to? "#{k}="
-      }
+      end
     end
 
     def to_hash
-      Hash[*@@names.map{|v| [v, send(v)] }.flatten]
+      Hash[*@@names.map{ |v| [v, send(v)] }.flatten]
     end
 
     def inspec

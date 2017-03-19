@@ -1,5 +1,5 @@
-require 'uri'
-require 'open-uri'
+require "uri"
+require "open-uri"
 
 class ResponseError < StandardError; end
 
@@ -8,7 +8,7 @@ class NiconicoSearch
     @app = app
   end
 
-  def search(query: , targets: , options: {})
+  def search(query:, targets:, options: {})
     fail ArgumentError, "query is required" if query.nil?
     fail ArgumentError, "target is required" if targets.nil? || targets.length <= 0
 
@@ -17,12 +17,10 @@ class NiconicoSearch
     res = uri.open(header).read
     response = JSON.parse(res).deep_symbolize_keys
     fail ::ResponseError, "HTTP status error #{response[:meta][:status]}" if response[:meta][:status] != 200
-    response[:data].map{|r|
-      NiconicoSearch::Result.new(r)
-    }
+    response[:data].map{ |r| NiconicoSearch::Result.new(r) }
   end
 
-  def build_query(query: , targets: , options:)
+  def build_query(query:, targets:, options:)
     options[:q] = query
     options[:targets] = targets.join(",")
     options = default_options.merge(options)
@@ -50,15 +48,5 @@ class NiconicoSearch
 
   def parse_targets(targets)
     targets.join(",")
-  end
-
-  def parse_filters(filters)
-    filters.map {|f|
-      case filters[:type]
-      when :range
-
-      when :match
-      end
-    }.join("&")
   end
 end
