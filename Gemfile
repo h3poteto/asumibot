@@ -56,7 +56,7 @@ gem 'exception_notification'
 gem 'slack-notifier'
 gem 'exception_notification-rake'
 gem 'exception_notification-shoryuken'
-gem 'nico_search_snapshot'
+gem 'niconico_search'
 gem 'sanitize'
 
 group :test do
