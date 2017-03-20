@@ -10,7 +10,7 @@ class NiconicoClient
 
   def get_today_movies()
     @niconico_search.each do |keyword|
-      nico = NiconicoSearch.new("asumibot")
+      nico = NiconicoSearch::Client.new("asumibot")
       results = nico.search(
         query: keyword,
         targets: [:title, :description, :tags],
@@ -30,7 +30,7 @@ class NiconicoClient
 
   def get_popular_movies
     @niconico_tags.each do |tag|
-      nico = NiconicoSearch.new("asumibot")
+      nico = NiconicoSearch::Client.new("asumibot")
       results = nico.search(
         query: tag,
         targets: [:tags],
