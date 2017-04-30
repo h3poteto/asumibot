@@ -114,5 +114,5 @@ every '*/5 * * * *' do
 end
 
 every '*/5 * * * *' do
-  command "cd /srv/www/asumibot/current && if [ ! -e tmp/pids/shoryuken.pid ] || ! ps $(cat tmp/pids/shoryuken.pid) ; then RAILS_ENV=production bundle exec shoryuken -R -C config/shoryuken.yml -d ; fi"
+  command "cd /srv/www/asumibot/current && if [ ! -e tmp/pids/shoryuken.pid ] || ! ps $(cat tmp/pids/shoryuken.pid) ; then RAILS_ENV=production bundle exec shoryuken -R -C config/shoryuken.yml -d --logfile log/shoryuken.log ; fi"
 end
