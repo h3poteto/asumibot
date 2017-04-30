@@ -13,3 +13,6 @@ twitter:
   ## irbで取得したAccess Token/Access Secret
   oauth_token: <%# settings.local overrides %>
   oauth_token_secret: <%# settings.local overrides %>
+sqs:
+  queue:
+    patient: "asumibot-production-patient-queue"
