@@ -31,7 +31,7 @@ lock '3.4.0'
 
 set :application, 'asumibot'
 set :repo_url, 'git@github.com:h3poteto/asumibot'
-set :branch, 'master'
+set :branch, 'terraform'
 set :deploy_to, '/srv/www/asumibot'
 set :scm, :git
 set :log_level, :debug
@@ -62,7 +62,7 @@ namespace :deploy do
   task :upload do
     on roles(:app) do |host|
       if test "[ -d #{shared_path}/config ]"
-        execute "mkdir -p #{shared_path}/config"
+        execute "mkdir -p #{shared_path}/config/settings"
       end
       upload!('config/settings/production.local.yml', "#{shared_path}/config/settings/production.local.yml")
     end
