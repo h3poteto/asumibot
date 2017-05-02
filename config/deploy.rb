@@ -31,7 +31,7 @@ lock '3.4.0'
 
 set :application, 'asumibot'
 set :repo_url, 'git@github.com:h3poteto/asumibot'
-set :branch, 'terraform'
+set :branch, "master"
 set :deploy_to, '/srv/www/asumibot'
 set :scm, :git
 set :log_level, :debug

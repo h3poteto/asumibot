@@ -61,11 +61,11 @@
 #   }
 
 set :stage, :production
-server '13.113.145.52',
-  user: 'rails',
+server "13.113.145.52",
+  user: "rails",
   roles: %w{app web db},
   ssh_options: {
-    user: 'rails', # overrides user setting above
+    user: "rails", # overrides user setting above
     keys: %w(~/.ssh/id_rsa),
     forward_agent: true,
     auth_methods: %w(publickey)
