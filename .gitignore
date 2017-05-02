@@ -25,6 +25,4 @@ vendor/bundler/
 public/
 
 
-# Ignore application configuration
-/config/application.yml
-/config/application.production.yml
+.docker-env

@@ -22,6 +22,12 @@ services:
     image: h3poteto/rails
     environment:
       BUNDLE_APP_CONFIG: /usr/src/app/.bundle
+      DB_HOST: mysql
+      AWS_SQS_ENDPOINT: "http://fake_sqs.com:4568"
+      AWS_SECRET_ACCESS_KEY: "secret access key"
+      AWS_ACCESS_KEY_ID: "access key id"
+      AWS_DEFAULT_REGION: "region"
+    env_file: .docker-env
     volumes:
       - ~/.ssh:/home/rails/.ssh
       - .:/usr/src/app
@@ -35,6 +41,11 @@ services:
     image: h3poteto/rails
     environment:
       BUNDLE_APP_CONFIG: /usr/src/app/.bundle
+      DB_HOST: mysql
+      AWS_SQS_ENDPOINT: "http://fake_sqs.com:4568"
+      AWS_SECRET_ACCESS_KEY: "secret access key"
+      AWS_ACCESS_KEY_ID: "access key id"
+      AWS_DEFAULT_REGION: "region"
     volumes:
       - .:/usr/src/app
     links:

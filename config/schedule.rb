@@ -23,7 +23,7 @@ set :output, {:error => 'log/crontab.err.log', :standard => 'log/crontab.log'}
 
 set :environment, :production
 env :PATH, ENV['PATH']
-job_type :rails4_runner, "cd :path && bin/rails runner -e :environment :task :output"
+# job_type :rails4_runner, "source ~/.profile && cd :path && bin/rails runner -e :environment :task :output"
 
 every '49 * * * *' do
   rake "twitter:normal"
