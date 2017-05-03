@@ -1,3 +1,6 @@
+# rubocop:disable Style/LineLength
+# frozen_string_literal: true
+
 # Use this file to easily define all of your cron jobs.
 #
 # It's helpful, but not entirely necessary to understand cron before proceeding.
@@ -23,7 +26,7 @@ set :output, {:error => 'log/crontab.err.log', :standard => 'log/crontab.log'}
 
 set :environment, :production
 env :PATH, ENV['PATH']
-job_type :rails4_runner, "cd :path && bin/rails runner -e :environment :task :output"
+# job_type :rails4_runner, "source ~/.profile && cd :path && bin/rails runner -e :environment :task :output"
 
 every '49 * * * *' do
   rake "twitter:normal"
@@ -114,5 +117,5 @@ every '*/5 * * * *' do
 end
 
 every '*/5 * * * *' do
-  command "cd /srv/www/asumibot/current && if [ ! -e tmp/pids/shoryuken.pid ] || ! ps $(cat tmp/pids/shoryuken.pid) ; then RAILS_ENV=production bundle exec shoryuken -R -C config/shoryuken.yml -d ; fi"
+  command "cd /srv/www/asumibot/current && if [ ! -e tmp/pids/shoryuken.pid ] || ! ps $(cat tmp/pids/shoryuken.pid) ; then RAILS_ENV=production bundle exec shoryuken -R -C config/shoryuken.yml -d --logfile log/shoryuken.log ; fi"
 end
