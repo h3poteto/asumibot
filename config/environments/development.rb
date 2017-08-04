@@ -54,7 +54,7 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   config.action_mailer.default_url_options = { host: Settings.site.host }
-  config_action_controller.default_url_options = { host: Settings.site.host }
+  config.action_controller.default_url_options = { host: Settings.site.host }
   BetterErrors::Middleware.allow_ip! ENV["TRUSTED_IP"] if ENV["TRUSTED_IP"]
 end
 
