@@ -49,3 +49,6 @@ Style/AsciiComments:
 # Offense count: 30
 Style/Documentation:
   Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
