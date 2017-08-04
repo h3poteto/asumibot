@@ -1,0 +1,5 @@
+# https://console.developers.google.com/ ここでDeveloperKeyを手に入れる
+DEVELOPER_KEY=
+# 普段ログインに使用している認証情報
+NICONICO_ID=
+NICONICO_PASSWORD=
