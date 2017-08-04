@@ -12,7 +12,7 @@
 #  updated_at  :datetime
 #
 
-class AsumiLevel < ActiveRecord::Base
+class AsumiLevel < ApplicationRecord
   belongs_to :patient
 
 end

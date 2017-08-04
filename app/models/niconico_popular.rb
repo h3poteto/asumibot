@@ -13,6 +13,6 @@
 #  updated_at  :datetime
 #
 
-class NiconicoPopular < ActiveRecord::Base
+class NiconicoPopular < ApplicationRecord
   validates_uniqueness_of :url
 end

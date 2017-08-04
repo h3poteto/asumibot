@@ -13,6 +13,6 @@
 #  updated_at  :datetime
 #
 
-class TodayNiconico < ActiveRecord::Base
+class TodayNiconico < ApplicationRecord
   validates_uniqueness_of :url
 end

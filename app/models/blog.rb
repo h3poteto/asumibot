@@ -11,6 +11,6 @@
 #  updated_at :datetime
 #
 
-class Blog < ActiveRecord::Base
+class Blog < ApplicationRecord
   validates_uniqueness_of :link
 end

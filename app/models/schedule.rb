@@ -9,6 +9,6 @@
 #  updated_at :datetime
 #
 
-class Schedule < ActiveRecord::Base
+class Schedule < ApplicationRecord
   validates_uniqueness_of :task
 end

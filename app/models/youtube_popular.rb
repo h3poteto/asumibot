@@ -13,6 +13,6 @@
 #  updated_at  :datetime
 #
 
-class YoutubePopular < ActiveRecord::Base
+class YoutubePopular < ApplicationRecord
   validates_uniqueness_of :url
 end

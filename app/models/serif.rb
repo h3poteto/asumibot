@@ -9,6 +9,6 @@
 #  updated_at :datetime
 #
 
-class Serif < ActiveRecord::Base
+class Serif < ApplicationRecord
   validates_uniqueness_of :word
 end

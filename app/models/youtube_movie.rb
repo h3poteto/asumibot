@@ -12,7 +12,7 @@
 #  updated_at  :datetime
 #
 
-class YoutubeMovie < ActiveRecord::Base
+class YoutubeMovie < ApplicationRecord
   has_many :youtube_fav_users, :foreign_key => :youtube_movie_id
   has_many :fav_users, :through => :youtube_fav_users
   has_many :youtube_rt_users, :foreign_key => :youtube_movie_id

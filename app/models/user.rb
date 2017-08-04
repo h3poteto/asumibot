@@ -9,7 +9,7 @@
 #  updated_at  :datetime
 #
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   has_many :youtube_fav_users, :foreign_key => :user_id
   has_many :fav_youtubes, :through => :youtube_fav_users
   has_many :niconico_fav_users, :foreign_key => :user_id

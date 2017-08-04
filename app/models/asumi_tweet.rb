@@ -15,7 +15,7 @@
 #  index_asumi_tweets_on_tweet_id  (tweet_id) UNIQUE
 #
 
-class AsumiTweet < ActiveRecord::Base
+class AsumiTweet < ApplicationRecord
   belongs_to :patient
 
   before_save :encode_emoji

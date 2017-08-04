@@ -1,3 +1,33 @@
+# == Schema Information
+#
+# Table name: patients
+#
+#  id               :integer          not null, primary key
+#  twitter_id       :integer
+#  name             :string(255)
+#  nickname         :string(255)
+#  description      :text(65535)
+#  icon             :string(255)
+#  all_tweet        :integer
+#  friend           :integer
+#  follower         :integer
+#  level            :integer
+#  asumi_count      :integer
+#  tweet_count      :integer
+#  asumi_word       :integer
+#  prev_level       :integer
+#  prev_level_tweet :integer
+#  prev_tweet_count :integer
+#  prev_asumi_word  :integer
+#  since_id         :string(255)
+#  clear            :boolean          default(FALSE), not null
+#  protect          :boolean          default(FALSE), not null
+#  locked           :boolean          default(FALSE), not null
+#  disabled         :boolean          default(FALSE), not null
+#  created_at       :datetime
+#  updated_at       :datetime
+#
+
 FactoryGirl.define do
   factory :patient do
     twitter_id { Faker::Number.number(8) }
