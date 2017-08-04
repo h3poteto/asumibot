@@ -1,4 +1,4 @@
-class CreateNiconicoPopulars < ActiveRecord::Migration
+class CreateNiconicoPopulars < ActiveRecord::Migration[4.2]
   def change
     create_table :niconico_populars do |t|
       t.string :title

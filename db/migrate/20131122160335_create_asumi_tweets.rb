@@ -1,4 +1,4 @@
-class CreateAsumiTweets < ActiveRecord::Migration
+class CreateAsumiTweets < ActiveRecord::Migration[4.2]
   def change
     create_table :asumi_tweets do |t|
       t.integer :patient_id

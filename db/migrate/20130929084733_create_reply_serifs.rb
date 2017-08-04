@@ -1,4 +1,4 @@
-class CreateReplySerifs < ActiveRecord::Migration
+class CreateReplySerifs < ActiveRecord::Migration[4.2]
   def change
     create_table :reply_serifs do |t|
       t.string :word

@@ -1,4 +1,4 @@
-class AddIndexTweetIdOnAsumiTweets < ActiveRecord::Migration
+class AddIndexTweetIdOnAsumiTweets < ActiveRecord::Migration[4.2]
   def change
     add_index :asumi_tweets, :tweet_id, unique: true
   end

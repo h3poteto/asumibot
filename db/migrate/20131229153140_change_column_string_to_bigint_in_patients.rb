@@ -1,4 +1,4 @@
-class ChangeColumnStringToBigintInPatients < ActiveRecord::Migration
+class ChangeColumnStringToBigintInPatients < ActiveRecord::Migration[4.2]
   def up
     change_column :patients, :twitter_id, :integer, :limit => 8
   end

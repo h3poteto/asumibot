@@ -1,4 +1,4 @@
-class CreateNiconicoMovies < ActiveRecord::Migration
+class CreateNiconicoMovies < ActiveRecord::Migration[4.2]
   def change
     create_table :niconico_movies do |t|
       t.string :title

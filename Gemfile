@@ -18,7 +18,7 @@ gem 'less-rails', git: 'https://github.com/MustafaZain/less-rails'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', :platforms => :ruby
 #gem 'less-rails-bootstrap'
-gem 'twitter-bootstrap-rails', "2.2.8"
+gem 'twitter-bootstrap-rails', '~> 2.2.8'
 
 gem 'uglifier'
 

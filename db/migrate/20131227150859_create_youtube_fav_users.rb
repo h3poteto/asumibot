@@ -1,4 +1,4 @@
-class CreateYoutubeFavUsers < ActiveRecord::Migration
+class CreateYoutubeFavUsers < ActiveRecord::Migration[4.2]
   def change
     create_table :youtube_fav_users do |t|
       t.integer :user_id
