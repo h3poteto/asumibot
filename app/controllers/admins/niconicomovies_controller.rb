@@ -1,5 +1,5 @@
 class Admins::NiconicomoviesController < AdminsController
-  before_filter :authenticate_admin!
+  before_action :authenticate_admin!
   # GET /niconicomovies
   # GET /niconicomovies.json
   def index

@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include Jpmobile::ViewSelector
   protect_from_forgery
-  before_filter :page_info_for_js
+  before_action :page_info_for_js
 
   def after_sign_in_path_for(resource)
     case resource

@@ -14,11 +14,11 @@ RSpec.describe "Movies", type: :request do
     end
     context "jsonのとき" do
       it do
-        get(movies_path, format: :json)
+        get movies_path, params: { format: :json }
         expect(response).to have_http_status(200)
       end
       it do
-        get(movies_path, format: :json)
+        get movies_path, params: { format: :json }
         expect([@youtube.url, @niconico.url]).to include(JSON.parse(response.body)["url"])
       end
     end

@@ -1,5 +1,5 @@
 class Admins::YoutubemoviesController < AdminsController
-  before_filter :authenticate_admin!
+  before_action :authenticate_admin!
   # GET /youtubemovies
   # GET /youtubemovies.json
   def index
