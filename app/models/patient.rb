@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: patients
@@ -28,7 +30,7 @@
 #  updated_at       :datetime
 #
 
-class Patient < ActiveRecord::Base
+class Patient < ApplicationRecord
   has_many :asumi_tweets
   has_many :asumi_levels
   has_one :month_ranking

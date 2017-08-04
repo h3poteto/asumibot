@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: month_rankings
@@ -9,7 +11,7 @@
 #  updated_at :datetime         not null
 #
 
-class MonthRanking < ActiveRecord::Base
+class MonthRanking < ApplicationRecord
   belongs_to :patient
 
   scope :level_order, -> { order('level DESC')}

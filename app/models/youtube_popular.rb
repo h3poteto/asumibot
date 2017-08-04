@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: youtube_populars
@@ -13,6 +15,6 @@
 #  updated_at  :datetime
 #
 
-class YoutubePopular < ActiveRecord::Base
+class YoutubePopular < ApplicationRecord
   validates_uniqueness_of :url
 end

@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.9'
+gem 'rails', '5.0.5'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -49,7 +49,7 @@ gem 'pry-byebug'
 gem 'pry-rails'
 gem 'pry-doc'
 gem 'pry-stack_explorer'
-gem 'jpmobile', '~> 4.2.3'
+gem 'jpmobile', '~> 5.0.0'
 gem 'google-api-client', '= 0.8.2'
 gem 'json', '~> 1.8'
 gem 'exception_notification'
@@ -78,7 +78,6 @@ group :development do
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'
   gem 'capistrano3-unicorn'
-  gem 'brancher'
 end
 
 group :development, :test do

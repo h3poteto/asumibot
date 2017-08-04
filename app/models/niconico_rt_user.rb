@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: niconico_rt_users
@@ -9,7 +11,7 @@
 #  updated_at        :datetime
 #
 
-class NiconicoRtUser < ActiveRecord::Base
+class NiconicoRtUser < ApplicationRecord
   belongs_to :rt_niconico, :class_name => 'NiconicoMovie', :foreign_key => :niconico_movie_id
   belongs_to :rt_user, :class_name => 'User', :foreign_key => :user_id
 

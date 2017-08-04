@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: today_youtubes
@@ -13,6 +15,6 @@
 #  updated_at  :datetime
 #
 
-class TodayYoutube < ActiveRecord::Base
+class TodayYoutube < ApplicationRecord
   validates_uniqueness_of :url
 end

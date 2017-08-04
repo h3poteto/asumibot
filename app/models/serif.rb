@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: serifs
@@ -9,6 +11,6 @@
 #  updated_at :datetime
 #
 
-class Serif < ActiveRecord::Base
+class Serif < ApplicationRecord
   validates_uniqueness_of :word
 end

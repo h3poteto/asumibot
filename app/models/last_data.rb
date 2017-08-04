@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: last_data
@@ -9,5 +11,5 @@
 #  updated_at :datetime
 #
 
-class LastData < ActiveRecord::Base
+class LastData < ApplicationRecord
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: niconico_movies
@@ -12,7 +14,7 @@
 #  updated_at  :datetime
 #
 
-class NiconicoMovie < ActiveRecord::Base
+class NiconicoMovie < ApplicationRecord
   has_many :niconico_fav_users, :foreign_key => :niconico_movie_id
   has_many :fav_users, :through => :niconico_fav_users
   has_many :niconico_rt_users, :foreign_key => :niconico_movie_id

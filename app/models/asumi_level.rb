@@ -1,4 +1,5 @@
-# coding: utf-8
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: asumi_levels
@@ -12,7 +13,7 @@
 #  updated_at  :datetime
 #
 
-class AsumiLevel < ActiveRecord::Base
+class AsumiLevel < ApplicationRecord
   belongs_to :patient
 
 end

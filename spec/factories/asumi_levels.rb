@@ -1,3 +1,18 @@
+# frozen_string_literal: true
+
+# == Schema Information
+#
+# Table name: asumi_levels
+#
+#  id          :integer          not null, primary key
+#  patient_id  :integer
+#  asumi_count :integer
+#  tweet_count :integer
+#  asumi_word  :integer
+#  created_at  :datetime
+#  updated_at  :datetime
+#
+
 FactoryGirl.define do
   factory :asumi_level do
     association :patient, factory: :patient
