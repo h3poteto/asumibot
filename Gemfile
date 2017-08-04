@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '5.0.5'
+gem 'rails', '5.1.3'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -15,7 +15,7 @@ gem 'coffee-rails'
 # Waitin for: https://github.com/metaskills/less-rails/pull/137
 gem 'less-rails', git: 'https://github.com/MustafaZain/less-rails'
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', :platforms => :ruby
 #gem 'less-rails-bootstrap'
 gem 'twitter-bootstrap-rails', '~> 2.2.8'
@@ -42,7 +42,6 @@ gem 'tweetstream', '~> 2.6'
 gem 'kaminari'
 gem 'devise'
 gem 'ransack'
-gem 'bootstrap_helper'
 gem 'i18n_generators'
 gem 'gon'
 gem 'shoryuken', '~> 3.0.6'
@@ -50,7 +49,7 @@ gem 'pry-byebug'
 gem 'pry-rails'
 gem 'pry-doc'
 gem 'pry-stack_explorer'
-gem 'jpmobile', '~> 5.0.0'
+gem 'jpmobile', '~> 5.1.0'
 gem 'google-api-client', '= 0.8.2'
 gem 'json', '~> 1.8'
 gem 'exception_notification'
@@ -79,6 +78,7 @@ group :development do
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'
   gem 'capistrano3-unicorn'
+  gem 'listen'
 end
 
 group :development, :test do

@@ -1,4 +1,6 @@
-Asumibot::Application.routes.draw do
+# frozen_string_literal: true
+
+Rails.application.routes.draw do
 
   resources :patients, only: [:show, :index]
   resources :recommends, only: [:index]
