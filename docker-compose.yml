@@ -5,7 +5,7 @@ services:
    volumes:
      - /var/lib/mysql
   mysql:
-    image: mysql:5.7.16
+    image: mysql:5.7
     ports:
       - "3306:3306"
     volumes_from:
@@ -19,7 +19,7 @@ services:
     hostname: fake_sqs.com
     command: /usr/local/bundle/bin/fake_sqs --bind fake_sqs.com
   rails:
-    image: h3poteto/rails:v2.3.4
+    image: h3poteto/rails:v2.4.1
     environment:
       BUNDLE_APP_CONFIG: /usr/src/app/.bundle
       DB_HOST: mysql
@@ -38,7 +38,7 @@ services:
       - mysql:mysql
     command: /bin/bash
   shoryuken:
-    image: h3poteto/rails:v2.3.4
+    image: h3poteto/rails:v2.4.1
     environment:
       BUNDLE_APP_CONFIG: /usr/src/app/.bundle
       DB_HOST: mysql
