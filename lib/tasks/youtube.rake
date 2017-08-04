@@ -32,8 +32,8 @@ namespace :youtube do
 
   desc "clear db"
   task :clear => :environment do
-    YoutubePopular.delete_all(["created_at < ?", Time.current])
-    TodayYoutube.delete_all(["created_at < ?", Time.current])
+    YoutubePopular.where(["created_at < ?", Time.current]).delete_all
+    TodayYoutube.where(["created_at < ?", Time.current]).delete_all
   end
 
 =begin

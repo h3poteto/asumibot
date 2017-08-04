@@ -1,4 +1,6 @@
-class CreateTodayYoutubes < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateTodayYoutubes < ActiveRecord::Migration[4.2]
   def change
     create_table :today_youtubes do |t|
       t.string :title

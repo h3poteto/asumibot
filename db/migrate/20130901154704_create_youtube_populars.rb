@@ -1,4 +1,6 @@
-class CreateYoutubePopulars < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateYoutubePopulars < ActiveRecord::Migration[4.2]
   def change
     create_table :youtube_populars do |t|
       t.string :title

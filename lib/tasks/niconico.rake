@@ -16,8 +16,8 @@ namespace :niconico do
 
   desc "clear db"
   task :clear => :environment do
-    NiconicoPopular.delete_all(["created_at < ?", Time.current])
-    TodayNiconico.delete_all(["created_at < ?", Time.current])
+    NiconicoPopular.where(["created_at < ?", Time.current]).delete_all
+    TodayNiconico.where(["created_at < ?", Time.current]).delete_all
   end
 
 =begin

@@ -1,4 +1,6 @@
-class CreateYoutubeRtUsers < ActiveRecord::Migration
+# frozen_string_literal: true
+
+class CreateYoutubeRtUsers < ActiveRecord::Migration[4.2]
   def change
     create_table :youtube_rt_users do |t|
       t.integer :user_id

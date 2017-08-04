@@ -10,14 +10,15 @@ gem 'mysql2'
 
 # Gems used only for assets and not required
 # in production environments by default.
-gem 'sass-rails'
+gem 'sass-rails', '~> 5.0.6'
 gem 'coffee-rails'
-gem 'less-rails'
+# Waitin for: https://github.com/metaskills/less-rails/pull/137
+gem 'less-rails', git: 'https://github.com/MustafaZain/less-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', :platforms => :ruby
 #gem 'less-rails-bootstrap'
-gem 'twitter-bootstrap-rails', "2.2.8"
+gem 'twitter-bootstrap-rails', '~> 2.2.8'
 
 gem 'uglifier'
 
