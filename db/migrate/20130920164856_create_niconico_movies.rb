@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateNiconicoMovies < ActiveRecord::Migration[4.2]
   def change
     create_table :niconico_movies do |t|

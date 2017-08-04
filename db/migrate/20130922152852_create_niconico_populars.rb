@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateNiconicoPopulars < ActiveRecord::Migration[4.2]
   def change
     create_table :niconico_populars do |t|

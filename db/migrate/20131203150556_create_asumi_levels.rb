@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateAsumiLevels < ActiveRecord::Migration[4.2]
   def change
     create_table :asumi_levels do |t|
