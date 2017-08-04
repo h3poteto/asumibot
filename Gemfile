@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.0'
+gem 'rails', '4.2.9'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -32,12 +32,12 @@ gem 'jbuilder'
 # Use unicorn as the app server
 gem 'aws-sdk'
 gem 'unicorn'
-gem 'twitter'
-gem 'rails_config'
+gem 'twitter', '~> 5.17'
+gem 'config', '~> 1.4.0'
 gem 'nokogiri'
 gem 'whenever', :require => false
 gem 'url_expander'
-gem 'tweetstream'
+gem 'tweetstream', '~> 2.6'
 gem 'kaminari'
 gem 'devise'
 gem 'ransack'
@@ -49,8 +49,9 @@ gem 'pry-byebug'
 gem 'pry-rails'
 gem 'pry-doc'
 gem 'pry-stack_explorer'
-gem 'jpmobile'
-gem 'google-api-client'
+gem 'jpmobile', '~> 4.2.3'
+gem 'google-api-client', '= 0.8.2'
+gem 'json', '~> 1.8'
 gem 'exception_notification'
 gem 'slack-notifier'
 gem 'exception_notification-rake'
@@ -59,7 +60,7 @@ gem 'niconico_search'
 gem 'sanitize'
 
 group :test do
-  gem 'shoulda-matchers', require: false
+  gem 'shoulda-matchers'
   gem 'rspec-collection_matchers'
   gem 'factory_girl_rails'
   gem 'database_cleaner'
