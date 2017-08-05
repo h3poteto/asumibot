@@ -25,7 +25,7 @@
               <b>阿澄ワード</b><br />
               <%= @patient.prev_asumi_word %>語
             </td>
-            <td class="last">
+            <td>
               <b>順位</b><br />
               <% ranking = @all_patients.index {|p| p.id == @patient.id } %>
               <% if ranking.present? %>
@@ -40,14 +40,14 @@
       <div id="main_tweet">
         <% cache @patient.asumi_tweets do %>
           <caption><h5>阿澄ツイート</h5></caption>
-          <table class="table tweet_area">
+          <table class="table tweet-area">
             <tbody>
               <% @patient.asumi_tweets.first(25).each do | tweet | %>
                 <tr>
-                  <td><%= tweet.tweet %>
-                    <div class="tweet_detail"><%= link_to "詳細", "http://twitter.com/#{@patient.name}/status/#{tweet.tweet_id}", target: :blank %></div>
+                  <td class="tweet"><%= tweet.tweet %>
+                    <div class="tweet-detail"><%= link_to "詳細", "http://twitter.com/#{@patient.name}/status/#{tweet.tweet_id}", target: :blank %></div>
                   </td>
-                  <td><%=l tweet.tweet_time %></td>
+                  <td class="tweet-time"><%=l tweet.tweet_time %></td>
                 </tr>
               <% end %>
             </tbody>
