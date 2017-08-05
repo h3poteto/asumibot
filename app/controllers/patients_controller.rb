@@ -25,16 +25,13 @@ class PatientsController < ApplicationController
     if @patient.protect
       redirect_to :action => :index and return
     end
-    @search = AsumiTweet.where(patient_id: params[:id]).search(params[:q])
-    @asumi_tweet = @search.result.order("tweet_time DESC").page(params[:page]).per(25)
+    @asumi_tweet = AsumiTweet.where(patient_id: params[:id]).order("tweet_time DESC").limit(25)
 
     @all_patients = Patient.rankings
     @all_patients.each_with_index do |p, i|
       @ranking = i + 1 if p.id == params[:id].to_i
     end
 
-    @first_day = Date.current.beginning_of_month
-    @last_day = Date.current.end_of_month
     @today = Date.current
     @datedata = Date.current.weeks_ago(2)..@today
     @level_data = []
@@ -50,6 +47,4 @@ class PatientsController < ApplicationController
     gon.leveldata = @level_data
     gon.datedata = @datedata.map{|d| d.prev_day.month.to_s + "/" + d.prev_day.day.to_s }
   end
-
-
 end

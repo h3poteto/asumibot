@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160403084823) do
+ActiveRecord::Schema.define(version: 20170805041829) do
 
   create_table "admins", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
     t.string "email", default: "", null: false
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20160403084823) do
     t.datetime "tweet_time", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.index ["patient_id", "tweet_time"], name: "index_asumi_tweets_on_patient_id_and_tweet_time"
     t.index ["tweet_id"], name: "index_asumi_tweets_on_tweet_id", unique: true
   end
 

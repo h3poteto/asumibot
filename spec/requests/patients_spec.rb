@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe "Patients", type: :request do
+  let(:patient) { create(:patient) }
   before(:each) do
-    @patient = create(:patient)
+    patient
   end
   describe "GET /patients" do
     it "works!" do
@@ -11,9 +12,9 @@ RSpec.describe "Patients", type: :request do
     end
   end
 
-  describe "GET /patient" do
+  describe "GET /patient/:id" do
     it "works!" do
-      get patient_path(@patient)
+      get patient_path(patient)
       expect(response).to have_http_status(200)
     end
   end
