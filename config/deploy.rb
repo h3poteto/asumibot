@@ -59,7 +59,7 @@ namespace :deploy do
 
   desc 'Upload local config yml'
   task :upload do
-    on roles(:app) do |host|
+    on roles(:app) do
       if test "[ -d #{shared_path}/config ]"
         execute "mkdir -p #{shared_path}/config/settings"
       end
@@ -67,9 +67,22 @@ namespace :deploy do
     end
   end
 
+  namespace :cache do
+    desc 'Clear cache'
+    task :clear do
+      on roles(:app) do
+        within release_path do
+          with rails_env: fetch(:rails_env) do
+            execute :rake, "tmp:cache:clear"
+          end
+        end
+      end
+    end
+  end
+
   namespace :shoryuken do
     task :stop do
-      on roles(:app) do |host|
+      on roles(:app) do
         execute "cd #{shared_path}; if [ -f tmp/pids/shoryuken.pid ] && ps $(cat tmp/pids/shoryuken.pid) ; then kill -15 $(cat tmp/pids/shoryuken.pid); fi"
       end
     end
@@ -77,4 +90,5 @@ namespace :deploy do
   before :starting, 'deploy:upload'
   after :finishing, 'deploy:cleanup'
   after :restart, 'deploy:shoryuken:stop'
+  after :restart, 'deploy:cache:clear'
 end
