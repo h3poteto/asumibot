@@ -52,15 +52,6 @@
     </div>
   </div>
   <div class="right_box">
-    <div class="content_area">
-      <div class="right">
-        <%= search_form_for(@search, :url => patient_path(@patient)) do |f| %>
-          <%= f.text_field :tweet_cont, :placeholder => "ツイート検索" %>
-          <%= f.submit "検索", class: "btn" %>
-      </div>
-      <% end %>
-    </div>
-    <br />
     <div class="content_area ranking">
       <h5>ランキング</h5>
       <table class="ranking">
