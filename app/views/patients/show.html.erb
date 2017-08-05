@@ -27,7 +27,7 @@
             </td>
             <td class="last">
               <b>順位</b><br />
-              <% ranking = @all_patients.map.with_index {|p, index| if p.id == @patient.id; index end }.find {|i| i != nil} %>
+              <% ranking = @all_patients.index {|p| p.id == @patient.id } %>
               <% if ranking.present? %>
                 <%= ranking %>位
               <% else %>

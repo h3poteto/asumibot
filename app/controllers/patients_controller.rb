@@ -8,14 +8,6 @@ class PatientsController < ApplicationController
     @patients = Patient.includes(:asumi_tweets).rankings.take(10)
     @month_ranking = MonthRanking.includes(:patient).level_order.limit(20)
     @prev_rank = Patient.avail_prev_rankings
-    @prev_rank_index = []
-    @patients.each_with_index do |p, i|
-      if @prev_rank.index(p).present?
-        @prev_rank_index[p.id] = @prev_rank.index(p)
-      else
-        @prev_rank_index[p.id] = 2147483648
-      end
-    end
   end
 
   # GET /patients/1
