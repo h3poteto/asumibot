@@ -58,6 +58,7 @@ gem 'exception_notification-rake'
 gem 'exception_notification-shoryuken', '~> 0.2.0'
 gem 'niconico_search'
 gem 'sanitize'
+gem 'activerecord-cause'
 
 group :test do
   gem 'shoulda-matchers'
@@ -91,6 +92,5 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-mocks'
   gem 'bullet'
-  gem 'capybara'
   gem 'rake_shared_context'
 end
