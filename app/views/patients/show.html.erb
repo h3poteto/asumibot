@@ -29,7 +29,7 @@
               <b>順位</b><br />
               <% ranking = @all_patients.index {|p| p.id == @patient.id } %>
               <% if ranking.present? %>
-                <%= ranking %>位
+                <%= ranking + 1 %>位
               <% else %>
                 圏外
               <% end %>
