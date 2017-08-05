@@ -47,6 +47,4 @@ class PatientsController < ApplicationController
     gon.leveldata = @level_data
     gon.datedata = @datedata.map{|d| d.prev_day.month.to_s + "/" + d.prev_day.day.to_s }
   end
-
-
 end
