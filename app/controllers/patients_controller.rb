@@ -1,4 +1,5 @@
-# coding: utf-8
+# frozen_string_literal: true
+
 class PatientsController < ApplicationController
   layout "user"
 
@@ -19,7 +20,7 @@ class PatientsController < ApplicationController
       order("asumi_tweets.tweet_time DESC").first
 
     if @patient.protect
-      redirect_to :action => :index and return
+      redirect_to action: :index && return
     end
 
     @all_patients = Patient.rankings
@@ -29,8 +30,8 @@ class PatientsController < ApplicationController
     @datedata = Date.current.weeks_ago(2)..@today
     @level_data = []
     @levels = AsumiLevel.where(patient_id: params[:id]).where(created_at: Date.current.weeks_ago(2).beginning_of_day...Date.current.end_of_day)
-    @datedata.each do | day |
-      level = @levels.find {|l| l.created_at.to_date == day }
+    @datedata.each do |day|
+      level = @levels.detect { |l| l.created_at.to_date == day }
 
       if level.present? && level.tweet_count != 0 && level.asumi_count.present?
         @level_data.push(level.asumi_count * 100 / level.tweet_count)
@@ -39,6 +40,6 @@ class PatientsController < ApplicationController
       end
     end
     gon.leveldata = @level_data
-    gon.datedata = @datedata.map{|d| d.prev_day.month.to_s + "/" + d.prev_day.day.to_s }
+    gon.datedata = @datedata.map { |d| d.prev_day.month.to_s + "/" + d.prev_day.day.to_s }
   end
 end
