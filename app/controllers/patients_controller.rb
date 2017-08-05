@@ -21,25 +21,27 @@ class PatientsController < ApplicationController
   # GET /patients/1
   # GET /patients/1.json
   def show
-    @patient = Patient.find(params[:id])
+    @patient = Patient.
+      includes(:asumi_tweets).
+      where(id: params[:id]).
+      order("asumi_tweets.tweet_time DESC").first
+
     if @patient.protect
       redirect_to :action => :index and return
     end
-    @asumi_tweet = AsumiTweet.where(patient_id: params[:id]).order("tweet_time DESC").limit(25)
 
     @all_patients = Patient.rankings
-    @all_patients.each_with_index do |p, i|
-      @ranking = i + 1 if p.id == params[:id].to_i
-    end
 
+    # for js graph
     @today = Date.current
     @datedata = Date.current.weeks_ago(2)..@today
     @level_data = []
+    @levels = AsumiLevel.where(patient_id: params[:id]).where(created_at: Date.current.weeks_ago(2).beginning_of_day...Date.current.end_of_day)
     @datedata.each do | day |
-      level = AsumiLevel.where(patient_id: params[:id]).where(created_at: day.beginning_of_day...day.end_of_day )
+      level = @levels.find {|l| l.created_at.to_date == day }
 
-      if level.present? && level.first.tweet_count != 0 && level.first.asumi_count.present?
-        @level_data.push(level.first.asumi_count * 100 / level.first.tweet_count)
+      if level.present? && level.tweet_count != 0 && level.asumi_count.present?
+        @level_data.push(level.asumi_count * 100 / level.tweet_count)
       else
         @level_data.push(0)
       end

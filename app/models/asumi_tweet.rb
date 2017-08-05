@@ -18,7 +18,7 @@
 #
 
 class AsumiTweet < ApplicationRecord
-  belongs_to :patient
+  belongs_to :patient, touch: true
 
   before_save :encode_emoji
 
