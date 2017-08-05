@@ -1,161 +1,197 @@
 body[data-controller='patients']{
-    .update_time{
-	position: absolute;
-	right: 20px;
-	top: 10px;
-    }
-    .left_box{
-	float: left;
-    }
-    .right_box{
-	margin-left: 682px;
+  .update_time {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+  }
+
+  .left_box {
+    float: left;
+  }
+
+  .right_box {
+    margin-left: 682px;
+  }
+
+  #patient_ranking {
+    #ranking {
+      margin-top:40px;
+
+      .ranking_tbl {
+        cursor: pointer;
+
+        tr {
+          position: relative;
+        }
+
+        th {
+          width: 80px;
+
+          .ranking_1 {
+            color: rgb(255,170,0);
+            font-size: 24px;
+          }
+
+          .ranking_2 {
+            color: rgb(100,100,192);
+            font-size: 20px;
+          }
+
+          .ranking_3 {
+            color: rgb( 196, 112, 34);
+            font-size: 18px;
+          }
+
+          .updown {
+            width: 20px;
+            margin-left: 10px;
+          }
+        }
+
+        td.icon {
+          width: 120px;
+          max-width: 120px;
+          text-align:center;
+          .name{
+            margin:10px 5px;
+          }
+        }
+        td.profile {
+
+          .description {
+            background: rgba(230,230,230,0.7);
+            border: 1px solid rgb(220,220,220);
+            border-radius: 10px;
+            padding: 10px;
+            width: 442px;
+            margin-bottom: 20px;
+
+            .screen_name {
+              text-align: right;
+            }
+
+            .hover_profile {
+              position: absolute;
+              z-index: 10;
+              background: rgba(0,0,0,0.5);
+              color: rgb(255,255,255);
+              padding: 10px;
+              width: 450px;
+            }
+          }
+        }
+      }
     }
 
-    #patient_ranking{
-	#ranking{
-	    margin-top:40px;
-	    .ranking_tbl{
-		cursor: pointer;
-		tr{
-		    position: relative;
-		}
-		th{
-		    width: 80px;
-		    .ranking_1{
-			color: rgb(255,170,0);
-			font-size: 24px;
-		    }
-		    .ranking_2{
-			color: rgb(100,100,192);
-			font-size: 20px;
-		    }
-		    .ranking_3{
-			color: rgb( 196, 112, 34);
-			font-size: 18px;
-		    }
-		    .updown{
-			width: 20px;
-			margin-left: 10px;
-		    }
-		}
-		td.icon{
-		    width: 120px;
-		    max-width: 120px;
-		    text-align:center;
-		    .name{
-			margin:10px 5px;
-		    }
-		}
-		td.profile{
-		    .description{
-			background: rgba(230,230,230,0.7);
-			border: 1px solid rgb(220,220,220);
-			border-radius: 10px;
-			padding: 10px;
-			width: 442px;
-			margin-bottom: 20px;
-			.screen_name{
-			    text-align: right;
-			}
-			.hover_profile{
-			    position: absolute;
-			    z-index: 10;
-			    background: rgba(0,0,0,0.5);
-			    color: rgb(255,255,255);
-			    padding: 10px;
-			    width: 450px;
-			}
-		    }
-		}
-	    }
-	}
-	.month_ranking{
-	    background: rgba(240,210,160,0.7);
-	    padding: 10px;
-	    border-radius: 10px;
-	    table{
-		line-height: 1.7em;
-		th{
-		    width: 120px;
-		    .ranking_1{
-			color: rgb(255,170,0);
-			font-size: 18px;
-		    }
-		    .ranking_2{
-			color: rgb(100,100,192);
-			font-size: 16px;
-		    }
-		    .ranking_3{
-			color: rgb( 196, 112, 34);
-			font-size: 14px;
-		    }
-		}
-	    }
-	}
+    .month_ranking {
+      background: rgba(240,210,160,0.7);
+      padding: 10px;
+      border-radius: 10px;
+
+      table {
+        line-height: 1.7em;
+
+        th {
+          width: 120px;
+
+          .ranking_1 {
+            color: rgb(255,170,0);
+            font-size: 18px;
+          }
+
+          .ranking_2 {
+            color: rgb(100,100,192);
+            font-size: 16px;
+          }
+
+          .ranking_3 {
+            color: rgb( 196, 112, 34);
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+
+  #patient_show {
+    #main_tweet {
+      background: rgba(255,255,255,1.0);
+      z-index:1;
+      width: 650px;
+      border: 1px solid rgba(200,200,200,0);
+      border-radius: 10px;
+      padding: 10px;
+
+      .tweet-area {
+        table-layout: fixed;
+        width: 100%;
+
+        td {
+          overflow-wrap: break-word;
+        }
+
+        .tweet-detail {
+          width: 100%;
+          margin: 5px 0 0 10px;
+
+          a{
+            color: rgba(150,150,150,1.0);
+          }
+          a:hover {
+            color: rgba(150,150,150,1.0);
+          }
+          a:visited {
+            color: rgba(150,150,150,1.0);
+          }
+        }
+
+        .tweet-time {
+          width: 24%;
+        }
+      }
     }
 
-    #patient_show{
-	#main_tweet{
-	    background: rgba(255,255,255,1.0);
-	    z-index:1;
-	    width: 650px;
-	    border: 1px solid rgba(200,200,200,0);
-	    border-radius: 10px;
-	    padding: 10px;
-
-	    .tweet_area{
-		.tweet_detail{
-		    margin: 5px 0 0 10px;
-		    a{
-			color: rgba(150,150,150,1.0);
-		    }
-		    a:hover{
-			color: rgba(150,150,150,1.0);
-		    }
-		    a:visited{
-			color: rgba(150,150,150,1.0);
-		    }
-		}
-	    }
-	}
-	#chart{
-	    margin-bottom: 10px;
-	    margin-top: 20px;
-	}
-	.report{
-	    margin: 10px auto;
-	    th{
-		border: 3px solid rgb(150,200,250);
-		padding: 5px 10px;
-	    }
-	    td{
-		//border: 3px solid rgb(200,200,200);
-		border-top: 3px solid rgb(150,200,250);
-		border-bottom: 3px solid rgb(150,200,250);
-		border-left: 3px dotted rgb(150,200,250);
-		padding: 5px 30px;
-	    }
-	    td.last{
-		border-right: 3px solid rgb(150,200,250);
-	    }
-	}
-
-	.content_area{
-	    padding: 10px;
-	    background: rgb(230,230,230);
-	    border-radius: 10px;
-	    #asumi_tweet_search{
-		margin: 0px;
-	    }
-	}
-	div.ranking{
-	    background: rgb(240,240,240);
-	}
-	table.ranking{
-	    margin-bottom: 20px;
-	    th{
-		width: 50px;
-	    }
-	}
+    #chart {
+      margin-bottom: 10px;
+      margin-top: 20px;
     }
+
+    .report {
+      margin: 10px auto;
+
+      th {
+        border: 3px solid rgb(150,200,250);
+        padding: 5px 10px;
+      }
+
+      td {
+        border-top: 3px solid rgb(150,200,250);
+        border-bottom: 3px solid rgb(150,200,250);
+        border-left: 3px dotted rgb(150,200,250);
+        padding: 5px 30px;
+      }
+
+      td:last-child {
+        border-right: 3px solid rgb(150,200,250);
+      }
+    }
+
+    .content_area {
+      padding: 10px;
+      background: rgb(230,230,230);
+      border-radius: 10px;
+    }
+
+    div.ranking {
+      background: rgb(240,240,240);
+    }
+
+    table.ranking {
+      margin-bottom: 20px;
+
+      th {
+        width: 50px;
+      }
+    }
+  }
 }
