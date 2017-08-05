@@ -18,6 +18,9 @@ require 'capistrano/deploy'
 # require 'capistrano/rvm'
 require 'capistrano/rbenv'
 # require 'capistrano/chruby'
+require "capistrano/scm/git"
+install_plugin Capistrano::SCM::Git
+
 require 'capistrano/bundler'
 require 'capistrano/rails'
 require 'capistrano/rails/assets'
