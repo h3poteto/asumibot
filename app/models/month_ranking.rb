@@ -12,7 +12,7 @@
 #
 
 class MonthRanking < ApplicationRecord
-  belongs_to :patient
+  belongs_to :patient, touch: true
 
   scope :level_order, -> { order('level DESC')}
 end

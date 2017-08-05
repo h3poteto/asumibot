@@ -52,3 +52,12 @@ Style/Documentation:
 
 Style/StringLiterals:
   Enabled: false
+
+Style/Lambda:
+  Enabled: false
+
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented

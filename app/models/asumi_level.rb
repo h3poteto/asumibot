@@ -14,6 +14,6 @@
 #
 
 class AsumiLevel < ApplicationRecord
-  belongs_to :patient
+  belongs_to :patient, touch: true
 
 end
