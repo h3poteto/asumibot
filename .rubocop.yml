@@ -61,3 +61,6 @@ Layout/DotPosition:
 
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
+
+Style/AndOr:
+  EnforcedStyle: conditionals
