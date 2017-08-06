@@ -19,9 +19,7 @@ class PatientsController < ApplicationController
       where(id: params[:id]).
       order("asumi_tweets.tweet_time DESC").first
 
-    if @patient.protect
-      redirect_to action: :index && return
-    end
+    redirect_to action: :index and return if @patient.protect
 
     @all_patients = Patient.rankings
 
