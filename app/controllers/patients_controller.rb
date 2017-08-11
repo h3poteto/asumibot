@@ -28,14 +28,14 @@ class PatientsController < ApplicationController
     @datedata = Date.current.weeks_ago(2)..@today
     @level_data = []
     @levels = AsumiLevel.where(patient_id: params[:id]).where(created_at: Date.current.weeks_ago(2).beginning_of_day...Date.current.end_of_day)
-    cache @levels do
-      @datedata.each do |day|
+    @level_data = Rails.cache.fetch(@levels) do
+      @datedata.map do |day|
         level = @levels.detect { |l| l.created_at.to_date == day }
 
         if level.present? && level.tweet_count != 0 && level.asumi_count.present?
-          @level_data.push(level.asumi_count * 100 / level.tweet_count)
+          level.asumi_count * 100 / level.tweet_count
         else
-          @level_data.push(0)
+          0
         end
       end
     end
