@@ -24,11 +24,11 @@ class PatientsController < ApplicationController
     @all_patients = Patient.rankings
 
     # for js graph
+    @today = Date.current
+    @datedata = Date.current.weeks_ago(2)..@today
+    @level_data = []
     @levels = AsumiLevel.where(patient_id: params[:id]).where(created_at: Date.current.weeks_ago(2).beginning_of_day...Date.current.end_of_day)
     cache @levels do
-      @today = Date.current
-      @datedata = Date.current.weeks_ago(2)..@today
-      @level_data = []
       @datedata.each do |day|
         level = @levels.detect { |l| l.created_at.to_date == day }
 
@@ -38,8 +38,8 @@ class PatientsController < ApplicationController
           @level_data.push(0)
         end
       end
-      gon.leveldata = @level_data
-      gon.datedata = @datedata.map { |d| d.prev_day.month.to_s + "/" + d.prev_day.day.to_s }
     end
+    gon.leveldata = @level_data
+    gon.datedata = @datedata.map { |d| d.prev_day.month.to_s + "/" + d.prev_day.day.to_s }
   end
 end
